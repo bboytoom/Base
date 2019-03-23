@@ -71,6 +71,14 @@
     <Compile Include="Interface\IGroup.cs" />
     <Compile Include="Interface\ILogin.cs" />
     <Compile Include="Interface\IUser.cs" />
+    <Compile Include="Migrations\201903232238478_initial.cs" />
+    <Compile Include="Migrations\201903232238478_initial.Designer.cs">
+      <DependentUpon>201903232238478_initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201903232240148_store_group.cs" />
+    <Compile Include="Migrations\201903232240148_store_group.Designer.cs">
+      <DependentUpon>201903232240148_store_group.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -78,6 +86,13 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201903232238478_initial.resx">
+      <DependentUpon>201903232238478_initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903232240148_store_group.resx">
+      <DependentUpon>201903232240148_store_group.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
