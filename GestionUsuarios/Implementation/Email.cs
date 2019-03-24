@@ -1,7 +1,7 @@
-﻿using GestionUsuarios.Data;
-using GestionUsuarios.Flyweight;
-using GestionUsuarios.Helpers;
-using GestionUsuarios.Interface;
+﻿using Administrator.Manager.Data;
+using Administrator.Manager.Flyweight;
+using Administrator.Manager.Helpers;
+using Administrator.Manager.Interface;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -10,7 +10,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GestionUsuarios.Implementation
+namespace Administrator.Manager.Implementation
 {
     public class CreateEmailImp : ICreateEmail
     {
@@ -146,7 +146,27 @@ namespace GestionUsuarios.Implementation
 
         public List<ViewModelEmail> ReadEmail(int Id)
         {
-            throw new NotImplementedException();
+            IQueryable<ViewModelEmail> salida;
+
+            try
+            {
+                salida = ctx.Tbl_Correos.Where(w => w.id == Id)
+                    .Select(s => new ViewModelEmail
+                    {
+                        Id = s.id,
+                        Iduser = s.id_usuario,
+                        Mainemail = s.principal_correo,
+                        Email = s.email_correo,
+                        Description = s.descripcion_correo,
+                        Status = s.activo_correo
+                    });
+
+                return salida.ToList();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
     }
     
@@ -158,9 +178,27 @@ namespace GestionUsuarios.Implementation
             ctx = new DataModels();
         }
 
-        public List<ViewModelEmail> ReadAllEmail()
+        public List<Tbl_Correos> ReadAllEmail()
         {
-            throw new NotImplementedException();
+            IQueryable<Tbl_Correos> salida;
+
+            try
+            {
+                salida = ctx.Tbl_Correos.Select(s => new Tbl_Correos
+                {
+                    id = s.id,
+                    principal_correo = s.principal_correo,
+                    email_correo = s.email_correo,
+                    descripcion_correo = s.descripcion_correo,
+                    activo_correo = s.activo_correo
+                });
+
+                return salida.ToList();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
     }
 }

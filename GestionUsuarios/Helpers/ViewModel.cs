@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GestionUsuarios.Helpers
+namespace Administrator.Manager.Helpers
 {
     public class ViewModelGroup
     {

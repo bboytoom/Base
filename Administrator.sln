@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Administrator", "Administra
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Administrator.Tests", "Administrator.Tests\Administrator.Tests.csproj", "{167CCEC0-7D87-467A-B89D-917C8653A21B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GestionUsuarios", "GestionUsuarios\GestionUsuarios.csproj", "{DB1E35F4-8258-4049-ACBC-16AED397018D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Administrator.Manager", "GestionUsuarios\Administrator.Manager.csproj", "{DB1E35F4-8258-4049-ACBC-16AED397018D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WsManager", "WsManager\WsManager.csproj", "{D7C0E733-BAD2-49B4-9D32-E1F74FBED99E}"
 EndProject

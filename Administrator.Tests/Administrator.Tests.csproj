@@ -66,9 +66,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\GestionUsuarios\GestionUsuarios.csproj">
+    <ProjectReference Include="..\GestionUsuarios\Administrator.Manager.csproj">
       <Project>{db1e35f4-8258-4049-acbc-16aed397018d}</Project>
-      <Name>GestionUsuarios</Name>
+      <Name>Administrator.Manager</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

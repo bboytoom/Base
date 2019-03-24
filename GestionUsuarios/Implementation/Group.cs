@@ -1,7 +1,7 @@
-﻿using GestionUsuarios.Data;
-using GestionUsuarios.Flyweight;
-using GestionUsuarios.Helpers;
-using GestionUsuarios.Interface;
+﻿using Administrator.Manager.Data;
+using Administrator.Manager.Flyweight;
+using Administrator.Manager.Helpers;
+using Administrator.Manager.Interface;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -11,7 +11,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GestionUsuarios.Implementation
+namespace Administrator.Manager.Implementation
 {
     public class CreateGroupImp : ICreateGroup
     {
@@ -138,7 +138,43 @@ namespace GestionUsuarios.Implementation
 
         public List<ViewModelGroup> ReadGroup(int Id)
         {
-            throw new NotImplementedException();
+            IQueryable<ViewModelGroup> salida;
+
+            try
+            {
+                salida = ctx.Tbl_Grupos.Join(ctx.Tbl_Permisos,
+                    pkgrupo => pkgrupo.id, 
+                    fkgrupo => fkgrupo.id_grupo,
+                    (pkgrupo, fkgrupo) => new ViewModelGroup
+                    {
+                        Id = pkgrupo.id,
+                        Name = pkgrupo.nombre_grupo,
+                        Description = pkgrupo.descripcion_grupo,
+                        Readuser = fkgrupo.mostrarUsuario_permiso,
+                        Createuser = fkgrupo.crearUsuario_permiso,
+                        Updateuser = fkgrupo.editarUsuario_permiso,
+                        Deleteuser = fkgrupo.eliminarUsuario_permiso,
+                        Readgroup = fkgrupo.mostrarGrupo_permiso,
+                        Creategroup = fkgrupo.crearGrupo_permiso,
+                        Updategroup = fkgrupo.editarGrupo_permiso,
+                        Deletegroup = fkgrupo.eliminarGrupo_permiso,
+                        Readpermission = fkgrupo.mostrarPermiso_permiso,
+                        Createpermission = fkgrupo.crearPermiso_permiso,
+                        Updatepermission = fkgrupo.editarPermiso_permiso,
+                        Deletepermission = fkgrupo.eliminarPermiso_permiso,
+                        Reademail = fkgrupo.mostrarEmail_permiso,
+                        Createemail = fkgrupo.crearEmail_permiso,
+                        Updateemail = fkgrupo.editarEmail_permiso,
+                        Deleteemail = fkgrupo.eliminarEmail_permiso,
+                        Status = pkgrupo.activo_grupo
+                    }).Where(w => w.Id == Id);
+
+                return salida.ToList();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
     }
 
@@ -150,9 +186,19 @@ namespace GestionUsuarios.Implementation
             ctx = new DataModels();
         }
 
-        public List<ViewModelGroup> ReadAllGroup()
+        public List<Tbl_Grupos> ReadAllGroup()
         {
-            throw new NotImplementedException();
+            IQueryable<Tbl_Grupos> salida;
+
+            salida = ctx.Tbl_Grupos.Select(s => new Tbl_Grupos
+            {
+                id = s.id,
+                nombre_grupo = s.nombre_grupo,
+                descripcion_grupo = s.descripcion_grupo,
+                activo_grupo = s.activo_grupo
+            });
+
+            return salida.ToList();
         }
     }
 }

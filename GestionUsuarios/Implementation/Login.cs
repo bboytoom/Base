@@ -1,6 +1,6 @@
-﻿using GestionUsuarios.Data;
-using GestionUsuarios.Helpers;
-using GestionUsuarios.Interface;
+﻿using Administrator.Manager.Data;
+using Administrator.Manager.Helpers;
+using Administrator.Manager.Interface;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -9,7 +9,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GestionUsuarios.Implementation
+namespace Administrator.Manager.Implementation
 {
     public class CheckEmailImp : ICheckEmail
     {

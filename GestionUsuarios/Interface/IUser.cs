@@ -1,4 +1,5 @@
-﻿using GestionUsuarios.Helpers;
+﻿using Administrator.Manager.Data;
+using Administrator.Manager.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.ServiceModel.Web;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GestionUsuarios.Interface
+namespace Administrator.Manager.Interface
 {
     [ServiceContract]
     public interface ICreateUser
@@ -40,6 +41,6 @@ namespace GestionUsuarios.Interface
 
     public interface IReadAllUser
     {
-        List<ViewModelUser> ReadAllUser();
+        List<Tbl_Usuarios> ReadAllUser();
     }
 }

@@ -5,7 +5,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GestionUsuarios.Helpers
+namespace Administrator.Manager.Helpers
 {
     public static class HEncrypt
     {

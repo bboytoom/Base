@@ -1,4 +1,4 @@
-namespace GestionUsuarios.Migrations
+namespace Administrator.Manager.Migrations
 {
     using System;
     using System.Data.Entity.Migrations;

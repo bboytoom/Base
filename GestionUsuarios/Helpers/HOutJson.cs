@@ -1,11 +1,11 @@
-﻿using GestionUsuarios.Data;
+﻿using Administrator.Manager.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GestionUsuarios.Helpers
+namespace Administrator.Manager.Helpers
 {
     public class OutJsonCheck
     {

@@ -1,7 +1,7 @@
-﻿using GestionUsuarios.Data;
-using GestionUsuarios.Flyweight;
-using GestionUsuarios.Helpers;
-using GestionUsuarios.Interface;
+﻿using Administrator.Manager.Data;
+using Administrator.Manager.Flyweight;
+using Administrator.Manager.Helpers;
+using Administrator.Manager.Interface;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -10,7 +10,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GestionUsuarios.Implementation
+namespace Administrator.Manager.Implementation
 {
     public class CreateUserImp : ICreateUser
     {
@@ -155,7 +155,16 @@ namespace GestionUsuarios.Implementation
 
         public List<ViewModelUser> ReadUser(int Id)
         {
-            throw new NotImplementedException();
+            IQueryable<ViewModelUser> salida;
+
+            try
+            {
+                throw new NotImplementedException();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
     }
 
@@ -167,9 +176,18 @@ namespace GestionUsuarios.Implementation
             ctx = new DataModels();
         }
 
-        public List<ViewModelUser> ReadAllUser()
+        public List<Tbl_Usuarios> ReadAllUser()
         {
-            throw new NotImplementedException();
+            IQueryable<Tbl_Usuarios> salida;
+
+            try
+            {
+                throw new NotImplementedException();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
     }
 }

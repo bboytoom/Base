@@ -72,6 +72,7 @@
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="wscheckemail.svc" />
     <Content Include="wsemailcreate.svc" />
     <Content Include="wsemaildelete.svc" />
     <Content Include="wsemailupdate.svc" />
@@ -90,9 +91,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\GestionUsuarios\GestionUsuarios.csproj">
+    <ProjectReference Include="..\GestionUsuarios\Administrator.Manager.csproj">
       <Project>{db1e35f4-8258-4049-acbc-16aed397018d}</Project>
-      <Name>GestionUsuarios</Name>
+      <Name>Administrator.Manager</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

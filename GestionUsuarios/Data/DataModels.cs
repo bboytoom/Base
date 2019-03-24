@@ -1,4 +1,4 @@
-namespace GestionUsuarios.Data
+namespace Administrator.Manager.Data
 {
     using System;
     using System.Data.Entity;

@@ -1,12 +1,12 @@
-﻿using GestionUsuarios.Data;
-using GestionUsuarios.Helpers;
+﻿using Administrator.Manager.Data;
+using Administrator.Manager.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GestionUsuarios.Flyweight
+namespace Administrator.Manager.Flyweight
 {
     abstract class AbstractUser
     {
