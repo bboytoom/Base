@@ -29,8 +29,8 @@ namespace GestionUsuarios.Interface
     public interface IDeleteGroup
     {
         [OperationContract]
-        [WebInvoke(RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "/delete", Method = "POST", BodyStyle = WebMessageBodyStyle.Wrapped)]
-        string DeleteGroup(int Id, int HighUser);
+        [WebInvoke(RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "/delete", Method = "POST", BodyStyle = WebMessageBodyStyle.Bare)]
+        string DeleteGroup(ViewModelGroup Data);
     }
 
     public interface IReadGroup

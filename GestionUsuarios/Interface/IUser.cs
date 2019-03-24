@@ -30,7 +30,7 @@ namespace GestionUsuarios.Interface
     {
         [OperationContract]
         [WebInvoke(RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "/delete", Method = "POST", BodyStyle = WebMessageBodyStyle.Wrapped)]
-        string DeleteUser(int Id, int HighUser);
+        string DeleteUser(ViewModelUser Data);
     }
 
     public interface IReadUser

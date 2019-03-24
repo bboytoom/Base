@@ -59,6 +59,9 @@
     <Compile Include="Data\Tbl_Grupos.cs" />
     <Compile Include="Data\Tbl_Permisos.cs" />
     <Compile Include="Data\Tbl_Usuarios.cs" />
+    <Compile Include="Flyweight\FlyEmail.cs" />
+    <Compile Include="Flyweight\FlyGroup.cs" />
+    <Compile Include="Flyweight\FlyUser.cs" />
     <Compile Include="Helpers\HCheckEmail.cs" />
     <Compile Include="Helpers\HEncrypt.cs" />
     <Compile Include="Helpers\HOutJson.cs" />

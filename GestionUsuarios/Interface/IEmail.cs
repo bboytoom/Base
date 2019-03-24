@@ -29,8 +29,8 @@ namespace GestionUsuarios.Interface
     public interface IDeleteEmail
     {
         [OperationContract]
-        [WebInvoke(RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "/delete", Method = "POST", BodyStyle = WebMessageBodyStyle.Wrapped)]
-        string DeleteEmail(int Id, int HighUser);
+        [WebInvoke(RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "/delete", Method = "POST", BodyStyle = WebMessageBodyStyle.Bare)]
+        string DeleteEmail(ViewModelEmail Data);
     }
 
     public interface IReadEmail

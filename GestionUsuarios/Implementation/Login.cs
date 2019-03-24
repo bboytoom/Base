@@ -1,8 +1,11 @@
 ﻿using GestionUsuarios.Data;
+using GestionUsuarios.Helpers;
 using GestionUsuarios.Interface;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -10,37 +13,57 @@ namespace GestionUsuarios.Implementation
 {
     public class CheckEmailImp : ICheckEmail
     {
-        public bool CheckEmail(string Email)
+        private DataModels ctx;
+        private CheckEmailImp()
         {
-            using (DataModels ctx = new DataModels())
-            {
-                try
-                {
-                    throw new NotImplementedException();
-                }
-                catch (Exception)
-                {
-                    throw;
-                }
-            }
+            ctx = new DataModels();
+        }
+
+        public string CheckEmail(string Email)
+        {
+            string email_clean = "";
+
+            if (Email == "")
+                return JsonConvert.SerializeObject(
+                    new OutJsonCheck
+                    {
+                        Status = 404,
+                        Respuesta = false
+                    }
+                );
+
+            email_clean = WebUtility.HtmlEncode(Email.ToLower());
+
+            throw new NotImplementedException();
         }
     }
 
     public class LoginImp : ILogin
     {
+        private DataModels ctx;
+        private LoginImp()
+        {
+            ctx = new DataModels();
+        }
+
         public string Login(string Email, string Password)
         {
-            using (DataModels ctx = new DataModels())
-            {
-                try
-                {
-                    throw new NotImplementedException();
-                }
-                catch (Exception)
-                {
-                    throw;
-                }
-            }
+            string email_clean = "";
+            string password_clean = "";
+
+            if (Email == "" || Password == "")
+                return JsonConvert.SerializeObject(
+                    new OutJsonCheck
+                    {
+                        Status = 404,
+                        Respuesta = false
+                    }
+                );
+
+            email_clean = WebUtility.HtmlEncode(Email.ToLower());
+            password_clean = HEncrypt.PasswordEncryp(Password);
+
+            throw new NotImplementedException();
         }
     }
 }
