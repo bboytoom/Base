@@ -16,8 +16,11 @@ namespace GestionUsuarios.Interface
         string Login(string Email, string Password);
     }
 
+    [ServiceContract]
     public interface ICheckEmail
     {
-        bool CheckEmail(string Email);
+        [OperationContract]
+        [WebInvoke(RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "/checkemail", Method = "POST", BodyStyle = WebMessageBodyStyle.Wrapped)]
+        string CheckEmail(string Email);
     }
 }

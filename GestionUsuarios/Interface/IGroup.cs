@@ -1,11 +1,8 @@
-﻿using GestionUsuarios.Helpers;
-using System;
+﻿using GestionUsuarios.Data;
+using GestionUsuarios.Helpers;
 using System.Collections.Generic;
-using System.Linq;
 using System.ServiceModel;
 using System.ServiceModel.Web;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GestionUsuarios.Interface
 {
@@ -13,7 +10,7 @@ namespace GestionUsuarios.Interface
     public interface ICreateGroup
     {
         [OperationContract]
-        [WebInvoke(RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "/create", Method = "POST", BodyStyle = WebMessageBodyStyle.Bare)]
+        [WebInvoke(RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "/create", Method = "POST", BodyStyle = WebMessageBodyStyle.Wrapped)]
         string CreateGroup(ViewModelGroup Data);
     }
 
@@ -21,7 +18,7 @@ namespace GestionUsuarios.Interface
     public interface IUpdateGroup
     {
         [OperationContract]
-        [WebInvoke(RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "/update", Method = "POST", BodyStyle = WebMessageBodyStyle.Bare)]
+        [WebInvoke(RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "/update", Method = "POST", BodyStyle = WebMessageBodyStyle.Wrapped)]
         string UpdateGroup(ViewModelGroup Data);
     }
 
@@ -30,7 +27,7 @@ namespace GestionUsuarios.Interface
     {
         [OperationContract]
         [WebInvoke(RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "/delete", Method = "POST", BodyStyle = WebMessageBodyStyle.Wrapped)]
-        string DeleteGroup(int Id, int HighUser);
+        string DeleteGroup(ViewModelGroup Data);
     }
 
     public interface IReadGroup
@@ -40,6 +37,6 @@ namespace GestionUsuarios.Interface
 
     public interface IReadAllGroup
     {
-        List<ViewModelGroup> ReadAllGroup();
+        List<Tbl_Grupos> ReadAllGroup();
     }
 }

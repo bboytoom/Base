@@ -31,7 +31,7 @@ namespace GestionUsuarios.Migrations
                     @updateemail bit,
                     @deleteemail bit, 
                     @status bit, 
-                    @highUser bit 
+                    @highUser int 
                 )
                 AS
 

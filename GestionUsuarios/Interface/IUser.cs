@@ -1,11 +1,8 @@
-﻿using GestionUsuarios.Helpers;
-using System;
+﻿using GestionUsuarios.Data;
+using GestionUsuarios.Helpers;
 using System.Collections.Generic;
-using System.Linq;
 using System.ServiceModel;
 using System.ServiceModel.Web;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GestionUsuarios.Interface
 {
@@ -13,7 +10,7 @@ namespace GestionUsuarios.Interface
     public interface ICreateUser
     {
         [OperationContract]
-        [WebInvoke(RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "/create", Method = "POST", BodyStyle = WebMessageBodyStyle.Bare)]
+        [WebInvoke(RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "/create", Method = "POST", BodyStyle = WebMessageBodyStyle.Wrapped)]
         string CreateUser(ViewModelUser Data);
     }
 
@@ -21,7 +18,7 @@ namespace GestionUsuarios.Interface
     public interface IUpdateUser
     {
         [OperationContract]
-        [WebInvoke(RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "/update", Method = "POST", BodyStyle = WebMessageBodyStyle.Bare)]
+        [WebInvoke(RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "/update", Method = "POST", BodyStyle = WebMessageBodyStyle.Wrapped)]
         string UpdateUser(ViewModelUser Data);
     }
 
@@ -30,7 +27,7 @@ namespace GestionUsuarios.Interface
     {
         [OperationContract]
         [WebInvoke(RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "/delete", Method = "POST", BodyStyle = WebMessageBodyStyle.Wrapped)]
-        string DeleteUser(int Id, int HighUser);
+        string DeleteUser(ViewModelUser Data);
     }
 
     public interface IReadUser
@@ -40,6 +37,6 @@ namespace GestionUsuarios.Interface
 
     public interface IReadAllUser
     {
-        List<ViewModelUser> ReadAllUser();
+        List<Tbl_Usuarios> ReadAllUser();
     }
 }

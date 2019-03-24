@@ -1,45 +1,141 @@
 ﻿using GestionUsuarios.Data;
+using GestionUsuarios.Helpers;
 using GestionUsuarios.Interface;
+using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Net;
+using System.ServiceModel.Web;
 
 namespace GestionUsuarios.Implementation
 {
     public class CheckEmailImp : ICheckEmail
     {
-        public bool CheckEmail(string Email)
+        private DataModels ctx;
+        private CheckEmailImp()
         {
-            using (DataModels ctx = new DataModels())
+            ctx = new DataModels();
+        }
+
+        public string CheckEmail(string Email)
+        {
+            string email_clean;
+            
+            if (Email == "" || Email == null)
+                return JsonConvert.SerializeObject(
+                    new OutJsonCheck
+                    {
+                        Status = 200,
+                        Respuesta = false
+                    }
+                );
+
+            email_clean = WebUtility.HtmlEncode(Email.ToLower());
+
+            if (!HCheckEmail.EmailCheck(email_clean))
+                return JsonConvert.SerializeObject(
+                    new OutJsonCheck
+                    {
+                        Status = 200,
+                        Respuesta = false
+                    }
+                );
+
+            try
             {
-                try
-                {
-                    throw new NotImplementedException();
-                }
-                catch (Exception)
-                {
-                    throw;
-                }
+                var query = ctx.Tbl_Correos.Where(w => w.email_correo == email_clean).FirstOrDefault();
+
+                if (query == null)
+                    return JsonConvert.SerializeObject(
+                        new OutJsonCheck
+                        {
+                            Status = 200,
+                            Respuesta = false
+                        }
+                    );
+
+                return JsonConvert.SerializeObject(
+                    new OutJsonCheck
+                    {
+                        Status = 200,
+                        Respuesta = true
+                    }
+                );
+            }
+            catch (Exception)
+            {
+                CustomErrorDetail customError = new CustomErrorDetail("Error en la peticion", "Hubo un error en la peticion a la base");
+                throw new WebFaultException<CustomErrorDetail>(customError, HttpStatusCode.InternalServerError);
             }
         }
     }
 
     public class LoginImp : ILogin
     {
+        private DataModels ctx;
+        private LoginImp()
+        {
+            ctx = new DataModels();
+        }
+
         public string Login(string Email, string Password)
         {
-            using (DataModels ctx = new DataModels())
+            string email_clean;
+            string password_clean;
+
+            if (Email == null || Password == null)
             {
-                try
+                CustomErrorDetail customError = new CustomErrorDetail("Datos Faltantes", "Faltan algunos datos necesarios en la petición");
+                throw new WebFaultException<CustomErrorDetail>(customError, HttpStatusCode.BadRequest);
+            }
+
+            if (Email == "" || Password == "")
+            {
+                CustomErrorDetail customError = new CustomErrorDetail("Datos Faltantes", "Faltan algunos datos necesarios en la petición");
+                throw new WebFaultException<CustomErrorDetail>(customError, HttpStatusCode.BadRequest);
+            }
+
+            email_clean = WebUtility.HtmlEncode(Email.ToLower());
+
+            if (!HCheckEmail.EmailCheck(email_clean))
+            {
+                CustomErrorDetail customError = new CustomErrorDetail("Email no valido", "El correo ingresado no es valido");
+                throw new WebFaultException<CustomErrorDetail>(customError, HttpStatusCode.UnsupportedMediaType);
+            }
+            
+            try
+            {
+                password_clean = HEncrypt.PasswordEncryp(Password);
+
+                var query = ctx.Tbl_Usuarios.Join(ctx.Tbl_Correos,
+                        pkusuario => pkusuario.id,
+                        fkusuario => fkusuario.id_usuario,
+                        (pkusuario, fkusuario) => new
+                        {
+                            User_table = pkusuario,
+                            Email_table = fkusuario
+                        })
+                        .Where(s => s.Email_table.email_correo == email_clean && s.User_table.password_usuario == password_clean)
+                        .FirstOrDefault();
+
+                if (query == null)
                 {
-                    throw new NotImplementedException();
+                    CustomErrorDetail customError = new CustomErrorDetail("Dato no encontrado", "No se encontro ninguna coincidencia en los datos");
+                    throw new WebFaultException<CustomErrorDetail>(customError, HttpStatusCode.NotFound);
                 }
-                catch (Exception)
-                {
-                    throw;
-                }
+
+                return JsonConvert.SerializeObject(
+                    new OutJsonCheck
+                    {
+                        Status = 200,
+                        Respuesta = true
+                    }
+                );
+            }
+            catch (Exception)
+            {
+                CustomErrorDetail customError = new CustomErrorDetail("Error en la peticion", "Hubo un error en la peticion a la base");
+                throw new WebFaultException<CustomErrorDetail>(customError, HttpStatusCode.InternalServerError);
             }
         }
     }

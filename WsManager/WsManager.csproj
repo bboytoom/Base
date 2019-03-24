@@ -72,6 +72,7 @@
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="wscheckemail.svc" />
     <Content Include="wsemailcreate.svc" />
     <Content Include="wsemaildelete.svc" />
     <Content Include="wsemailupdate.svc" />

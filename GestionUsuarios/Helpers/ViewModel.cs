@@ -30,7 +30,7 @@ namespace GestionUsuarios.Helpers
         public bool Status { get; set; }
         public int HighUser { get; set; }
     }
-
+    
     public class ViewModelUser
     {
         public int Id { get; set; }
@@ -38,8 +38,7 @@ namespace GestionUsuarios.Helpers
         public int Idgroup { get; set; }
         public string Photo { get; set; }
         public string Email { get; set; }
-        public bool Initemail { get; set; }
-        public string Descriptionemail { get; set; }
+        public bool Mainemail { get; set; }
         public string Password { get; set; }
         public string Curp { get; set; }
         public string Rfc { get; set; }

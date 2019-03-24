@@ -1,245 +1,195 @@
 ﻿using GestionUsuarios.Data;
+using GestionUsuarios.Flyweight;
 using GestionUsuarios.Helpers;
 using GestionUsuarios.Interface;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
+using System.ServiceModel.Web;
 
 namespace GestionUsuarios.Implementation
 {
     public class CreateGroupImp : ICreateGroup
     {
+        private DataModels ctx;
+        private QueryGroup objetcQuery;
+        private CreateGroupImp()
+        {
+            ctx = new DataModels();
+        }
+
         public string CreateGroup(ViewModelGroup Data)
         {
+            string name_clean;
+
             if (Data.Name == "" || Data.HighUser == 0)
-                return JsonConvert.SerializeObject(
-                    new OutJsonCheck
-                    {
-                        Status = 404,
-                        Respuesta = false
-                    }
-                );
-            
-            using (DataModels ctx = new DataModels())
             {
-                string nameClean = WebUtility.HtmlEncode(Data.Name.ToLower());
-                string descriptionClean = WebUtility.HtmlEncode(Data.Description);
+                CustomErrorDetail customError = new CustomErrorDetail("Datos Faltantes", "Faltan algunos datos necesarios en la petición");
+                throw new WebFaultException<CustomErrorDetail>(customError, HttpStatusCode.BadRequest);
+            }
 
-                try
-                {
-                    ctx.Database.ExecuteSqlCommand("EXECUTE STR_CRUDGROUP @token, @idgrupo, @name, @description, " +
-                        "@readuser, @createuser, @updateuser, @deleteuser," +
-                        "@readgroup, @creategroup, @updategroup, @deletegroup, " +
-                        "@readpermission, @createpermission, @updatepermission, @deletepermission," +
-                        "@reademail, @createemail, @updateemail, @deleteemail, " +
-                        "@status, @highUser",
-                        new SqlParameter("token", 1),
-                        new SqlParameter("idgrupo", Data.Id),
-                        new SqlParameter("name", nameClean),
-                        new SqlParameter("description", descriptionClean),
-                        new SqlParameter("readuser", Data.Readuser),
-                        new SqlParameter("createuser", Data.Createuser),
-                        new SqlParameter("updateuser", Data.Updateuser),
-                        new SqlParameter("deleteuser", Data.Deleteuser),
-                        new SqlParameter("readgroup", Data.Readgroup),
-                        new SqlParameter("creategroup", Data.Creategroup),
-                        new SqlParameter("updategroup", Data.Updategroup),
-                        new SqlParameter("deletegroup", Data.Deletegroup),
-                        new SqlParameter("readpermission", Data.Readpermission),
-                        new SqlParameter("createpermission", Data.Createpermission),
-                        new SqlParameter("updatepermission", Data.Updatepermission),
-                        new SqlParameter("deletepermission", Data.Deletepermission),
-                        new SqlParameter("reademail", Data.Reademail),
-                        new SqlParameter("createemail", Data.Createemail),
-                        new SqlParameter("updateemail", Data.Updateemail),
-                        new SqlParameter("deleteemail", Data.Deleteemail),
-                        new SqlParameter("status", Data.Status),
-                        new SqlParameter("highUser", Data.HighUser)
-                    );
+            name_clean = WebUtility.HtmlEncode(Data.Name.ToLower());
 
-                    return JsonConvert.SerializeObject(
-                        new OutJsonCheck
-                        {
-                            Status = 200,
-                            Respuesta = true
-                        }
-                    );
-                }
-                catch (Exception)
-                {
-                    throw;
-                }   
-            }          
+            var search_group = ctx.Tbl_Grupos.Where(w => w.nombre_grupo == name_clean).FirstOrDefault();
+
+            if (search_group != null)
+            {
+                CustomErrorDetail customError = new CustomErrorDetail("Ya no esta disponible", "El grupo que ingreso ya se encuentra en uso");
+                throw new WebFaultException<CustomErrorDetail>(customError, HttpStatusCode.Gone);
+            }
+
+            objetcQuery = new QueryGroup(Data);
+            return objetcQuery.Query(1, ctx);
         }
     }
 
     public class UpdateGroupImp : IUpdateGroup
     {
-        public string UpdateGroup(ViewModelGroup Data)
+        private DataModels ctx;
+        private QueryGroup objetcQuery;
+        private UpdateGroupImp()
         {
+            ctx = new DataModels();
+        }
+
+        public string UpdateGroup(ViewModelGroup Data)
+        {         
             if (Data.Name == "" || Data.HighUser == 0 || Data.Id == 0)
-                return JsonConvert.SerializeObject(
-                    new OutJsonCheck
-                    {
-                        Status = 404,
-                        Respuesta = false
-                    }
-                );
-
-            using (DataModels ctx = new DataModels())
             {
-                string nameClean = WebUtility.HtmlEncode(Data.Name.ToLower());
-                string descriptionClean = WebUtility.HtmlEncode(Data.Description);
-
-                try
-                {
-                    ctx.Database.ExecuteSqlCommand("EXECUTE STR_CRUDGROUP @token, @idgrupo, @name, @description, " +
-                        "@readuser, @createuser, @updateuser, @deleteuser," +
-                        "@readgroup, @creategroup, @updategroup, @deletegroup, " +
-                        "@readpermission, @createpermission, @updatepermission, @deletepermission," +
-                        "@reademail, @createemail, @updateemail, @deleteemail, " +
-                        "@status, @highUser",
-                        new SqlParameter("token", 2),
-                        new SqlParameter("idgrupo", Data.Id),
-                        new SqlParameter("name", nameClean),
-                        new SqlParameter("description", descriptionClean),
-                        new SqlParameter("readuser", Data.Readuser),
-                        new SqlParameter("createuser", Data.Createuser),
-                        new SqlParameter("updateuser", Data.Updateuser),
-                        new SqlParameter("deleteuser", Data.Deleteuser),
-                        new SqlParameter("readgroup", Data.Readgroup),
-                        new SqlParameter("creategroup", Data.Creategroup),
-                        new SqlParameter("updategroup", Data.Updategroup),
-                        new SqlParameter("deletegroup", Data.Deletegroup),
-                        new SqlParameter("readpermission", Data.Readpermission),
-                        new SqlParameter("createpermission", Data.Createpermission),
-                        new SqlParameter("updatepermission", Data.Updatepermission),
-                        new SqlParameter("deletepermission", Data.Deletepermission),
-                        new SqlParameter("reademail", Data.Reademail),
-                        new SqlParameter("createemail", Data.Createemail),
-                        new SqlParameter("updateemail", Data.Updateemail),
-                        new SqlParameter("deleteemail", Data.Deleteemail),
-                        new SqlParameter("status", Data.Status),
-                        new SqlParameter("highUser", Data.HighUser)
-                    );
-
-                    return JsonConvert.SerializeObject(
-                        new OutJsonCheck
-                        {
-                            Status = 200,
-                            Respuesta = true
-                        }
-                    );
-                }
-                catch (Exception)
-                {
-                    throw;
-                }
+                CustomErrorDetail customError = new CustomErrorDetail("Datos Faltantes", "Faltan algunos datos necesarios en la petición");
+                throw new WebFaultException<CustomErrorDetail>(customError, HttpStatusCode.BadRequest);
             }
+
+            var search_group = ctx.Tbl_Grupos.Where(w => w.id == Data.Id).FirstOrDefault();
+
+            if (search_group == null)
+            {
+                CustomErrorDetail customError = new CustomErrorDetail("Dato no encontrado", "No se encontro ninguna coincidencia en los datos");
+                throw new WebFaultException<CustomErrorDetail>(customError, HttpStatusCode.NotFound);
+            }
+
+            var search_group_repeat = ctx.Tbl_Grupos.Where(w => w.id != Data.Id && w.nombre_grupo == Data.Name).FirstOrDefault();
+
+            if (search_group_repeat != null)
+            {
+                CustomErrorDetail customError = new CustomErrorDetail("Ya no esta disponible", "El grupo que ingreso ya se encuentra en uso");
+                throw new WebFaultException<CustomErrorDetail>(customError, HttpStatusCode.Gone);
+            }
+
+            objetcQuery = new QueryGroup(Data);
+            return objetcQuery.Query(2, ctx);
         }
     }
 
     public class DeleteGroupImp : IDeleteGroup
     {
-        public string DeleteGroup(int Id, int HighUser)
+        private DataModels ctx;
+        private QueryGroup objetcQuery;
+        private DeleteGroupImp()
         {
-            if (Id == 0 || HighUser == 0)
-                return JsonConvert.SerializeObject(
-                    new OutJsonCheck
-                    {
-                        Status = 404,
-                        Respuesta = false
-                    }
-                );
+            ctx = new DataModels();
+        }
 
-            using (DataModels ctx = new DataModels())
+        public string DeleteGroup(ViewModelGroup Data)
+        {
+            if (Data.Id == 0 || Data.HighUser == 0)
             {
-                try
-                {
-                    ctx.Database.ExecuteSqlCommand("EXECUTE STR_CRUDGROUP @token, @idgrupo, @name, @description, " +
-                        "@readuser, @createuser, @updateuser, @deleteuser," +
-                        "@readgroup, @creategroup, @updategroup, @deletegroup, " +
-                        "@readpermission, @createpermission, @updatepermission, @deletepermission," +
-                        "@reademail, @createemail, @updateemail, @deleteemail, " +
-                        "@status, @highUser",
-                        new SqlParameter("token", 3),
-                        new SqlParameter("idgrupo", Id),
-                        new SqlParameter("name", false),
-                        new SqlParameter("description", false),
-                        new SqlParameter("readuser", false),
-                        new SqlParameter("createuser", false),
-                        new SqlParameter("updateuser", false),
-                        new SqlParameter("deleteuser", false),
-                        new SqlParameter("readgroup", false),
-                        new SqlParameter("creategroup", false),
-                        new SqlParameter("updategroup", false),
-                        new SqlParameter("deletegroup", false),
-                        new SqlParameter("readpermission", false),
-                        new SqlParameter("createpermission", false),
-                        new SqlParameter("updatepermission", false),
-                        new SqlParameter("deletepermission", false),
-                        new SqlParameter("reademail", false),
-                        new SqlParameter("createemail", false),
-                        new SqlParameter("updateemail", false),
-                        new SqlParameter("deleteemail", false),
-                        new SqlParameter("status", false),
-                        new SqlParameter("highUser", HighUser)
-                    );
-
-                    return JsonConvert.SerializeObject(
-                        new OutJsonCheck
-                        {
-                            Status = 200,
-                            Respuesta = true
-                        }
-                    );
-                }
-                catch (Exception)
-                {
-                    throw;
-                }
+                CustomErrorDetail customError = new CustomErrorDetail("Datos Faltantes", "Faltan algunos datos necesarios en la petición");
+                throw new WebFaultException<CustomErrorDetail>(customError, HttpStatusCode.BadRequest);
             }
+
+            var search_group = ctx.Tbl_Grupos.Where(w => w.id == Data.Id).FirstOrDefault();
+
+            if (search_group == null)
+            {
+                CustomErrorDetail customError = new CustomErrorDetail("Dato no encontrado", "No se encontro ninguna coincidencia en los datos");
+                throw new WebFaultException<CustomErrorDetail>(customError, HttpStatusCode.NotFound);
+            }
+
+            objetcQuery = new QueryGroup(Data);
+            return objetcQuery.Query(3, ctx);
         }
     }
 
     public class ReadGroupImp : IReadGroup
     {
+        private DataModels ctx;
+        private ReadGroupImp()
+        {
+            ctx = new DataModels();
+        }
+
         public List<ViewModelGroup> ReadGroup(int Id)
         {
-            using (DataModels ctx = new DataModels())
+            IQueryable<ViewModelGroup> salida;
+            
+            try
             {
-                try
-                {
-                    throw new NotImplementedException();
-                }
-                catch (Exception)
-                {
-                    throw;
-                }
+                salida = ctx.Tbl_Grupos.Join(ctx.Tbl_Permisos,
+                    pkgrupo => pkgrupo.id, 
+                    fkgrupo => fkgrupo.id_grupo,
+                    (pkgrupo, fkgrupo) => new ViewModelGroup
+                    {
+                        Id = pkgrupo.id,
+                        Name = pkgrupo.nombre_grupo,
+                        Description = pkgrupo.descripcion_grupo,
+                        Readuser = fkgrupo.mostrarUsuario_permiso,
+                        Createuser = fkgrupo.crearUsuario_permiso,
+                        Updateuser = fkgrupo.editarUsuario_permiso,
+                        Deleteuser = fkgrupo.eliminarUsuario_permiso,
+                        Readgroup = fkgrupo.mostrarGrupo_permiso,
+                        Creategroup = fkgrupo.crearGrupo_permiso,
+                        Updategroup = fkgrupo.editarGrupo_permiso,
+                        Deletegroup = fkgrupo.eliminarGrupo_permiso,
+                        Readpermission = fkgrupo.mostrarPermiso_permiso,
+                        Createpermission = fkgrupo.crearPermiso_permiso,
+                        Updatepermission = fkgrupo.editarPermiso_permiso,
+                        Deletepermission = fkgrupo.eliminarPermiso_permiso,
+                        Reademail = fkgrupo.mostrarEmail_permiso,
+                        Createemail = fkgrupo.crearEmail_permiso,
+                        Updateemail = fkgrupo.editarEmail_permiso,
+                        Deleteemail = fkgrupo.eliminarEmail_permiso,
+                        Status = pkgrupo.activo_grupo
+                    }).Where(w => w.Id == Id);
+
+                return salida.ToList();
+            }
+            catch (Exception)
+            {
+                throw;
             }
         }
     }
 
     public class ReadAllGroupImp : IReadAllGroup
     {
-        public List<ViewModelGroup> ReadAllGroup()
+        private DataModels ctx;
+        private ReadAllGroupImp()
         {
-            using (DataModels ctx = new DataModels())
+            ctx = new DataModels();
+        }
+
+        public List<Tbl_Grupos> ReadAllGroup()
+        {
+            IQueryable<Tbl_Grupos> salida;
+
+            try
             {
-                try
+                salida = ctx.Tbl_Grupos.Select(s => new Tbl_Grupos
                 {
-                    throw new NotImplementedException();
-                }
-                catch (Exception)
-                {
-                    throw;
-                }
+                    id = s.id,
+                    nombre_grupo = s.nombre_grupo,
+                    descripcion_grupo = s.descripcion_grupo,
+                    activo_grupo = s.activo_grupo
+                });
             }
+            catch (Exception)
+            {
+                throw;
+            }
+            
+            return salida.ToList();
         }
     }
 }
