@@ -1,5 +1,5 @@
-﻿using Administrator.Manager.Data;
-using Administrator.Manager.Helpers;
+﻿using GestionUsuarios.Data;
+using GestionUsuarios.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +8,7 @@ using System.ServiceModel.Web;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Administrator.Manager.Interface
+namespace GestionUsuarios.Interface
 {
     [ServiceContract]
     public interface ICreateEmail

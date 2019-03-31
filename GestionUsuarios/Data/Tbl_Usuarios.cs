@@ -1,4 +1,4 @@
-namespace Administrator.Manager.Data
+namespace GestionUsuarios.Data
 {
     using System;
     using System.Collections.Generic;

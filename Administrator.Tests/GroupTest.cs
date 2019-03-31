@@ -1,6 +1,6 @@
 ﻿using System;
-using Administrator.Manager.Helpers;
-using Administrator.Manager.Implementation;
+using GestionUsuarios.Helpers;
+using GestionUsuarios.Implementation;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Administrator.Tests

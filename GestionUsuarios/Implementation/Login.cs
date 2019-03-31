@@ -1,6 +1,6 @@
-﻿using Administrator.Manager.Data;
-using Administrator.Manager.Helpers;
-using Administrator.Manager.Interface;
+﻿using GestionUsuarios.Data;
+using GestionUsuarios.Helpers;
+using GestionUsuarios.Interface;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -9,7 +9,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Administrator.Manager.Implementation
+namespace GestionUsuarios.Implementation
 {
     public class CheckEmailImp : ICheckEmail
     {
@@ -33,6 +33,15 @@ namespace Administrator.Manager.Implementation
                 );
 
             email_clean = WebUtility.HtmlEncode(Email.ToLower());
+
+            if (!HCheckEmail.EmailCheck(email_clean))
+                return JsonConvert.SerializeObject(
+                    new OutJsonCheck
+                    {
+                        Status = 404,
+                        Respuesta = false
+                    }
+                );
 
             throw new NotImplementedException();
         }
@@ -61,6 +70,16 @@ namespace Administrator.Manager.Implementation
                 );
 
             email_clean = WebUtility.HtmlEncode(Email.ToLower());
+
+            if (!HCheckEmail.EmailCheck(email_clean))
+                return JsonConvert.SerializeObject(
+                    new OutJsonCheck
+                    {
+                        Status = 404,
+                        Respuesta = false
+                    }
+                );
+
             password_clean = HEncrypt.PasswordEncryp(Password);
 
             throw new NotImplementedException();

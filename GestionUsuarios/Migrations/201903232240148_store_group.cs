@@ -1,4 +1,4 @@
-namespace Administrator.Manager.Migrations
+namespace GestionUsuarios.Migrations
 {
     using System;
     using System.Data.Entity.Migrations;
@@ -31,7 +31,7 @@ namespace Administrator.Manager.Migrations
                     @updateemail bit,
                     @deleteemail bit, 
                     @status bit, 
-                    @highUser bit 
+                    @highUser int 
                 )
                 AS
 

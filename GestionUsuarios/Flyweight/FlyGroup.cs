@@ -1,5 +1,5 @@
-﻿using Administrator.Manager.Data;
-using Administrator.Manager.Helpers;
+﻿using GestionUsuarios.Data.DSManagerTableAdapters;
+using GestionUsuarios.Helpers;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -9,54 +9,35 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Administrator.Manager.Flyweight
+namespace GestionUsuarios.Flyweight
 {
     abstract class AbstractGroup
     {
         protected ViewModelGroup data;
-        public abstract string Query(int token, DataModels ctx);
+        public abstract string Query(int token);
     }
 
     class QueryGroup : AbstractGroup
     {
+        private Tbl_GruposTableAdapter dt_group;
         public QueryGroup(ViewModelGroup Data)
         {
+            dt_group = new Tbl_GruposTableAdapter();
             data = Data;
         }
 
-        public override string Query(int token, DataModels ctx)
+        public override string Query(int token)
         {
             try
             {
-                ctx.Database.ExecuteSqlCommand("EXECUTE STR_CRUDGROUP @token, @idgrupo, @name, @description, " +
-                    "@readuser, @createuser, @updateuser, @deleteuser," +
-                    "@readgroup, @creategroup, @updategroup, @deletegroup, " +
-                    "@readpermission, @createpermission, @updatepermission, @deletepermission," +
-                    "@reademail, @createemail, @updateemail, @deleteemail, " +
-                    "@status, @highUser",
-                    new SqlParameter("token", token),
-                    new SqlParameter("idgrupo", data.Id),
-                    new SqlParameter("name", WebUtility.HtmlEncode(data.Name.ToLower())),
-                    new SqlParameter("description", (data.Description != "") ? WebUtility.HtmlEncode(data.Description) : ""),
-                    new SqlParameter("readuser", data.Readuser),
-                    new SqlParameter("createuser", data.Createuser),
-                    new SqlParameter("updateuser", data.Updateuser),
-                    new SqlParameter("deleteuser", data.Deleteuser),
-                    new SqlParameter("readgroup", data.Readgroup),
-                    new SqlParameter("creategroup", data.Creategroup),
-                    new SqlParameter("updategroup", data.Updategroup),
-                    new SqlParameter("deletegroup", data.Deletegroup),
-                    new SqlParameter("readpermission", data.Readpermission),
-                    new SqlParameter("createpermission", data.Createpermission),
-                    new SqlParameter("updatepermission", data.Updatepermission),
-                    new SqlParameter("deletepermission", data.Deletepermission),
-                    new SqlParameter("reademail", data.Reademail),
-                    new SqlParameter("createemail", data.Createemail),
-                    new SqlParameter("updateemail", data.Updateemail),
-                    new SqlParameter("deleteemail", data.Deleteemail),
-                    new SqlParameter("status", data.Status),
-                    new SqlParameter("highUser", data.HighUser)
-                );
+                string name_clean = WebUtility.HtmlEncode(data.Name.ToLower());
+                string description_clean = (data.Description != "") ? WebUtility.HtmlEncode(data.Description) : "";
+
+                dt_group.STR_CRUDGROUP(token, data.Id, name_clean, description_clean,
+                    data.Readuser, data.Createuser, data.Updateuser, data.Deleteuser,
+                    data.Readgroup, data.Creategroup, data.Updategroup, data.Deletegroup,
+                    data.Readpermission, data.Createpermission, data.Updatepermission, data.Deletepermission,
+                    data.Reademail, data.Createemail, data.Updateemail, data.Deleteemail, data.Status, data.HighUser);
 
                 return JsonConvert.SerializeObject(
                     new OutJsonCheck

@@ -6,7 +6,7 @@ using System.ServiceModel.Web;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Administrator.Manager.Interface
+namespace GestionUsuarios.Interface
 {
     [ServiceContract]
     public interface ILogin

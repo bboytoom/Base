@@ -91,9 +91,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\GestionUsuarios\Administrator.Manager.csproj">
+    <ProjectReference Include="..\GestionUsuarios\GestionUsuarios.csproj">
       <Project>{db1e35f4-8258-4049-acbc-16aed397018d}</Project>
-      <Name>Administrator.Manager</Name>
+      <Name>GestionUsuarios</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

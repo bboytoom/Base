@@ -1,7 +1,7 @@
-﻿using Administrator.Manager.Data;
-using Administrator.Manager.Flyweight;
-using Administrator.Manager.Helpers;
-using Administrator.Manager.Interface;
+﻿using GestionUsuarios.Data;
+using GestionUsuarios.Flyweight;
+using GestionUsuarios.Helpers;
+using GestionUsuarios.Interface;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -11,7 +11,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Administrator.Manager.Implementation
+namespace GestionUsuarios.Implementation
 {
     public class CreateGroupImp : ICreateGroup
     {
@@ -50,7 +50,7 @@ namespace Administrator.Manager.Implementation
                 );
 
             objetcQuery = new QueryGroup(Data);
-            return objetcQuery.Query(1, ctx);
+            return objetcQuery.Query(1);
         }
     }
 
@@ -87,7 +87,7 @@ namespace Administrator.Manager.Implementation
                 );
 
             objetcQuery = new QueryGroup(Data);
-            return objetcQuery.Query(2, ctx);
+            return objetcQuery.Query(2);
         }
     }
 
@@ -124,7 +124,7 @@ namespace Administrator.Manager.Implementation
                 );
 
             objetcQuery = new QueryGroup(Data);
-            return objetcQuery.Query(3, ctx);
+            return objetcQuery.Query(3);
         }
     }
 
