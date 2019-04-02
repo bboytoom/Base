@@ -91,6 +91,10 @@
     <Compile Include="Migrations\201903310447579_store_email.Designer.cs">
       <DependentUpon>201903310447579_store_email.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201904020424289_store_user.cs" />
+    <Compile Include="Migrations\201904020424289_store_user.Designer.cs">
+      <DependentUpon>201904020424289_store_user.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
@@ -127,6 +131,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201903310447579_store_email.resx">
       <DependentUpon>201903310447579_store_email.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904020424289_store_user.resx">
+      <DependentUpon>201904020424289_store_user.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

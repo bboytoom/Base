@@ -43,7 +43,33 @@ namespace GestionUsuarios.Implementation
                     }
                 );
 
-            throw new NotImplementedException();
+            try
+            {
+                var query = ctx.Tbl_Correos
+                        .Where(s => s.email_correo == email_clean)
+                        .FirstOrDefault();
+
+                if (query == null)
+                    return JsonConvert.SerializeObject(
+                        new OutJsonCheck
+                        {
+                            Status = 404,
+                            Respuesta = false
+                        }
+                    );
+
+                return JsonConvert.SerializeObject(
+                    new OutJsonCheck
+                    {
+                        Status = 200,
+                        Respuesta = true
+                    }
+                );
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
     }
 
@@ -82,7 +108,33 @@ namespace GestionUsuarios.Implementation
 
             password_clean = HEncrypt.PasswordEncryp(Password);
 
-            throw new NotImplementedException();
+            var query = ctx.Tbl_Usuarios.Join(ctx.Tbl_Correos,
+                        pkusuario => pkusuario.id,
+                        fkusuario => fkusuario.id_usuario,
+                        (pkusuario, fkusuario) => new
+                        {
+                            User_table = pkusuario,
+                            Email_table = fkusuario
+                        })
+                        .Where(s => s.Email_table.email_correo == email_clean && s.User_table.password_usuario == password_clean)
+                        .FirstOrDefault();
+
+            if (query == null)
+                return JsonConvert.SerializeObject(
+                    new OutJsonCheck
+                    {
+                        Status = 404,
+                        Respuesta = false
+                    }
+                );
+
+            return JsonConvert.SerializeObject(
+                new OutJsonCheck
+                {
+                    Status = 200,
+                    Respuesta = true
+                }
+            );
         }
     }
 }
