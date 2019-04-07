@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.ServiceModel.Web;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -27,13 +28,18 @@ namespace GestionUsuarios.Flyweight
 
         public override string Query(int token)
         {
+            string email_clean;
+
             try
             {
-                string email_clean = WebUtility.HtmlEncode(data.Email.ToLower());
                 string description_clean = (data.Description != "") ? WebUtility.HtmlEncode(data.Description) : "";
 
-                dt_email.STR_CRUDEMAIL(token, data.Id, data.Iduser, data.Mainemail,
-                    email_clean, description_clean, data.Status, data.HighUser);
+                if (token == 3)
+                    email_clean = (data.Email == null) ? "" : WebUtility.HtmlEncode(data.Email);
+                else
+                    email_clean = WebUtility.HtmlEncode(data.Email.ToLower());
+            
+                dt_email.STR_CRUDEMAIL(token, data.Id, data.Iduser, data.Mainemail,email_clean, description_clean, data.Status, data.HighUser);
 
                 return JsonConvert.SerializeObject(
                     new OutJsonCheck
@@ -45,7 +51,8 @@ namespace GestionUsuarios.Flyweight
             }
             catch (Exception)
             {
-                throw;
+                CustomErrorDetail customError = new CustomErrorDetail("Error en la peticion", "Hubo un error en la peticion a la base");
+                throw new WebFaultException<CustomErrorDetail>(customError, HttpStatusCode.InternalServerError);
             }
         }
     }

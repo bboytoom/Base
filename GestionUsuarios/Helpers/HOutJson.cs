@@ -2,32 +2,32 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace GestionUsuarios.Helpers
 {
+
     public class OutJsonCheck
     {
         public int Status { get; set; }
         public bool Respuesta { get; set; }
     }
 
-    public class OutJsonGroup
+    [DataContract]
+    public class CustomErrorDetail
     {
-        public int Status { get; set; }
-        public List<ViewModelGroup> Respuesta { get; set; }
-    }
+        public CustomErrorDetail(string errorInfo, string errorDetails)
+        {
+            ErrorInfo = errorInfo;
+            ErrorDetails = errorDetails;
+        }
 
-    public class OutJsonUser
-    {
-        public int Status { get; set; }
-        public List<ViewModelUser> Respuesta { get; set; }
-    }
+        [DataMember]
+        public string ErrorInfo { get; private set; }
 
-    public class OutJsonEmail
-    {
-        public int Status { get; set; }
-        public List<ViewModelEmail> Respuesta { get; set; }
+        [DataMember]
+        public string ErrorDetails { get; private set; }
     }
 }

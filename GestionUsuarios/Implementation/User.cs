@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.ServiceModel.Web;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -26,46 +27,39 @@ namespace GestionUsuarios.Implementation
             string email_clean = "";
 
             if (Data.Idgroup == 0 || Data.HighUser == 0)
-                return JsonConvert.SerializeObject(
-                    new OutJsonCheck
-                    {
-                        Status = 404,
-                        Respuesta = false
-                    }
-                );
+            {
+                CustomErrorDetail customError = new CustomErrorDetail("Datos Faltantes", "Faltan algunos datos necesarios en la petición");
+                throw new WebFaultException<CustomErrorDetail>(customError, HttpStatusCode.BadRequest);
+            }
 
-            if(Data.Email == "" || Data.Password == "" || Data.Name == "" || Data.Lnamep == "")
-                return JsonConvert.SerializeObject(
-                    new OutJsonCheck
-                    {
-                        Status = 404,
-                        Respuesta = false
-                    }
-                );
+            if (Data.Email == null || Data.Password == null || Data.Name == null || Data.Lnamep == null)
+            {
+                CustomErrorDetail customError = new CustomErrorDetail("Datos Faltantes", "Faltan algunos datos necesarios en la petición");
+                throw new WebFaultException<CustomErrorDetail>(customError, HttpStatusCode.BadRequest);
+            }
+
+            if (Data.Email == "" || Data.Password == "" || Data.Name == "" || Data.Lnamep == "")
+            {
+                CustomErrorDetail customError = new CustomErrorDetail("Datos Faltantes", "Faltan algunos datos necesarios en la petición");
+                throw new WebFaultException<CustomErrorDetail>(customError, HttpStatusCode.BadRequest);
+            }
 
             email_clean = WebUtility.HtmlEncode(Data.Email.ToLower());
 
             if (!HCheckEmail.EmailCheck(email_clean))
-                return JsonConvert.SerializeObject(
-                    new OutJsonCheck
-                    {
-                        Status = 404,
-                        Respuesta = false
-                    }
-                );
+            {
+                CustomErrorDetail customError = new CustomErrorDetail("Email no valido", "El correo ingresado no es valido");
+                throw new WebFaultException<CustomErrorDetail>(customError, HttpStatusCode.UnsupportedMediaType);
+            }
 
-            var search_email = ctx.Tbl_Correos
-                        .Where(w => w.email_correo == email_clean).FirstOrDefault();
+            var search_email = ctx.Tbl_Correos.Where(w => w.email_correo == email_clean).FirstOrDefault();
 
             if (search_email != null)
-                return JsonConvert.SerializeObject(
-                    new OutJsonCheck
-                    {
-                        Status = 404,
-                        Respuesta = false
-                    }
-                );
-            
+            {
+                CustomErrorDetail customError = new CustomErrorDetail("Ya no esta disponible", "El grupo que ingreso ya se encuentra en uso");
+                throw new WebFaultException<CustomErrorDetail>(customError, HttpStatusCode.Gone);
+            }
+
             objetcQuery = new QueryUser(Data);
             return objetcQuery.Query(1);
         }
@@ -85,46 +79,31 @@ namespace GestionUsuarios.Implementation
             string email_clean = "";
 
             if (Data.Idgroup == 0 || Data.HighUser == 0 || Data.Id == 0 || Data.Idemail == 0)
-                return JsonConvert.SerializeObject(
-                    new OutJsonCheck
-                    {
-                        Status = 404,
-                        Respuesta = false
-                    }
-                );
+            {
+                CustomErrorDetail customError = new CustomErrorDetail("Datos Faltantes", "Faltan algunos datos necesarios en la petición");
+                throw new WebFaultException<CustomErrorDetail>(customError, HttpStatusCode.BadRequest);
+            }
 
             if (Data.Email == "" || Data.Password == "" || Data.Name == "" || Data.Lnamep == "")
-                return JsonConvert.SerializeObject(
-                    new OutJsonCheck
-                    {
-                        Status = 404,
-                        Respuesta = false
-                    }
-                );
+            {
+                CustomErrorDetail customError = new CustomErrorDetail("Datos Faltantes", "Faltan algunos datos necesarios en la petición");
+                throw new WebFaultException<CustomErrorDetail>(customError, HttpStatusCode.BadRequest);
+            }
+
+            if (Data.Email == null || Data.Password == null || Data.Name == null || Data.Lnamep == null)
+            {
+                CustomErrorDetail customError = new CustomErrorDetail("Datos Faltantes", "Faltan algunos datos necesarios en la petición");
+                throw new WebFaultException<CustomErrorDetail>(customError, HttpStatusCode.BadRequest);
+            }
 
             email_clean = WebUtility.HtmlEncode(Data.Email.ToLower());
 
             if (!HCheckEmail.EmailCheck(email_clean))
-                return JsonConvert.SerializeObject(
-                    new OutJsonCheck
-                    {
-                        Status = 404,
-                        Respuesta = false
-                    }
-                );
-
-            var search_user = ctx.Tbl_Usuarios
-                        .Where(w => w.id == Data.Id).FirstOrDefault();
-
-            if (search_user == null)
-                return JsonConvert.SerializeObject(
-                    new OutJsonCheck
-                    {
-                        Status = 404,
-                        Respuesta = false
-                    }
-                );
-
+            {
+                CustomErrorDetail customError = new CustomErrorDetail("Email no valido", "El correo ingresado no es valido");
+                throw new WebFaultException<CustomErrorDetail>(customError, HttpStatusCode.UnsupportedMediaType);
+            }
+            
             objetcQuery = new QueryUser(Data);
             return objetcQuery.Query(2);
         }
@@ -142,25 +121,18 @@ namespace GestionUsuarios.Implementation
         public string DeleteUser(ViewModelUser Data)
         {
             if (Data.Id == 0 || Data.HighUser == 0)
-                return JsonConvert.SerializeObject(
-                    new OutJsonCheck
-                    {
-                        Status = 404,
-                        Respuesta = false
-                    }
-                );
+            {
+                CustomErrorDetail customError = new CustomErrorDetail("Datos Faltantes", "Faltan algunos datos necesarios en la petición");
+                throw new WebFaultException<CustomErrorDetail>(customError, HttpStatusCode.BadRequest);
+            }
 
-            var search_user = ctx.Tbl_Usuarios
-                        .Where(w => w.id == Data.Id).FirstOrDefault();
+            var search_user = ctx.Tbl_Usuarios.Where(w => w.id == Data.Id).FirstOrDefault();
 
             if (search_user == null)
-                return JsonConvert.SerializeObject(
-                    new OutJsonCheck
-                    {
-                        Status = 404,
-                        Respuesta = false
-                    }
-                );
+            {
+                CustomErrorDetail customError = new CustomErrorDetail("Dato no encontrado", "No se encontro ninguna coincidencia en los datos");
+                throw new WebFaultException<CustomErrorDetail>(customError, HttpStatusCode.NotFound);
+            }
 
             objetcQuery = new QueryUser(Data);
             return objetcQuery.Query(3);
@@ -170,6 +142,7 @@ namespace GestionUsuarios.Implementation
     public class ReadUserImp : IReadUser
     {
         private DataModels ctx;
+        private QueryUser objetcQuery;
         private ReadUserImp()
         {
             ctx = new DataModels();
@@ -177,8 +150,6 @@ namespace GestionUsuarios.Implementation
 
         public List<ViewModelUser> ReadUser(int Id)
         {
-            IQueryable<ViewModelUser> salida;
-
             try
             {
                 throw new NotImplementedException();
@@ -199,9 +170,7 @@ namespace GestionUsuarios.Implementation
         }
 
         public List<Tbl_Usuarios> ReadAllUser()
-        {
-            IQueryable<Tbl_Usuarios> salida;
-
+        {         
             try
             {
                 throw new NotImplementedException();

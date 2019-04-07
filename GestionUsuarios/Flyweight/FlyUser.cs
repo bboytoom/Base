@@ -1,4 +1,5 @@
 ﻿using GestionUsuarios.Data.DSManagerTableAdapters;
+using static GestionUsuarios.Data.DSManager;
 using GestionUsuarios.Helpers;
 using Newtonsoft.Json;
 using System;
@@ -7,6 +8,8 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using GestionUsuarios.Data;
+using System.ServiceModel.Web;
 
 namespace GestionUsuarios.Flyweight
 {
@@ -52,7 +55,8 @@ namespace GestionUsuarios.Flyweight
             }
             catch (Exception)
             {
-                throw;
+                CustomErrorDetail customError = new CustomErrorDetail("Error en la peticion", "Hubo un error en la peticion a la base");
+                throw new WebFaultException<CustomErrorDetail>(customError, HttpStatusCode.InternalServerError);
             }
         }
     }

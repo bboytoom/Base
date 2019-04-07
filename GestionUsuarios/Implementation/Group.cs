@@ -2,14 +2,11 @@
 using GestionUsuarios.Flyweight;
 using GestionUsuarios.Helpers;
 using GestionUsuarios.Interface;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
+using System.ServiceModel.Web;
 
 namespace GestionUsuarios.Implementation
 {
@@ -27,27 +24,20 @@ namespace GestionUsuarios.Implementation
             string name_clean = "";
 
             if (Data.Name == "" || Data.HighUser == 0)
-                return JsonConvert.SerializeObject(
-                    new OutJsonCheck
-                    {
-                        Status = 404,
-                        Respuesta = false
-                    }
-                );
+            {
+                CustomErrorDetail customError = new CustomErrorDetail("Datos Faltantes", "Faltan algunos datos necesarios en la petición");
+                throw new WebFaultException<CustomErrorDetail>(customError, HttpStatusCode.BadRequest);
+            }
 
             name_clean = WebUtility.HtmlEncode(Data.Name.ToLower());
 
-            var search_group = ctx.Tbl_Grupos
-                        .Where(w => w.nombre_grupo == name_clean).FirstOrDefault();
+            var search_group = ctx.Tbl_Grupos.Where(w => w.nombre_grupo == name_clean).FirstOrDefault();
 
             if (search_group != null)
-                return JsonConvert.SerializeObject(
-                    new OutJsonCheck
-                    {
-                        Status = 404,
-                        Respuesta = false
-                    }
-                );
+            {
+                CustomErrorDetail customError = new CustomErrorDetail("Ya no esta disponible", "El grupo que ingreso ya se encuentra en uso");
+                throw new WebFaultException<CustomErrorDetail>(customError, HttpStatusCode.Gone);
+            }
 
             objetcQuery = new QueryGroup(Data);
             return objetcQuery.Query(1);
@@ -66,25 +56,26 @@ namespace GestionUsuarios.Implementation
         public string UpdateGroup(ViewModelGroup Data)
         {         
             if (Data.Name == "" || Data.HighUser == 0 || Data.Id == 0)
-                return JsonConvert.SerializeObject(
-                    new OutJsonCheck
-                    {
-                        Status = 404,
-                        Respuesta = false
-                    }
-                );
-            
-            var search_group = ctx.Tbl_Grupos
-                        .Where(w => w.id == Data.Id).FirstOrDefault();
+            {
+                CustomErrorDetail customError = new CustomErrorDetail("Datos Faltantes", "Faltan algunos datos necesarios en la petición");
+                throw new WebFaultException<CustomErrorDetail>(customError, HttpStatusCode.BadRequest);
+            }
+
+            var search_group = ctx.Tbl_Grupos.Where(w => w.id == Data.Id).FirstOrDefault();
 
             if (search_group == null)
-                return JsonConvert.SerializeObject(
-                    new OutJsonCheck
-                    {
-                        Status = 404,
-                        Respuesta = false
-                    }
-                );
+            {
+                CustomErrorDetail customError = new CustomErrorDetail("Dato no encontrado", "No se encontro ninguna coincidencia en los datos");
+                throw new WebFaultException<CustomErrorDetail>(customError, HttpStatusCode.NotFound);
+            }
+
+            var search_group_repeat = ctx.Tbl_Grupos.Where(w => w.id != Data.Id && w.nombre_grupo == Data.Name).FirstOrDefault();
+
+            if (search_group_repeat != null)
+            {
+                CustomErrorDetail customError = new CustomErrorDetail("Ya no esta disponible", "El grupo que ingreso ya se encuentra en uso");
+                throw new WebFaultException<CustomErrorDetail>(customError, HttpStatusCode.Gone);
+            }
 
             objetcQuery = new QueryGroup(Data);
             return objetcQuery.Query(2);
@@ -103,25 +94,18 @@ namespace GestionUsuarios.Implementation
         public string DeleteGroup(ViewModelGroup Data)
         {
             if (Data.Id == 0 || Data.HighUser == 0)
-                return JsonConvert.SerializeObject(
-                    new OutJsonCheck
-                    {
-                        Status = 404,
-                        Respuesta = false
-                    }
-                );
+            {
+                CustomErrorDetail customError = new CustomErrorDetail("Datos Faltantes", "Faltan algunos datos necesarios en la petición");
+                throw new WebFaultException<CustomErrorDetail>(customError, HttpStatusCode.BadRequest);
+            }
 
-            var search_group = ctx.Tbl_Grupos
-                        .Where(w => w.id == Data.Id).FirstOrDefault();
+            var search_group = ctx.Tbl_Grupos.Where(w => w.id == Data.Id).FirstOrDefault();
 
             if (search_group == null)
-                return JsonConvert.SerializeObject(
-                    new OutJsonCheck
-                    {
-                        Status = 404,
-                        Respuesta = false
-                    }
-                );
+            {
+                CustomErrorDetail customError = new CustomErrorDetail("Dato no encontrado", "No se encontro ninguna coincidencia en los datos");
+                throw new WebFaultException<CustomErrorDetail>(customError, HttpStatusCode.NotFound);
+            }
 
             objetcQuery = new QueryGroup(Data);
             return objetcQuery.Query(3);
@@ -139,7 +123,7 @@ namespace GestionUsuarios.Implementation
         public List<ViewModelGroup> ReadGroup(int Id)
         {
             IQueryable<ViewModelGroup> salida;
-
+            
             try
             {
                 salida = ctx.Tbl_Grupos.Join(ctx.Tbl_Permisos,
@@ -190,14 +174,21 @@ namespace GestionUsuarios.Implementation
         {
             IQueryable<Tbl_Grupos> salida;
 
-            salida = ctx.Tbl_Grupos.Select(s => new Tbl_Grupos
+            try
             {
-                id = s.id,
-                nombre_grupo = s.nombre_grupo,
-                descripcion_grupo = s.descripcion_grupo,
-                activo_grupo = s.activo_grupo
-            });
-
+                salida = ctx.Tbl_Grupos.Select(s => new Tbl_Grupos
+                {
+                    id = s.id,
+                    nombre_grupo = s.nombre_grupo,
+                    descripcion_grupo = s.descripcion_grupo,
+                    activo_grupo = s.activo_grupo
+                });
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            
             return salida.ToList();
         }
     }

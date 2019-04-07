@@ -3,11 +3,9 @@ using GestionUsuarios.Helpers;
 using GestionUsuarios.Interface;
 using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
+using System.ServiceModel.Web;
 
 namespace GestionUsuarios.Implementation
 {
@@ -22,12 +20,12 @@ namespace GestionUsuarios.Implementation
         public string CheckEmail(string Email)
         {
             string email_clean = "";
-
-            if (Email == "")
+            
+            if (Email == "" || Email == null)
                 return JsonConvert.SerializeObject(
                     new OutJsonCheck
                     {
-                        Status = 404,
+                        Status = 200,
                         Respuesta = false
                     }
                 );
@@ -38,22 +36,20 @@ namespace GestionUsuarios.Implementation
                 return JsonConvert.SerializeObject(
                     new OutJsonCheck
                     {
-                        Status = 404,
+                        Status = 200,
                         Respuesta = false
                     }
                 );
 
             try
             {
-                var query = ctx.Tbl_Correos
-                        .Where(s => s.email_correo == email_clean)
-                        .FirstOrDefault();
+                var query = ctx.Tbl_Correos.Where(w => w.email_correo == email_clean).FirstOrDefault();
 
                 if (query == null)
                     return JsonConvert.SerializeObject(
                         new OutJsonCheck
                         {
-                            Status = 404,
+                            Status = 200,
                             Respuesta = false
                         }
                     );
@@ -68,7 +64,8 @@ namespace GestionUsuarios.Implementation
             }
             catch (Exception)
             {
-                throw;
+                CustomErrorDetail customError = new CustomErrorDetail("Error en la peticion", "Hubo un error en la peticion a la base");
+                throw new WebFaultException<CustomErrorDetail>(customError, HttpStatusCode.InternalServerError);
             }
         }
     }
@@ -86,29 +83,31 @@ namespace GestionUsuarios.Implementation
             string email_clean = "";
             string password_clean = "";
 
+            if (Email == null || Password == null)
+            {
+                CustomErrorDetail customError = new CustomErrorDetail("Datos Faltantes", "Faltan algunos datos necesarios en la petición");
+                throw new WebFaultException<CustomErrorDetail>(customError, HttpStatusCode.BadRequest);
+            }
+
             if (Email == "" || Password == "")
-                return JsonConvert.SerializeObject(
-                    new OutJsonCheck
-                    {
-                        Status = 404,
-                        Respuesta = false
-                    }
-                );
+            {
+                CustomErrorDetail customError = new CustomErrorDetail("Datos Faltantes", "Faltan algunos datos necesarios en la petición");
+                throw new WebFaultException<CustomErrorDetail>(customError, HttpStatusCode.BadRequest);
+            }
 
             email_clean = WebUtility.HtmlEncode(Email.ToLower());
 
             if (!HCheckEmail.EmailCheck(email_clean))
-                return JsonConvert.SerializeObject(
-                    new OutJsonCheck
-                    {
-                        Status = 404,
-                        Respuesta = false
-                    }
-                );
+            {
+                CustomErrorDetail customError = new CustomErrorDetail("Email no valido", "El correo ingresado no es valido");
+                throw new WebFaultException<CustomErrorDetail>(customError, HttpStatusCode.UnsupportedMediaType);
+            }
+            
+            try
+            {
+                password_clean = HEncrypt.PasswordEncryp(Password);
 
-            password_clean = HEncrypt.PasswordEncryp(Password);
-
-            var query = ctx.Tbl_Usuarios.Join(ctx.Tbl_Correos,
+                var query = ctx.Tbl_Usuarios.Join(ctx.Tbl_Correos,
                         pkusuario => pkusuario.id,
                         fkusuario => fkusuario.id_usuario,
                         (pkusuario, fkusuario) => new
@@ -119,22 +118,25 @@ namespace GestionUsuarios.Implementation
                         .Where(s => s.Email_table.email_correo == email_clean && s.User_table.password_usuario == password_clean)
                         .FirstOrDefault();
 
-            if (query == null)
+                if (query == null)
+                {
+                    CustomErrorDetail customError = new CustomErrorDetail("Dato no encontrado", "No se encontro ninguna coincidencia en los datos");
+                    throw new WebFaultException<CustomErrorDetail>(customError, HttpStatusCode.NotFound);
+                }
+
                 return JsonConvert.SerializeObject(
                     new OutJsonCheck
                     {
-                        Status = 404,
-                        Respuesta = false
+                        Status = 200,
+                        Respuesta = true
                     }
                 );
-
-            return JsonConvert.SerializeObject(
-                new OutJsonCheck
-                {
-                    Status = 200,
-                    Respuesta = true
-                }
-            );
+            }
+            catch (Exception)
+            {
+                CustomErrorDetail customError = new CustomErrorDetail("Error en la peticion", "Hubo un error en la peticion a la base");
+                throw new WebFaultException<CustomErrorDetail>(customError, HttpStatusCode.InternalServerError);
+            }
         }
     }
 }

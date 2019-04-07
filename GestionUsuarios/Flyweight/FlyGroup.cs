@@ -6,8 +6,7 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
+using System.ServiceModel.Web;
 
 namespace GestionUsuarios.Flyweight
 {
@@ -28,11 +27,17 @@ namespace GestionUsuarios.Flyweight
 
         public override string Query(int token)
         {
+            string name_clean;
+
             try
             {
-                string name_clean = WebUtility.HtmlEncode(data.Name.ToLower());
                 string description_clean = (data.Description != "") ? WebUtility.HtmlEncode(data.Description) : "";
 
+                if (token == 3)
+                    name_clean = (data.Name == null) ? "" : WebUtility.HtmlEncode(data.Name);
+                else
+                    name_clean = WebUtility.HtmlEncode(data.Name.ToLower());
+                
                 dt_group.STR_CRUDGROUP(token, data.Id, name_clean, description_clean,
                     data.Readuser, data.Createuser, data.Updateuser, data.Deleteuser,
                     data.Readgroup, data.Creategroup, data.Updategroup, data.Deletegroup,
@@ -49,7 +54,8 @@ namespace GestionUsuarios.Flyweight
             }
             catch (Exception)
             {
-                throw;
+                CustomErrorDetail customError = new CustomErrorDetail("Error en la peticion", "Hubo un error en la peticion a la base");
+                throw new WebFaultException<CustomErrorDetail>(customError, HttpStatusCode.InternalServerError);
             }
         }
     }
