@@ -24,7 +24,7 @@ namespace GestionUsuarios.Implementation
 
         public string CreateEmail(ViewModelEmail Data)
         {
-            string email_clean = "";
+            string email_clean;
 
             if (Data.Iduser == 0 || Data.HighUser == 0)
             {
@@ -70,7 +70,7 @@ namespace GestionUsuarios.Implementation
 
         public string UpdateEmail(ViewModelEmail Data)
         {
-            string email_clean = "";
+            string email_clean;
 
             if (Data.Id == 0 || Data.Iduser == 0 || Data.HighUser == 0)
             {

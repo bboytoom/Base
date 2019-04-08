@@ -19,7 +19,7 @@ namespace GestionUsuarios.Implementation
 
         public string CheckEmail(string Email)
         {
-            string email_clean = "";
+            string email_clean;
             
             if (Email == "" || Email == null)
                 return JsonConvert.SerializeObject(
@@ -80,8 +80,8 @@ namespace GestionUsuarios.Implementation
 
         public string Login(string Email, string Password)
         {
-            string email_clean = "";
-            string password_clean = "";
+            string email_clean;
+            string password_clean;
 
             if (Email == null || Password == null)
             {

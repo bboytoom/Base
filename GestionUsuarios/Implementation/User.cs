@@ -2,14 +2,11 @@
 using GestionUsuarios.Flyweight;
 using GestionUsuarios.Helpers;
 using GestionUsuarios.Interface;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.ServiceModel.Web;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GestionUsuarios.Implementation
 {
@@ -24,7 +21,7 @@ namespace GestionUsuarios.Implementation
          
         public string CreateUser(ViewModelUser Data)
         {
-            string email_clean = "";
+            string email_clean;
 
             if (Data.Idgroup == 0 || Data.HighUser == 0)
             {
@@ -76,7 +73,7 @@ namespace GestionUsuarios.Implementation
 
         public string UpdateUser(ViewModelUser Data)
         {
-            string email_clean = "";
+            string email_clean;
 
             if (Data.Idgroup == 0 || Data.HighUser == 0 || Data.Id == 0 || Data.Idemail == 0)
             {
@@ -142,7 +139,6 @@ namespace GestionUsuarios.Implementation
     public class ReadUserImp : IReadUser
     {
         private DataModels ctx;
-        private QueryUser objetcQuery;
         private ReadUserImp()
         {
             ctx = new DataModels();

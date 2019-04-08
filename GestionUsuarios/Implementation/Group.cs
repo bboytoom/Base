@@ -21,7 +21,7 @@ namespace GestionUsuarios.Implementation
 
         public string CreateGroup(ViewModelGroup Data)
         {
-            string name_clean = "";
+            string name_clean;
 
             if (Data.Name == "" || Data.HighUser == 0)
             {
