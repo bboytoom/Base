@@ -1,4 +1,4 @@
-﻿using GestionUsuarios.Data.DSManagerTableAdapters;
+﻿using GestionUsuarios.Data;
 using GestionUsuarios.Helpers;
 using Newtonsoft.Json;
 using System;
@@ -14,32 +14,25 @@ namespace GestionUsuarios.Flyweight
     abstract class AbstractEmail
     {
         protected ViewModelEmail data;
-        public abstract string Query(int token);
+        public abstract string Query(int token, DataModels ctx);
     }
 
     class QueryEmail : AbstractEmail
     {
-        private Tbl_CorreosTableAdapter dt_email;
         public QueryEmail(ViewModelEmail Data)
         {
-            dt_email = new Tbl_CorreosTableAdapter();
             data = Data;
         }
 
-        public override string Query(int token)
+        public override string Query(int token, DataModels ctx)
         {
             string email_clean;
+            string description_clean;
 
             try
             {
-                string description_clean = (data.Description != "") ? WebUtility.HtmlEncode(data.Description) : "";
-
-                if (token == 3)
-                    email_clean = (data.Email == null) ? "" : WebUtility.HtmlEncode(data.Email);
-                else
-                    email_clean = WebUtility.HtmlEncode(data.Email.ToLower());
-            
-                dt_email.STR_CRUDEMAIL(token, data.Id, data.Iduser, data.Mainemail,email_clean, description_clean, data.Status, data.HighUser);
+                description_clean = (data.Description == "" || data.Email == null) ? WebUtility.HtmlEncode(data.Description) : "";
+                email_clean = (data.Email == "" || data.Email == null) ? "" : WebUtility.HtmlEncode(data.Email.ToLower());
 
                 return JsonConvert.SerializeObject(
                     new OutJsonCheck

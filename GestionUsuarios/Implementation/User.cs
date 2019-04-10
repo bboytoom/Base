@@ -58,7 +58,7 @@ namespace GestionUsuarios.Implementation
             }
 
             objetcQuery = new QueryUser(Data);
-            return objetcQuery.Query(1);
+            return objetcQuery.Query(1, ctx);
         }
     }
 
@@ -81,13 +81,13 @@ namespace GestionUsuarios.Implementation
                 throw new WebFaultException<CustomErrorDetail>(customError, HttpStatusCode.BadRequest);
             }
 
-            if (Data.Email == "" || Data.Password == "" || Data.Name == "" || Data.Lnamep == "")
+            if (Data.Email == "" || Data.Name == "" || Data.Lnamep == "")
             {
                 CustomErrorDetail customError = new CustomErrorDetail("Datos Faltantes", "Faltan algunos datos necesarios en la petición");
                 throw new WebFaultException<CustomErrorDetail>(customError, HttpStatusCode.BadRequest);
             }
 
-            if (Data.Email == null || Data.Password == null || Data.Name == null || Data.Lnamep == null)
+            if (Data.Email == null || Data.Name == null || Data.Lnamep == null)
             {
                 CustomErrorDetail customError = new CustomErrorDetail("Datos Faltantes", "Faltan algunos datos necesarios en la petición");
                 throw new WebFaultException<CustomErrorDetail>(customError, HttpStatusCode.BadRequest);
@@ -100,9 +100,17 @@ namespace GestionUsuarios.Implementation
                 CustomErrorDetail customError = new CustomErrorDetail("Email no valido", "El correo ingresado no es valido");
                 throw new WebFaultException<CustomErrorDetail>(customError, HttpStatusCode.UnsupportedMediaType);
             }
-            
+
+            var search_email_repeat = ctx.Tbl_Correos.Where(w => w.id != Data.Idemail &&  w.email_correo == Data.Email).FirstOrDefault();
+
+            if (search_email_repeat != null)
+            {
+                CustomErrorDetail customError = new CustomErrorDetail("Ya no esta disponible", "El grupo que ingreso ya se encuentra en uso");
+                throw new WebFaultException<CustomErrorDetail>(customError, HttpStatusCode.Gone);
+            }
+
             objetcQuery = new QueryUser(Data);
-            return objetcQuery.Query(2);
+            return objetcQuery.Query(2, ctx);
         }
     }
 
@@ -132,7 +140,7 @@ namespace GestionUsuarios.Implementation
             }
 
             objetcQuery = new QueryUser(Data);
-            return objetcQuery.Query(3);
+            return objetcQuery.Query(3, ctx);
         }
     }
 

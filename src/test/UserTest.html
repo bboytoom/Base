@@ -6,22 +6,47 @@
         <script>
             var pruebauno = {
                 "Data": {
-                    "Curp": "SATETDL2308",
-                    "Email": "tevis@hotmail.es",
+       
+                    "Email": "",
                     "HighUser": 1,
                     "Id": 1,
                     "Idemail": 1,
                     "Idgroup": 6,
-                    "Lnamem": "",
-                    "Lnamep": "Salas",
+                    "Lnamep": "",
                     "Mainemail": true,
-                    "Name": "etelvina",
-                    "Password": "@Tevis2308",
-                    "Photo": "default.png",
-                    "Rfc": "SATETDL2308",
+                    "Name": "",
+                    "Password": "",                   
                     "Status": true
                 }
             };
+
+            $.ajax({
+                type: "POST",
+                url: "http://localhost:51099/wsuserdelete.svc/user/delete",
+                data: JSON.stringify(pruebauno),
+                contentType: "application/json",
+                dataType: "json",
+                success: function (msg) {
+                    console.log(msg);
+                },
+                error: function (data) {
+                    console.log(data);
+                }
+            });
+
+            $.ajax({
+                type: "POST",
+                url: "http://localhost:51099/wsuserupdate.svc/user/update",
+                data: JSON.stringify(pruebauno),
+                contentType: "application/json",
+                dataType: "json",
+                success: function (msg) {
+                    console.log(msg);
+                },
+                error: function (data) {
+                    console.log(data);
+                }
+            });
 
             $.ajax({
                 type: "POST",

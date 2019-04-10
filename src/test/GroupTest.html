@@ -5,7 +5,13 @@
     <body>
         <script>
            
-            var pruebauno = { Data: { 'Id': '1', 'Name': 'pruebasiete', 'Description': 'prueba del servicio once', 'Readuser': 'true', 'Createuser': 'true', 'Updateuser': 'true', 'Deleteuser': 'true', 'Readgroup': 'true', 'Creategroup': 'true', 'Updategroup': 'true', 'Deletegroup': 'true', 'Readpermission': 'true', 'Createpermission': 'true', 'Updatepermission': 'true', 'Deletepermission': 'true', 'Reademail': 'true', 'Createemail': 'true', 'Updateemail': 'true', 'Deleteemail': 'true', 'Status': 'true', 'HighUser': '1' } };
+            var pruebauno = {
+                Data: {
+                    'Id': '7',
+                    
+                    'HighUser': '1'
+                }
+            };
                 
             $.ajax({
                 type: "POST",
@@ -21,9 +27,7 @@
                 }
             });
 
-
-            var pruebados = { Data: { 'Id': '6', 'Name': 'pruebacuatro', 'Description': 'prueba del servicio ocho editado8', 'Readuser': 'true', 'Createuser': 'true', 'Updateuser': 'true', 'Deleteuser': 'true', 'Readgroup': 'true', 'Creategroup': 'true', 'Updategroup': 'true', 'Deletegroup': 'true', 'Readpermission': 'true', 'Createpermission': 'true', 'Updatepermission': 'true', 'Deletepermission': 'true', 'Reademail': 'true', 'Createemail': 'true', 'Updateemail': 'true', 'Deleteemail': 'true', 'Status': 'true', 'HighUser': '1' } };
-           
+            
             $.ajax({
                 type: "POST",
                 url: "http://localhost:51099/wsgroupupdate.svc/group/update",
@@ -37,13 +41,11 @@
                     console.log(data);
                 }
             });
-
-            var pruebatres = { Data: { 'Id': '9', 'HighUser': '1' } };
-           
+            
             $.ajax({
                 type: "POST",
                 url: "http://localhost:51099/wsgroupdelete.svc/group/delete",
-                data: JSON.stringify(pruebatres),
+                data: JSON.stringify(pruebauno),
                 contentType: "application/json",
                 dataType: "json",
                 success: function (msg) {

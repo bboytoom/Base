@@ -1,6 +1,4 @@
-﻿using GestionUsuarios.Data.DSManagerTableAdapters;
-using static GestionUsuarios.Data.DSManager;
-using GestionUsuarios.Helpers;
+﻿using GestionUsuarios.Helpers;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -16,19 +14,17 @@ namespace GestionUsuarios.Flyweight
     abstract class AbstractUser
     {
         protected ViewModelUser data;
-        public abstract string Query(int token);
+        public abstract string Query(int token, DataModels ctx);
     }
 
     class QueryUser : AbstractUser
     {
-        private Tbl_UsuariosTableAdapter dt_user;
         public QueryUser(ViewModelUser Data)
         {
-            dt_user = new Tbl_UsuariosTableAdapter();
             data = Data;
         }
 
-        public override string Query(int token)
+        public override string Query(int token, DataModels ctx)
         {
             string photo_clean;
             string email_clean;
@@ -41,33 +37,20 @@ namespace GestionUsuarios.Flyweight
 
             try
             {
-                if (token == 3)
-                {
-                    photo_clean = (data.Photo == null) ? "" : WebUtility.HtmlEncode(data.Photo);
-                    email_clean = (data.Email == null) ? "" : WebUtility.HtmlEncode(data.Email);
-                    password_clean = (data.Password == null) ? "" : HEncrypt.PasswordEncryp(data.Password);
-                    curp_clean = (data.Curp == null) ? "" : WebUtility.HtmlEncode(data.Curp);
-                    rfc_clean = (data.Rfc == null) ? "" : WebUtility.HtmlEncode(data.Rfc);
-                    name_clean = (data.Name == null) ? "" : WebUtility.HtmlEncode(data.Name);
-                    Lnamep_clean = (data.Lnamep == null) ? "" : WebUtility.HtmlEncode(data.Lnamep);
-                    Lnamem_clean = (data.Lnamem == null) ? "" : WebUtility.HtmlEncode(data.Lnamem);
-                }
-                else
-                {
-                    photo_clean = (data.Photo == "" || data.Photo == null) ? "" : WebUtility.HtmlEncode(data.Photo.ToLower());
-                    email_clean = WebUtility.HtmlEncode(data.Email.ToLower());
-                    password_clean = HEncrypt.PasswordEncryp(data.Password);
-                    curp_clean = (data.Curp == "" || data.Curp == null) ? "" : WebUtility.HtmlEncode(data.Curp.ToLower());
-                    rfc_clean = (data.Rfc == "" || data.Rfc == null) ? "" : WebUtility.HtmlEncode(data.Rfc.ToLower());
-                    name_clean = WebUtility.HtmlEncode(data.Name.ToLower());
-                    Lnamep_clean = WebUtility.HtmlEncode(data.Lnamep.ToLower());
-                    Lnamem_clean = WebUtility.HtmlEncode(data.Lnamem.ToLower());
-                }
-                
-                dt_user.STR_CRUDUSER(token, data.Id, data.Idemail, data.Idgroup,
-                    photo_clean, email_clean, data.Mainemail, password_clean, curp_clean, rfc_clean,
-                    name_clean, Lnamep_clean, Lnamem_clean, data.Birthdate, data.Status, data.HighUser);
+                photo_clean = (data.Photo == "" || data.Photo == null) ? "" : WebUtility.HtmlEncode(data.Photo.ToLower());
+                email_clean = (data.Email == "" || data.Email == null) ? "" : WebUtility.HtmlEncode(data.Email.ToLower());
+                curp_clean = (data.Curp == "" || data.Curp == null) ? "" : WebUtility.HtmlEncode(data.Curp.ToLower());
+                rfc_clean = (data.Rfc == "" || data.Rfc == null) ? "" : WebUtility.HtmlEncode(data.Rfc.ToLower());
+                name_clean = (data.Name == "" || data.Name == null) ? "" : WebUtility.HtmlEncode(data.Name.ToLower());
+                Lnamep_clean = (data.Lnamep == "" || data.Lnamep == null) ? "" : WebUtility.HtmlEncode(data.Lnamep.ToLower());
+                Lnamem_clean = (data.Lnamem == "" || data.Lnamem == null) ? "" : WebUtility.HtmlEncode(data.Lnamem.ToLower());
 
+                if (token == 2)
+                    password_clean = Convert.ToString(ctx.Tbl_Usuarios.Where(w => w.id == data.Id)
+                        .Select(s => s.password_usuario).FirstOrDefault());
+                else
+                    password_clean = (data.Password == "" || data.Password == null) ? "" : HEncrypt.PasswordEncryp(data.Password);
+                
                 return JsonConvert.SerializeObject(
                     new OutJsonCheck
                     {

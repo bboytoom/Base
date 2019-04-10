@@ -55,7 +55,7 @@ namespace GestionUsuarios.Implementation
             }
 
             objetcQuery = new QueryEmail(Data);
-            return objetcQuery.Query(1);
+            return objetcQuery.Query(1, ctx);
         }
     }
 
@@ -100,8 +100,16 @@ namespace GestionUsuarios.Implementation
                 throw new WebFaultException<CustomErrorDetail>(customError, HttpStatusCode.Gone);
             }
 
+            var search_email_repeat = ctx.Tbl_Correos.Where(w => w.id != Data.Id && w.email_correo == Data.Email).FirstOrDefault();
+
+            if (search_email_repeat != null)
+            {
+                CustomErrorDetail customError = new CustomErrorDetail("Ya no esta disponible", "El grupo que ingreso ya se encuentra en uso");
+                throw new WebFaultException<CustomErrorDetail>(customError, HttpStatusCode.Gone);
+            }
+
             objetcQuery = new QueryEmail(Data);
-            return objetcQuery.Query(2);
+            return objetcQuery.Query(2, ctx);
         }
     }
 
@@ -131,7 +139,7 @@ namespace GestionUsuarios.Implementation
             }
 
             objetcQuery = new QueryEmail(Data);
-            return objetcQuery.Query(3);
+            return objetcQuery.Query(3, ctx);
         }
     }
 

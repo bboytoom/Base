@@ -101,7 +101,7 @@ namespace GestionUsuarios.Migrations
 					                nacimientoF_usuario = @Birthdate,
 					                activo_usuario = @Status,
 					                actualizaU_usuario  = @HighUser,
-					                altaF_usuario = GETDATE()
+					                actualizaF_usuario = GETDATE()
 			                WHERE id = @Id;
 			
 			                UPDATE Tbl_Correos

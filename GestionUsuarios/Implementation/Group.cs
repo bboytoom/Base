@@ -40,7 +40,7 @@ namespace GestionUsuarios.Implementation
             }
 
             objetcQuery = new QueryGroup(Data);
-            return objetcQuery.Query(1);
+            return objetcQuery.Query(1, ctx);
         }
     }
 
@@ -78,7 +78,7 @@ namespace GestionUsuarios.Implementation
             }
 
             objetcQuery = new QueryGroup(Data);
-            return objetcQuery.Query(2);
+            return objetcQuery.Query(2, ctx);
         }
     }
 
@@ -108,7 +108,7 @@ namespace GestionUsuarios.Implementation
             }
 
             objetcQuery = new QueryGroup(Data);
-            return objetcQuery.Query(3);
+            return objetcQuery.Query(3, ctx);
         }
     }
 
