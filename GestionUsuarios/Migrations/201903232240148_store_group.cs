@@ -135,7 +135,8 @@ namespace GestionUsuarios.Migrations
 			                UPDATE Tbl_Grupos
 				                SET activo_grupo = 0,
 					                eliminaU_grupo = @highUser,
-					                eliminaF_grupo = GETDATE()
+					                eliminaF_grupo = GETDATE(),
+                                    elimina_status_grupo = 1
 			                WHERE id = @idgrupo;
 		                END
                 ");

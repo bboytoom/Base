@@ -14,15 +14,15 @@ namespace GestionUsuarios.Migrations
 	                @Id int,
 	                @Idemail int,
 	                @Idgroup int,
-	                @Photo nvarchar(60),
-	                @Email nvarchar(80),
+	                @Photo varchar(60),
+	                @Email varchar(80),
 	                @Mainemail bit,
-	                @Password nvarchar(250),
-	                @Curp nvarchar(20),
-	                @Rfc nvarchar(20),
-	                @Name nvarchar(50),
-	                @Lnamep nvarchar(30),
-	                @Lnamem nvarchar(30),
+	                @Password varchar(250),
+	                @Curp varchar(20),
+	                @Rfc varchar(20),
+	                @Name varchar(50),
+	                @Lnamep varchar(30),
+	                @Lnamem varchar(30),
 	                @Birthdate date,
 	                @Status bit,
 	                @HighUser int
@@ -119,14 +119,16 @@ namespace GestionUsuarios.Migrations
 			                UPDATE Tbl_Usuarios
 				                SET activo_usuario = 0,
 					                eliminaU_usuario  = @HighUser,
-					                eliminaF_usuario = GETDATE()
+					                eliminaF_usuario = GETDATE(),
+                                    elimina_status_usuario = 1
 			                WHERE id = @Id;
 			
 			                UPDATE Tbl_Correos
 				                SET principal_correo = 0,
 					                activo_correo = 0,
 					                eliminaU_correo = @HighUser,
-					                eliminaF_correo = GETDATE()
+					                eliminaF_correo = GETDATE(),
+					                elimina_status_correo = 1
 			                WHERE id = @Idemail
 		                END
             ");

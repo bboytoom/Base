@@ -8,41 +8,49 @@ namespace GestionUsuarios.Data
 
     public partial class Tbl_Usuarios
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Tbl_Usuarios()
         {
             Tbl_Correos = new HashSet<Tbl_Correos>();
         }
 
+        [Key]
         public int id { get; set; }
 
+        [ForeignKey("Tbl_Grupos")]
         public int id_grupo { get; set; }
 
+        [Column(TypeName = "VARCHAR")]
         [StringLength(60)]
         public string foto_usuario { get; set; }
 
         [Required]
+        [Column(TypeName = "VARCHAR")]
         [StringLength(250)]
         public string password_usuario { get; set; }
 
+        [Column(TypeName = "VARCHAR")]
         [StringLength(20)]
         public string curp_usuario { get; set; }
 
+        [Column(TypeName = "VARCHAR")]
         [StringLength(20)]
         public string rfc_usuario { get; set; }
 
         [Required]
+        [Column(TypeName = "VARCHAR")]
         [StringLength(50)]
         public string nombre_usuario { get; set; }
 
         [Required]
+        [Column(TypeName = "VARCHAR")]
         [StringLength(30)]
         public string apellidoP_usuario { get; set; }
 
+        [Column(TypeName = "VARCHAR")]
         [StringLength(30)]
         public string apellidoM_usuario { get; set; }
 
-        [Column(TypeName = "date")]
+        [Column(TypeName = "DATE")]
         public DateTime? nacimientoF_usuario { get; set; }
 
         public bool activo_usuario { get; set; }
@@ -58,8 +66,9 @@ namespace GestionUsuarios.Data
         public int? eliminaU_usuario { get; set; }
 
         public DateTime? eliminaF_usuario { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        
+        public bool elimina_status_usuario { get; set; }
+        
         public virtual ICollection<Tbl_Correos> Tbl_Correos { get; set; }
 
         public virtual Tbl_Grupos Tbl_Grupos { get; set; }

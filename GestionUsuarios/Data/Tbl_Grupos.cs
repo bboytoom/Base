@@ -8,18 +8,20 @@ namespace GestionUsuarios.Data
 
     public partial class Tbl_Grupos
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Tbl_Grupos()
         {
             Tbl_Usuarios = new HashSet<Tbl_Usuarios>();
         }
 
+        [Key]
         public int id { get; set; }
 
         [Required]
+        [Column(TypeName = "VARCHAR")]
         [StringLength(30)]
         public string nombre_grupo { get; set; }
 
+        [Column(TypeName = "VARCHAR")]
         [StringLength(200)]
         public string descripcion_grupo { get; set; }
 
@@ -37,9 +39,10 @@ namespace GestionUsuarios.Data
 
         public DateTime? eliminaF_grupo { get; set; }
 
+        public bool elimina_status_grupo { get; set; }
+
         public virtual Tbl_Permisos Tbl_Permisos { get; set; }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Tbl_Usuarios> Tbl_Usuarios { get; set; }
     }
 }

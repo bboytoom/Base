@@ -14,8 +14,8 @@ namespace GestionUsuarios.Migrations
 	                @Id int,
 	                @Iduser int,
 	                @Mainemail bit,
-	                @Email nvarchar(80),
-	                @Description nvarchar(200),
+	                @Email varchar(80),
+	                @Description varchar(200),
 	                @Status bit,
 	                @HighUser int
                 )
@@ -64,7 +64,8 @@ namespace GestionUsuarios.Migrations
 				            SET principal_correo = 0,
 					            activo_correo = 0,
 					            eliminaU_correo = @HighUser,
-					            eliminaF_correo = GETDATE()
+					            eliminaF_correo = GETDATE(),
+					            elimina_status_correo = 1
 			            WHERE id = @Id
 		            END
             ");
