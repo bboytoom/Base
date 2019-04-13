@@ -1,13 +1,11 @@
 ﻿using GestionUsuarios.Helpers;
 using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 using GestionUsuarios.Data;
 using System.ServiceModel.Web;
+using System.Data.SqlClient;
 
 namespace GestionUsuarios.Flyweight
 {
@@ -37,7 +35,7 @@ namespace GestionUsuarios.Flyweight
 
             try
             {
-                photo_clean = (data.Photo == "" || data.Photo == null) ? "" : WebUtility.HtmlEncode(data.Photo.ToLower());
+                photo_clean = (data.Photo == "" || data.Photo == null) ? "default.png" : WebUtility.HtmlEncode(data.Photo.ToLower());
                 email_clean = (data.Email == "" || data.Email == null) ? "" : WebUtility.HtmlEncode(data.Email.ToLower());
                 curp_clean = (data.Curp == "" || data.Curp == null) ? "" : WebUtility.HtmlEncode(data.Curp.ToLower());
                 rfc_clean = (data.Rfc == "" || data.Rfc == null) ? "" : WebUtility.HtmlEncode(data.Rfc.ToLower());
@@ -50,7 +48,27 @@ namespace GestionUsuarios.Flyweight
                         .Select(s => s.password_usuario).FirstOrDefault());
                 else
                     password_clean = (data.Password == "" || data.Password == null) ? "" : HEncrypt.PasswordEncryp(data.Password);
-                
+
+                ctx.Database.ExecuteSqlCommand("EXECUTE STR_CRUDUSER @token, @Id, @Idemail, @Idgroup, " +
+                    "@Photo, @Email, @Mainemail, @Password, @Curp, @Rfc, @Name, @Lnamep, @Lnamem, @Birthdate, @Status, @HighUser",
+                    new SqlParameter("token", token),
+                    new SqlParameter("Id", data.Id),
+                    new SqlParameter("Idemail", data.Idemail),
+                    new SqlParameter("Idgroup", data.Idgroup),
+                    new SqlParameter("Photo", photo_clean),
+                    new SqlParameter("Email", email_clean),
+                    new SqlParameter("Mainemail", data.Mainemail),
+                    new SqlParameter("Password", password_clean),
+                    new SqlParameter("Curp", curp_clean),
+                    new SqlParameter("Rfc", rfc_clean),
+                    new SqlParameter("Name", name_clean),
+                    new SqlParameter("Lnamep", Lnamep_clean),
+                    new SqlParameter("Lnamem", Lnamem_clean),
+                    new SqlParameter("Birthdate", Convert.ToDateTime(data.Birthdate).ToString("dd/MM/yyyy")),
+                    new SqlParameter("Status", data.Status),
+                    new SqlParameter("HighUser", data.HighUser)
+                );
+
                 return JsonConvert.SerializeObject(
                     new OutJsonCheck
                     {

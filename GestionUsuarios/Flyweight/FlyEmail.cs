@@ -2,12 +2,10 @@
 using GestionUsuarios.Helpers;
 using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
 using System.ServiceModel.Web;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GestionUsuarios.Flyweight
 {
@@ -33,6 +31,18 @@ namespace GestionUsuarios.Flyweight
             {
                 description_clean = (data.Description == "" || data.Email == null) ? WebUtility.HtmlEncode(data.Description) : "";
                 email_clean = (data.Email == "" || data.Email == null) ? "" : WebUtility.HtmlEncode(data.Email.ToLower());
+
+                ctx.Database.ExecuteSqlCommand("EXECUTE STR_CRUDEMAIL @token, @Id, @Iduser, " +
+                    "@Mainemail, @Email, @Description, @Status, @HighUser",
+                    new SqlParameter("token", token),
+                    new SqlParameter("Id", data.Id),
+                    new SqlParameter("Iduser", data.Iduser),
+                    new SqlParameter("Mainemail", data.Mainemail),
+                    new SqlParameter("Email", email_clean),
+                    new SqlParameter("Description", description_clean),
+                    new SqlParameter("Status", data.Status),
+                    new SqlParameter("HighUser", data.HighUser)
+                );
 
                 return JsonConvert.SerializeObject(
                     new OutJsonCheck

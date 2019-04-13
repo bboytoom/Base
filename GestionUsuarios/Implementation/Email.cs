@@ -2,14 +2,11 @@
 using GestionUsuarios.Flyweight;
 using GestionUsuarios.Helpers;
 using GestionUsuarios.Interface;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.ServiceModel.Web;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GestionUsuarios.Implementation
 {
@@ -91,15 +88,7 @@ namespace GestionUsuarios.Implementation
                 CustomErrorDetail customError = new CustomErrorDetail("Email no valido", "El correo ingresado no es valido");
                 throw new WebFaultException<CustomErrorDetail>(customError, HttpStatusCode.UnsupportedMediaType);
             }
-
-            var search_email = ctx.Tbl_Correos.Where(w => w.id == Data.Id).FirstOrDefault();
-
-            if (search_email == null)
-            {
-                CustomErrorDetail customError = new CustomErrorDetail("Ya no esta disponible", "El grupo que ingreso ya se encuentra en uso");
-                throw new WebFaultException<CustomErrorDetail>(customError, HttpStatusCode.Gone);
-            }
-
+            
             var search_email_repeat = ctx.Tbl_Correos.Where(w => w.id != Data.Id && w.email_correo == Data.Email).FirstOrDefault();
 
             if (search_email_repeat != null)
