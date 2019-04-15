@@ -14,9 +14,21 @@ namespace Administrator
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
-                name: "Default",
-                url: "{controller}",
-                defaults: new { controller = "Default", action = "Index", id = UrlParameter.Optional }
+                name: "default",
+                url: "",
+                defaults: new { controller = "Default", action = "Index" }
+            );
+
+            routes.MapRoute(
+                name: "dashboard",
+                url: "inicio",
+                defaults: new { controller = "Dashboard", action = "Index" }
+            );
+
+            routes.MapRoute(
+                name: "catalogos",
+                url: "catalogos",
+                defaults: new { controller = "Catalogs", action = "Index" }
             );
         }
     }
