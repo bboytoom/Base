@@ -8,5 +8,8 @@
   "compilerOptions": {
     "noImplicitAny": true,
     "target": "es2015"
+  },
+  "paths": {
+    "sweetalert2": [ "node_modules/sweetalert2/dist/sweetalert2" ]
   }
 }

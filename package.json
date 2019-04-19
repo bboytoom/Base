@@ -38,6 +38,7 @@
     "gulp-typescript": "^5.0.1",
     "gulp-uglify": "^3.0.2",
     "node-sass": "^4.11.0",
+    "sweetalert2": "^8.8.5",
     "tsify": "^4.0.1",
     "typescript": "^3.4.2",
     "vinyl-buffer": "^1.0.1",

@@ -23,11 +23,11 @@ export namespace LoginClass {
             let input_email = Validation.cleanInput(this._email);
           
             return fetch(url, {
-                method: 'POST',
-                body: JSON.stringify({ 'Email': Validation.cleanInput(input_email) }),
-                headers: {
-                    'Content-Type': 'application/json'
-                }
+                        method: 'POST',
+                        body: JSON.stringify({ 'Email': Validation.cleanInput(input_email) }),
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
             })
             .then(response => response.json())
             .catch(error => console.error(error))
@@ -46,36 +46,32 @@ export namespace LoginClass {
             this._password = password;
         }
 
-        checkLogin(): Number {
+        checkLogin(): boolean {
             let input_email = Validation.cleanInput(this._email);
-
-            if (input_email.length == 0 && this._password.length == 0)
-                return 450;
-
-            if (this._password.length < 7 && this._password.length > 18)
-                return 400;
-
-            if (!Validation.validEmail(input_email))
-                return 415;
             
-            return 200;
-        }
+            if (Validation.validEmail(input_email)) {
+                if (this._password.length < 7) 
+                    return false;
+                
+                return true;
+            }
 
+            return false;
+        }
+        
         RequestLogin(url: string): Promise<string> {
             let input_email = Validation.cleanInput(this._email);
 
             return fetch(url, {
-                method: 'POST',
-                body: JSON.stringify({ 'Email': Validation.cleanInput(input_email), 'Password': this._password }),
-                headers: {
-                    'Content-Type': 'application/json'
-                }
+                    method: 'POST',
+                    body: JSON.stringify({ 'Email': Validation.cleanInput(input_email), 'Password': this._password }),
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
             })
             .then(response => response.json())
             .catch(error => console.error(error))
-            .then(response => {                
-                return JSON.stringify(response);
-            });
+            .then(response => JSON.stringify(response));
         }
     }
 }
