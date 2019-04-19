@@ -25,7 +25,7 @@ namespace GestionUsuarios.Implementation
 
             if (Data.Name == "" || Data.HighUser == 0)
             {
-                CustomErrorDetail customError = new CustomErrorDetail("Datos Faltantes", "Faltan algunos datos necesarios en la petición");
+                CustomErrorDetail customError = new CustomErrorDetail(400, "Datos Faltantes", "Faltan algunos datos necesarios en la petición");
                 throw new WebFaultException<CustomErrorDetail>(customError, HttpStatusCode.BadRequest);
             }
 
@@ -35,7 +35,7 @@ namespace GestionUsuarios.Implementation
 
             if (search_group != null)
             {
-                CustomErrorDetail customError = new CustomErrorDetail("Ya no esta disponible", "El grupo que ingreso ya se encuentra en uso");
+                CustomErrorDetail customError = new CustomErrorDetail(410, "Ya no esta disponible", "El grupo que ingreso ya se encuentra en uso");
                 throw new WebFaultException<CustomErrorDetail>(customError, HttpStatusCode.Gone);
             }
 
@@ -57,7 +57,7 @@ namespace GestionUsuarios.Implementation
         {         
             if (Data.Name == "" || Data.HighUser == 0 || Data.Id == 0)
             {
-                CustomErrorDetail customError = new CustomErrorDetail("Datos Faltantes", "Faltan algunos datos necesarios en la petición");
+                CustomErrorDetail customError = new CustomErrorDetail(400, "Datos Faltantes", "Faltan algunos datos necesarios en la petición");
                 throw new WebFaultException<CustomErrorDetail>(customError, HttpStatusCode.BadRequest);
             }
 
@@ -65,7 +65,7 @@ namespace GestionUsuarios.Implementation
 
             if (search_group == null)
             {
-                CustomErrorDetail customError = new CustomErrorDetail("Dato no encontrado", "No se encontro ninguna coincidencia en los datos");
+                CustomErrorDetail customError = new CustomErrorDetail(404, "Dato no encontrado", "No se encontro ninguna coincidencia en los datos");
                 throw new WebFaultException<CustomErrorDetail>(customError, HttpStatusCode.NotFound);
             }
 
@@ -73,7 +73,7 @@ namespace GestionUsuarios.Implementation
 
             if (search_group_repeat != null)
             {
-                CustomErrorDetail customError = new CustomErrorDetail("Ya no esta disponible", "El grupo que ingreso ya se encuentra en uso");
+                CustomErrorDetail customError = new CustomErrorDetail(410, "Ya no esta disponible", "El grupo que ingreso ya se encuentra en uso");
                 throw new WebFaultException<CustomErrorDetail>(customError, HttpStatusCode.Gone);
             }
 
@@ -95,7 +95,7 @@ namespace GestionUsuarios.Implementation
         {
             if (Data.Id == 0 || Data.HighUser == 0)
             {
-                CustomErrorDetail customError = new CustomErrorDetail("Datos Faltantes", "Faltan algunos datos necesarios en la petición");
+                CustomErrorDetail customError = new CustomErrorDetail(400, "Datos Faltantes", "Faltan algunos datos necesarios en la petición");
                 throw new WebFaultException<CustomErrorDetail>(customError, HttpStatusCode.BadRequest);
             }
 
@@ -103,7 +103,7 @@ namespace GestionUsuarios.Implementation
 
             if (search_group == null)
             {
-                CustomErrorDetail customError = new CustomErrorDetail("Dato no encontrado", "No se encontro ninguna coincidencia en los datos");
+                CustomErrorDetail customError = new CustomErrorDetail(404, "Dato no encontrado", "No se encontro ninguna coincidencia en los datos");
                 throw new WebFaultException<CustomErrorDetail>(customError, HttpStatusCode.NotFound);
             }
 

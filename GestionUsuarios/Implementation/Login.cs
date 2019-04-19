@@ -64,7 +64,7 @@ namespace GestionUsuarios.Implementation
             }
             catch (Exception)
             {
-                CustomErrorDetail customError = new CustomErrorDetail("Error en la peticion", "Hubo un error en la peticion a la base");
+                CustomErrorDetail customError = new CustomErrorDetail(500, "Error en la peticion", "Hubo un error en la peticion a la base");
                 throw new WebFaultException<CustomErrorDetail>(customError, HttpStatusCode.InternalServerError);
             }
         }
@@ -85,13 +85,13 @@ namespace GestionUsuarios.Implementation
 
             if (Email == null || Password == null)
             {
-                CustomErrorDetail customError = new CustomErrorDetail("Datos Faltantes", "Faltan algunos datos necesarios en la petición");
+                CustomErrorDetail customError = new CustomErrorDetail(400, "Datos Faltantes", "Faltan algunos datos necesarios en la petición");
                 throw new WebFaultException<CustomErrorDetail>(customError, HttpStatusCode.BadRequest);
             }
 
             if (Email == "" || Password == "")
             {
-                CustomErrorDetail customError = new CustomErrorDetail("Datos Faltantes", "Faltan algunos datos necesarios en la petición");
+                CustomErrorDetail customError = new CustomErrorDetail(400, "Datos Faltantes", "Faltan algunos datos necesarios en la petición");
                 throw new WebFaultException<CustomErrorDetail>(customError, HttpStatusCode.BadRequest);
             }
 
@@ -99,44 +99,36 @@ namespace GestionUsuarios.Implementation
 
             if (!HCheckEmail.EmailCheck(email_clean))
             {
-                CustomErrorDetail customError = new CustomErrorDetail("Email no valido", "El correo ingresado no es valido");
+                CustomErrorDetail customError = new CustomErrorDetail(415, "Email no valido", "El correo ingresado no es valido");
                 throw new WebFaultException<CustomErrorDetail>(customError, HttpStatusCode.UnsupportedMediaType);
             }
-            
-            try
-            {
-                password_clean = HEncrypt.PasswordEncryp(Password);
 
-                var query = ctx.Tbl_Usuarios.Join(ctx.Tbl_Correos,
-                        pkusuario => pkusuario.id,
-                        fkusuario => fkusuario.id_usuario,
-                        (pkusuario, fkusuario) => new
-                        {
-                            User_table = pkusuario,
-                            Email_table = fkusuario
-                        })
-                        .Where(s => s.Email_table.email_correo == email_clean && s.User_table.password_usuario == password_clean)
-                        .FirstOrDefault();
+            password_clean = HEncrypt.PasswordEncryp(Password);
 
-                if (query == null)
-                {
-                    CustomErrorDetail customError = new CustomErrorDetail("Dato no encontrado", "No se encontro ninguna coincidencia en los datos");
-                    throw new WebFaultException<CustomErrorDetail>(customError, HttpStatusCode.NotFound);
-                }
-
-                return JsonConvert.SerializeObject(
-                    new OutJsonCheck
+            var query = ctx.Tbl_Usuarios.Join(ctx.Tbl_Correos,
+                    pkusuario => pkusuario.id,
+                    fkusuario => fkusuario.id_usuario,
+                    (pkusuario, fkusuario) => new
                     {
-                        Status = 200,
-                        Respuesta = true
-                    }
-                );
-            }
-            catch (Exception)
+                        User_table = pkusuario,
+                        Email_table = fkusuario
+                    })
+                    .Where(s => s.Email_table.email_correo == email_clean && s.User_table.password_usuario == password_clean)
+                    .FirstOrDefault();
+
+            if (query == null)
             {
-                CustomErrorDetail customError = new CustomErrorDetail("Error en la peticion", "Hubo un error en la peticion a la base");
-                throw new WebFaultException<CustomErrorDetail>(customError, HttpStatusCode.InternalServerError);
+                CustomErrorDetail customError = new CustomErrorDetail(404 , "Dato no encontrado", "No se encontro ninguna coincidencia en los datos");
+                throw new WebFaultException<CustomErrorDetail>(customError, HttpStatusCode.NotFound);
             }
+
+            return JsonConvert.SerializeObject(
+                new OutJsonCheck
+                {
+                    Status = 200,
+                    Respuesta = true
+                }
+            );
         }
     }
 }

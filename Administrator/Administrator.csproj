@@ -97,9 +97,6 @@
   <ItemGroup>
     <Content Include="Assets\css\build-manager.min.css" />
     <Content Include="Assets\css\build.min.css" />
-    <Content Include="Assets\js\build-libs.min.js" />
-    <Content Include="Assets\js\build.min.js" />
-    <Content Include="Assets\js\main.js" />
     <Content Include="Global.asax" />
     <Content Include="Web.config" />
   </ItemGroup>
@@ -108,6 +105,8 @@
     <Compile Include="Controllers\CatalogsController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\DefaultController.cs" />
+    <Compile Include="Controllers\ProfileController.cs" />
+    <Compile Include="Controllers\ToolsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -122,6 +121,8 @@
     <Content Include="Views\Dashboard\Index.cshtml" />
     <Content Include="Views\Shared\Header.cshtml" />
     <Content Include="Views\Catalogs\Index.cshtml" />
+    <Content Include="Views\Profile\Index.cshtml" />
+    <Content Include="Views\Tools\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -131,6 +132,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Assets\images\" />
+    <Folder Include="Assets\js\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>

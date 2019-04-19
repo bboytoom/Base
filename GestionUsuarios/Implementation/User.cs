@@ -25,19 +25,19 @@ namespace GestionUsuarios.Implementation
 
             if (Data.Idgroup == 0 || Data.HighUser == 0)
             {
-                CustomErrorDetail customError = new CustomErrorDetail("Datos Faltantes", "Faltan algunos datos necesarios en la petición");
+                CustomErrorDetail customError = new CustomErrorDetail(400, "Datos Faltantes", "Faltan algunos datos necesarios en la petición");
                 throw new WebFaultException<CustomErrorDetail>(customError, HttpStatusCode.BadRequest);
             }
 
             if (Data.Email == null || Data.Password == null || Data.Name == null || Data.Lnamep == null)
             {
-                CustomErrorDetail customError = new CustomErrorDetail("Datos Faltantes", "Faltan algunos datos necesarios en la petición");
+                CustomErrorDetail customError = new CustomErrorDetail(400, "Datos Faltantes", "Faltan algunos datos necesarios en la petición");
                 throw new WebFaultException<CustomErrorDetail>(customError, HttpStatusCode.BadRequest);
             }
 
             if (Data.Email == "" || Data.Password == "" || Data.Name == "" || Data.Lnamep == "")
             {
-                CustomErrorDetail customError = new CustomErrorDetail("Datos Faltantes", "Faltan algunos datos necesarios en la petición");
+                CustomErrorDetail customError = new CustomErrorDetail(400, "Datos Faltantes", "Faltan algunos datos necesarios en la petición");
                 throw new WebFaultException<CustomErrorDetail>(customError, HttpStatusCode.BadRequest);
             }
 
@@ -45,7 +45,7 @@ namespace GestionUsuarios.Implementation
 
             if (!HCheckEmail.EmailCheck(email_clean))
             {
-                CustomErrorDetail customError = new CustomErrorDetail("Email no valido", "El correo ingresado no es valido");
+                CustomErrorDetail customError = new CustomErrorDetail(415, "Email no valido", "El correo ingresado no es valido");
                 throw new WebFaultException<CustomErrorDetail>(customError, HttpStatusCode.UnsupportedMediaType);
             }
 
@@ -53,7 +53,7 @@ namespace GestionUsuarios.Implementation
 
             if (search_email != null)
             {
-                CustomErrorDetail customError = new CustomErrorDetail("Ya no esta disponible", "El grupo que ingreso ya se encuentra en uso");
+                CustomErrorDetail customError = new CustomErrorDetail(410, "Ya no esta disponible", "El grupo que ingreso ya se encuentra en uso");
                 throw new WebFaultException<CustomErrorDetail>(customError, HttpStatusCode.Gone);
             }
 
@@ -77,19 +77,19 @@ namespace GestionUsuarios.Implementation
 
             if (Data.Idgroup == 0 || Data.HighUser == 0 || Data.Id == 0 || Data.Idemail == 0)
             {
-                CustomErrorDetail customError = new CustomErrorDetail("Datos Faltantes", "Faltan algunos datos necesarios en la petición");
+                CustomErrorDetail customError = new CustomErrorDetail(400, "Datos Faltantes", "Faltan algunos datos necesarios en la petición");
                 throw new WebFaultException<CustomErrorDetail>(customError, HttpStatusCode.BadRequest);
             }
 
             if (Data.Email == "" || Data.Name == "" || Data.Lnamep == "")
             {
-                CustomErrorDetail customError = new CustomErrorDetail("Datos Faltantes", "Faltan algunos datos necesarios en la petición");
+                CustomErrorDetail customError = new CustomErrorDetail(400, "Datos Faltantes", "Faltan algunos datos necesarios en la petición");
                 throw new WebFaultException<CustomErrorDetail>(customError, HttpStatusCode.BadRequest);
             }
 
             if (Data.Email == null || Data.Name == null || Data.Lnamep == null)
             {
-                CustomErrorDetail customError = new CustomErrorDetail("Datos Faltantes", "Faltan algunos datos necesarios en la petición");
+                CustomErrorDetail customError = new CustomErrorDetail(400, "Datos Faltantes", "Faltan algunos datos necesarios en la petición");
                 throw new WebFaultException<CustomErrorDetail>(customError, HttpStatusCode.BadRequest);
             }
 
@@ -97,7 +97,7 @@ namespace GestionUsuarios.Implementation
 
             if (!HCheckEmail.EmailCheck(email_clean))
             {
-                CustomErrorDetail customError = new CustomErrorDetail("Email no valido", "El correo ingresado no es valido");
+                CustomErrorDetail customError = new CustomErrorDetail(415, "Email no valido", "El correo ingresado no es valido");
                 throw new WebFaultException<CustomErrorDetail>(customError, HttpStatusCode.UnsupportedMediaType);
             }
 
@@ -105,7 +105,7 @@ namespace GestionUsuarios.Implementation
 
             if (search_email_repeat != null)
             {
-                CustomErrorDetail customError = new CustomErrorDetail("Ya no esta disponible", "El grupo que ingreso ya se encuentra en uso");
+                CustomErrorDetail customError = new CustomErrorDetail(410, "Ya no esta disponible", "El grupo que ingreso ya se encuentra en uso");
                 throw new WebFaultException<CustomErrorDetail>(customError, HttpStatusCode.Gone);
             }
 
@@ -127,7 +127,7 @@ namespace GestionUsuarios.Implementation
         {
             if (Data.Id == 0 || Data.HighUser == 0)
             {
-                CustomErrorDetail customError = new CustomErrorDetail("Datos Faltantes", "Faltan algunos datos necesarios en la petición");
+                CustomErrorDetail customError = new CustomErrorDetail(400, "Datos Faltantes", "Faltan algunos datos necesarios en la petición");
                 throw new WebFaultException<CustomErrorDetail>(customError, HttpStatusCode.BadRequest);
             }
 
@@ -135,7 +135,7 @@ namespace GestionUsuarios.Implementation
 
             if (search_user == null)
             {
-                CustomErrorDetail customError = new CustomErrorDetail("Dato no encontrado", "No se encontro ninguna coincidencia en los datos");
+                CustomErrorDetail customError = new CustomErrorDetail(404, "Dato no encontrado", "No se encontro ninguna coincidencia en los datos");
                 throw new WebFaultException<CustomErrorDetail>(customError, HttpStatusCode.NotFound);
             }
 

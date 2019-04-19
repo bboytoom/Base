@@ -7,8 +7,12 @@ let concat = require('gulp-concat');
 let uglify = require('gulp-uglify');
 let cssnano = require('gulp-cssnano');
 let imagemin = require('gulp-imagemin');
-let ts = require("gulp-typescript");
-let tsProject = ts.createProject("tsconfig.json");
+
+var browserify = require('browserify');
+var source = require('vinyl-source-stream');
+var tsify = require('tsify');
+var sourcemaps = require('gulp-sourcemaps');
+var buffer = require('vinyl-buffer');
 
 let GlobalSass = './src/sass/main.scss';
 let ManagerSass = './src/sass/custom-manager.scss';
@@ -64,9 +68,24 @@ gulp.task('globalLibs-js', function () {
 });
 
 gulp.task('custom-js', function () {
-    return tsProject.src()
-        .pipe(tsProject())
-        .js.pipe(gulp.dest(Destino + 'js'));
+    return browserify({
+            basedir: '.',
+            debug: true,
+            entries: ['src/ts/main.ts'],
+            cache: {},
+            packageCache: {}
+        })
+        .plugin(tsify)
+        .transform('babelify', {
+            presets: ['es2015'],
+            extensions: ['.ts']
+        })
+        .bundle()
+        .pipe(source('bundle.js'))
+        .pipe(buffer())
+        .pipe(sourcemaps.init({ loadMaps: true }))
+        .pipe(sourcemaps.write('./'))
+        .pipe(gulp.dest(Destino + 'js'));
 });
 
 gulp.watch(Destino + 'css/*.css', gulp.series('global-css', 'manager-css'));

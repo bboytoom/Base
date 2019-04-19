@@ -26,9 +26,21 @@ namespace Administrator
             );
 
             routes.MapRoute(
+                name: "perfil",
+                url: "perfil",
+                defaults: new { controller = "Profile", action = "Index" }
+            );
+
+            routes.MapRoute(
                 name: "catalogos",
                 url: "catalogos",
                 defaults: new { controller = "Catalogs", action = "Index" }
+            );
+
+            routes.MapRoute(
+                name: "herramientas",
+                url: "herramientas",
+                defaults: new { controller = "Tools", action = "Index" }
             );
         }
     }

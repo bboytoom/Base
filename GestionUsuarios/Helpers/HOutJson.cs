@@ -18,11 +18,15 @@ namespace GestionUsuarios.Helpers
     [DataContract]
     public class CustomErrorDetail
     {
-        public CustomErrorDetail(string errorInfo, string errorDetails)
+        public CustomErrorDetail(int errorstatus ,string errorInfo, string errorDetails)
         {
+            ErrorStatus = errorstatus;
             ErrorInfo = errorInfo;
             ErrorDetails = errorDetails;
         }
+
+        [DataMember]
+        public int ErrorStatus { get; private set; }
 
         [DataMember]
         public string ErrorInfo { get; private set; }

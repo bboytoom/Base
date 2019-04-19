@@ -11,12 +11,18 @@
                 <div class="card-body p-0">
                     <div class="p-5 text-center">
                         <h4 class="mb-4">Bienvenido</h4>
+
                         <div class="form-group">
-                            <input id="TextEmail" type="text" placeholder="Correo del usuario" class="form-control" maxlength="79" />
+                            <div class="input-group">
+                                <input id="TextEmail" class="form-control" type="text" placeholder="Correo del usuario" maxlength="80" />
+                                <div class="input-group-append">
+                                    <span class="input-group-text"><i id="search_email_loader" class="fas fa-envelope-square fa-lg"></i></span>
+                                </div>
+                            </div>
                         </div>
 
                         <div class="form-group">
-                            <input id="TextPassword" type="password" placeholder="Contraseña del usuario" class="form-control" maxlength="19" />
+                            <input id="TextPassword" class="form-control" type="password" placeholder="Contraseña del usuario" maxlength="19" />
                         </div>
 
                         <button id="BtnLogin" class="btn btn-primary btn-lg btn-block" type="button">Entrar</button>
