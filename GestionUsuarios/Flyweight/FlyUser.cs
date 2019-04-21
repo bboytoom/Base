@@ -49,12 +49,13 @@ namespace GestionUsuarios.Flyweight
                 else
                     password_clean = (data.Password == "" || data.Password == null) ? "" : HEncrypt.PasswordEncryp(data.Password);
 
-                ctx.Database.ExecuteSqlCommand("EXECUTE STR_CRUDUSER @token, @Id, @Idemail, @Idgroup, " +
+                ctx.Database.ExecuteSqlCommand("EXECUTE STR_CRUDUSER @token, @Id, @Idemail, @Idgroup,  @UserType, " +
                     "@Photo, @Email, @Mainemail, @Password, @Curp, @Rfc, @Name, @Lnamep, @Lnamem, @Birthdate, @Status, @HighUser",
                     new SqlParameter("token", token),
                     new SqlParameter("Id", data.Id),
                     new SqlParameter("Idemail", data.Idemail),
                     new SqlParameter("Idgroup", data.Idgroup),
+                    new SqlParameter("UserType", data.UserType),
                     new SqlParameter("Photo", photo_clean),
                     new SqlParameter("Email", email_clean),
                     new SqlParameter("Mainemail", data.Mainemail),

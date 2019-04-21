@@ -1,4 +1,5 @@
-﻿
+﻿@model GestionUsuarios.Helpers.ViewModelsLogin
+
 @{
     ViewBag.Title = "Login";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -10,23 +11,34 @@
             <div class="card border-0 mdl-shadow--8dp my-5">
                 <div class="card-body p-0">
                     <div class="p-5 text-center">
-                        <h4 class="mb-4">Bienvenido</h4>
+                       
+                        @using (Html.BeginForm())
+                        {
+                            @Html.AntiForgeryToken()
 
-                        <div class="form-group">
-                            <div class="input-group">
-                                <input id="TextEmail" class="form-control" type="text" placeholder="Correo del usuario" maxlength="80" />
-                                <div class="input-group-append">
-                                    <span class="input-group-text"><i id="search_email_loader" class="fas fa-envelope-square fa-lg"></i></span>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @id = "TextEmail", @class = "form-control", @placeholder = "Correo del usuario", @maxlength = "80" } })
+                                    <div class="input-group-append">
+                                        <span class="input-group-text"><i id="search_email_loader" class="fas fa-envelope-square fa-lg"></i></span>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
 
-                        <div class="form-group">
-                            <input id="TextPassword" class="form-control" type="password" placeholder="Contraseña del usuario" maxlength="19" />
-                        </div>
+                            <div class="form-group">
+                                @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @id = "TextPassword", @class = "form-control", @placeholder = "Contraseña del usuario", @maxlength = "19" } })
+                            </div>
 
-                        <button id="BtnLogin" class="btn btn-primary btn-lg btn-block" type="button">Entrar</button>
-                        <hr>
+                            <div class="form-group">
+                                <div class="form-check">
+                                    @Html.EditorFor(model => model.Rememberme, new { htmlAttributes = new { @class = "form-check-input" } })
+                                    @Html.LabelFor(model => model.Rememberme, new { @class = "form-check-label" })
+                                </div>
+                            </div>
+                            
+                            <button id="BtnLogin" class="btn btn-primary btn-lg btn-block" type="submit">Entrar</button>
+                        }
+
                     </div>
                 </div>
             </div>

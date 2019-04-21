@@ -14,6 +14,7 @@ namespace GestionUsuarios.Migrations
 	                @Id int,
 	                @Idemail int,
 	                @Idgroup int,
+                    @UserType int,
 	                @Photo varchar(60),
 	                @Email varchar(80),
 	                @Mainemail bit,
@@ -36,6 +37,7 @@ namespace GestionUsuarios.Migrations
 			                INSERT INTO Tbl_Usuarios
 			                (
 				                id_grupo,
+                                userType_usuario,
 				                foto_usuario,
 				                password_usuario,
 				                curp_usuario,
@@ -51,6 +53,7 @@ namespace GestionUsuarios.Migrations
 			                VALUES
 			                (
 				                @Idgroup,
+                                @UserType,
 				                @Photo,
 				                @Password,
 				                @Curp,
@@ -92,6 +95,7 @@ namespace GestionUsuarios.Migrations
 		                BEGIN
 			                UPDATE Tbl_Usuarios
 				                SET id_grupo = @Idgroup,
+                                    userType_usuario = @UserType,
 					                foto_usuario = @Photo,
 					                curp_usuario = @Curp,
 					                rfc_usuario = @Rfc,

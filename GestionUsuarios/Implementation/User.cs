@@ -23,7 +23,7 @@ namespace GestionUsuarios.Implementation
         {
             string email_clean;
 
-            if (Data.Idgroup == 0 || Data.HighUser == 0)
+            if (Data.Idgroup == 0 || Data.HighUser == 0 || Data.UserType == 0)
             {
                 CustomErrorDetail customError = new CustomErrorDetail(400, "Datos Faltantes", "Faltan algunos datos necesarios en la petición");
                 throw new WebFaultException<CustomErrorDetail>(customError, HttpStatusCode.BadRequest);

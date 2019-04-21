@@ -4,8 +4,7 @@ namespace GestionUsuarios.Data
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
-    using System.Data.Entity.Spatial;
-
+    
     public partial class Tbl_Usuarios
     {
         public Tbl_Usuarios()
@@ -13,11 +12,12 @@ namespace GestionUsuarios.Data
             Tbl_Correos = new HashSet<Tbl_Correos>();
         }
 
-        [Key]
         public int id { get; set; }
 
         [ForeignKey("Tbl_Grupos")]
         public int id_grupo { get; set; }
+
+        public int userType_usuario { get; set; }
 
         [Column(TypeName = "VARCHAR")]
         [StringLength(60)]

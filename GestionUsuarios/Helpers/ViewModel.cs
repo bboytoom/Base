@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -31,11 +32,23 @@ namespace GestionUsuarios.Helpers
         public int HighUser { get; set; }
     }
     
+    public class ViewModelEmail
+    {
+        public int Id { get; set; }
+        public int Iduser { get; set; }
+        public bool Mainemail { get; set; }
+        public string Email { get; set; }
+        public string Description { get; set; }
+        public bool Status { get; set; }
+        public int HighUser { get; set; }
+    }
+
     public class ViewModelUser
     {
         public int Id { get; set; }
         public int Idemail { get; set; }
         public int Idgroup { get; set; }
+        public int UserType { get; set; }
         public string Photo { get; set; }
         public string Email { get; set; }
         public bool Mainemail { get; set; }
@@ -50,14 +63,21 @@ namespace GestionUsuarios.Helpers
         public int HighUser { get; set; }
     }
 
-    public class ViewModelEmail
+    public class ViewModelsLogin
     {
-        public int Id { get; set; }
-        public int Iduser { get; set; }
-        public bool Mainemail { get; set; }
+        [Display(Name = "Correo del usuario:")]
+        [Required(ErrorMessage = "* El campo de Correo es obligatorio")]
+        [DataType(DataType.EmailAddress)]
+        [StringLength(80, MinimumLength = 6)]
         public string Email { get; set; }
-        public string Description { get; set; }
-        public bool Status { get; set; }
-        public int HighUser { get; set; }
+
+        [Display(Name = "Contraseña del usuario:")]
+        [Required(ErrorMessage = "* El campo de Contraseña es obligatorio")]
+        [DataType(DataType.Password)]
+        [StringLength(19, MinimumLength = 7)]
+        public string Password { get; set; }
+        
+        [Display(Name = "Recuerdame:")]
+        public bool Rememberme { get; set; }
     }
 }

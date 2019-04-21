@@ -79,7 +79,6 @@
     <Content Include="wsgroupcreate.svc" />
     <Content Include="wsgroupdelete.svc" />
     <Content Include="wsgroupupdate.svc" />
-    <Content Include="wslogin.svc" />
     <Content Include="wsusercreate.svc" />
     <Content Include="wsuserdelete.svc" />
     <Content Include="wsuserupdate.svc" />

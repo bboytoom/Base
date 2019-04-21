@@ -3,6 +3,7 @@ using GestionUsuarios.Helpers;
 using GestionUsuarios.Interface;
 using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.ServiceModel.Web;
@@ -70,65 +71,29 @@ namespace GestionUsuarios.Implementation
         }
     }
 
-    public class LoginImp : ILogin
+    public class LoginImp 
     {
         private DataModels ctx;
-        private LoginImp()
+        public LoginImp()
         {
             ctx = new DataModels();
         }
 
-        public string Login(string Email, string Password)
+        public Tbl_Usuarios Login(ViewModelsLogin data)
         {
-            string email_clean;
             string password_clean;
+            
+            password_clean = HEncrypt.PasswordEncryp(data.Password);
 
-            if (Email == null || Password == null)
-            {
-                CustomErrorDetail customError = new CustomErrorDetail(400, "Datos Faltantes", "Faltan algunos datos necesarios en la petición");
-                throw new WebFaultException<CustomErrorDetail>(customError, HttpStatusCode.BadRequest);
-            }
-
-            if (Email == "" || Password == "")
-            {
-                CustomErrorDetail customError = new CustomErrorDetail(400, "Datos Faltantes", "Faltan algunos datos necesarios en la petición");
-                throw new WebFaultException<CustomErrorDetail>(customError, HttpStatusCode.BadRequest);
-            }
-
-            email_clean = WebUtility.HtmlEncode(Email.ToLower());
-
-            if (!HCheckEmail.EmailCheck(email_clean))
-            {
-                CustomErrorDetail customError = new CustomErrorDetail(415, "Email no valido", "El correo ingresado no es valido");
-                throw new WebFaultException<CustomErrorDetail>(customError, HttpStatusCode.UnsupportedMediaType);
-            }
-
-            password_clean = HEncrypt.PasswordEncryp(Password);
-
-            var query = ctx.Tbl_Usuarios.Join(ctx.Tbl_Correos,
-                    pkusuario => pkusuario.id,
-                    fkusuario => fkusuario.id_usuario,
+            return ctx.Tbl_Usuarios.Join(ctx.Tbl_Correos,
+                    pkusuario => pkusuario.id, fkusuario => fkusuario.id_usuario,
                     (pkusuario, fkusuario) => new
                     {
                         User_table = pkusuario,
                         Email_table = fkusuario
                     })
-                    .Where(s => s.Email_table.email_correo == email_clean && s.User_table.password_usuario == password_clean)
-                    .FirstOrDefault();
-
-            if (query == null)
-            {
-                CustomErrorDetail customError = new CustomErrorDetail(404 , "Dato no encontrado", "No se encontro ninguna coincidencia en los datos");
-                throw new WebFaultException<CustomErrorDetail>(customError, HttpStatusCode.NotFound);
-            }
-
-            return JsonConvert.SerializeObject(
-                new OutJsonCheck
-                {
-                    Status = 200,
-                    Respuesta = true
-                }
-            );
+                    .Where(w => w.Email_table.email_correo == data.Email && w.User_table.password_usuario == password_clean)
+                    .Select(s => s.User_table).FirstOrDefault();
         }
     }
 }
