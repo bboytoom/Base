@@ -42,6 +42,13 @@ namespace Administrator
                 url: "herramientas",
                 defaults: new { controller = "Tools", action = "Index" }
             );
+
+            routes.MapRoute(
+                name: "salir",
+                url: "",
+                defaults: new { controller = "Default", action = "LogOff" }
+            );
+      
         }
     }
 }

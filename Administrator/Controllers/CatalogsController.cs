@@ -6,6 +6,7 @@ using System.Web.Mvc;
 
 namespace Administrator.Controllers
 {
+    [Authorize]
     public class CatalogsController : Controller
     {
         public ActionResult Index()

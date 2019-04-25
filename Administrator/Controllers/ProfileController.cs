@@ -6,6 +6,7 @@ using System.Web.Mvc;
 
 namespace Administrator.Controllers
 {
+    [Authorize]
     public class ProfileController : Controller
     {
         public ActionResult Index()
