@@ -45,10 +45,9 @@ namespace Administrator
 
             routes.MapRoute(
                 name: "salir",
-                url: "",
+                url: "salir",
                 defaults: new { controller = "Default", action = "LogOff" }
             );
-      
         }
     }
 }

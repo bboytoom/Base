@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Administrator.App_Start;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -6,7 +7,7 @@ using System.Web.Mvc;
 
 namespace Administrator.Controllers
 {
-    [Authorize]
+    [CustomAuthorize]
     public class CatalogsController : Controller
     {
         public ActionResult Index()
