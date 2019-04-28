@@ -143,6 +143,8 @@
     <Content Include="Views\Profile\Index.cshtml" />
     <Content Include="Views\Tools\Index.cshtml" />
     <Content Include="Views\Default\Index.cshtml" />
+    <Content Include="Views\Default\AttempsLogin.cshtml" />
+    <Content Include="Views\Default\LockOutLogin.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

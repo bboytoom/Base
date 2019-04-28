@@ -48,6 +48,18 @@ namespace Administrator
                 url: "salir",
                 defaults: new { controller = "Default", action = "LogOff" }
             );
+
+            routes.MapRoute(
+                name: "bloqueado",
+                url: "bloqueado",
+                defaults: new { controller = "Default", action = "AttempsLogin" }
+            );
+
+            routes.MapRoute(
+                name: "lockout",
+                url: "lockout",
+                defaults: new { controller = "Default", action = "LockOutLogin" }
+            );
         }
     }
 }

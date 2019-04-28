@@ -69,6 +69,10 @@ namespace GestionUsuarios.Data
         
         public bool elimina_status_usuario { get; set; }
         
+        public int ciclos_usuario { get; set; }
+
+        public int intentos_usuario { get; set; }
+
         public virtual ICollection<Tbl_Correos> Tbl_Correos { get; set; }
 
         public virtual Tbl_Grupos Tbl_Grupos { get; set; }

@@ -5,14 +5,14 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<section class="container h-100">
+<section id="section-login" class="container h-100">
     <div class="row h-100 justify-content-center align-items-center">
         <div class="col-lg-5">
             <div class="card border-0 mdl-shadow--8dp my-5">
                 <div class="card-body p-0">
                     <div class="p-5 text-center">
                        
-                        @using (Html.BeginForm())
+                        @using (Html.BeginForm(new { autocomplete = "off" }))
                         {
                             @Html.AntiForgeryToken()
 
@@ -20,7 +20,7 @@
                                 <div class="input-group">
                                     @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @id = "TextEmail", @class = "form-control", @placeholder = "Correo del usuario", @maxlength = "80" } })
                                     <div class="input-group-append">
-                                        <span class="input-group-text"><i id="search_email_loader" class="fas fa-envelope-square fa-lg"></i></span>
+                                        <span class="input-group-text"><i id="search_email_loader" class="fas fa-lg"></i></span>
                                     </div>
                                 </div>
                             </div>
@@ -46,3 +46,4 @@
     </div>
 </section>
 
+<script src="/Assets/js/bundle.js"></script>

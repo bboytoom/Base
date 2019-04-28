@@ -20,6 +20,7 @@ namespace Administrator.Controllers
             objLogin = new LoginImp();
         }
 
+        [OutputCache(Duration = 0)]
         public ActionResult Index(string returnUrl)
         {
             if (User.Identity.IsAuthenticated)
@@ -28,8 +29,14 @@ namespace Administrator.Controllers
             }
             else
             {
+                if (Request.Cookies["_attempts"] != null)
+                    return RedirectToAction("AttempsLogin", "Default");
+
+                if (Request.Cookies["_inactiva"] != null)
+                    return RedirectToAction("LockOutLogin", "Default");
+
                 ViewBag.ReturnUrl = returnUrl;
-                return View();
+                return View();               
             }
         }
 
@@ -47,7 +54,6 @@ namespace Administrator.Controllers
                     Respuesta = false
                 });
             
-
             if (data.Email == "" || data.Password == "")
                 return Json(new OutJsonCheck
                 {
@@ -55,7 +61,6 @@ namespace Administrator.Controllers
                     Respuesta = false
                 });
             
-
             email_clean = WebUtility.HtmlEncode(data.Email.ToLower());
 
             if (!HCheckEmail.EmailCheck(email_clean))
@@ -64,11 +69,29 @@ namespace Administrator.Controllers
                     Status = 415,
                     Respuesta = false
                 });
-            
+
             if (objLogin.Login(data) == null)
+            {
+                if (LockOutUser.InsertAttemps(email_clean))
+                {
+                    HttpCookie attempCookie = new HttpCookie("_attempts");
+                    attempCookie.Value = "bloqueado";
+                    attempCookie.Expires = DateTime.Now.AddMinutes(2);
+                    Response.Cookies.Add(attempCookie);
+
+                    LockOutUser.InsertCycle(email_clean);
+                    return RedirectToAction("AttempsLogin", "Default");
+                }
+                
+                ModelState.Clear();
                 Result = View();
+            }
             else
+            {
+                Response.Cookies["_attempts"].Expires = DateTime.Now.AddMinutes(-1);
+                LockOutUser.ResetAttemps(email_clean);
                 Result = SingInUser(objLogin.Login(data), data.Rememberme, returnUrl);
+            }
 
             return Result;
         }
@@ -128,6 +151,24 @@ namespace Administrator.Controllers
             authenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
 
             return RedirectToAction("Index", "Default");
+        }
+
+        [OutputCache(Duration = 0)]
+        public ActionResult AttempsLogin()
+        {
+            if (Request.Cookies["_attempts"] == null)
+                return RedirectToAction("Index", "Default");
+
+            return View();
+        }
+
+        [OutputCache(Duration = 0)]
+        public ActionResult LockOutLogin()
+        {
+            if (Request.Cookies["_inactiva"] == null)
+                return RedirectToAction("Index", "Default");
+
+            return View();
         }
     }
 }

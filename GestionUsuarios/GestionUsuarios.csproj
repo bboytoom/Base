@@ -123,6 +123,10 @@
     <Compile Include="Migrations\201904210153022_add-typeuser.Designer.cs">
       <DependentUpon>201904210153022_add-typeuser.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201904271622148_columnas-de-control-de-acceso.cs" />
+    <Compile Include="Migrations\201904271622148_columnas-de-control-de-acceso.Designer.cs">
+      <DependentUpon>201904271622148_columnas-de-control-de-acceso.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -148,6 +152,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201904210153022_add-typeuser.resx">
       <DependentUpon>201904210153022_add-typeuser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904271622148_columnas-de-control-de-acceso.resx">
+      <DependentUpon>201904271622148_columnas-de-control-de-acceso.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
