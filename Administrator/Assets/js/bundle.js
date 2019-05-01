@@ -84,7 +84,7 @@ login_section.addEventListener('load', function () {
 });
 input_TextEmail.addEventListener('keyup', function () {
     var input = new LoginClass_1.LoginClass.CheckEmail(input_TextEmail.value);
-    var url = 'http://localhost:51099/wscheckemail.svc/auth/checkemail';
+    var url = 'http://localhost:50851/wscheckemail.svc/auth/checkemail';
     if (input.checkEmail()) {
         icon_loader.classList.remove('fa-envelope-square');
         icon_loader.classList.remove('fa-times-circle');

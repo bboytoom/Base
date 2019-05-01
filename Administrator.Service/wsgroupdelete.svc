@@ -1,0 +1,1 @@
+﻿<%@ ServiceHost Language="C#" Debug="true" Service="Administrator.Manager.Implementations.DeleteGroupImp" CodeBehind="Group.cs" %>

@@ -19,7 +19,7 @@ login_section.addEventListener('load', () => {
 input_TextEmail.addEventListener('keyup', () => {
     
     let input = new LoginClass.CheckEmail(input_TextEmail.value);
-    let url = 'http://localhost:51099/wscheckemail.svc/auth/checkemail';
+    let url = 'http://localhost:50851/wscheckemail.svc/auth/checkemail';
    
     if (input.checkEmail()) {
         icon_loader.classList.remove('fa-envelope-square');

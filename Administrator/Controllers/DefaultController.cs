@@ -1,15 +1,14 @@
-﻿using GestionUsuarios.Helpers;
-using GestionUsuarios.Implementation;
+﻿using Administrator.Manager.Implementations;
+using Administrator.Manager.Helpers;
+using Administrator.Manager.Data;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using System.Security.Claims;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
-using GestionUsuarios.Data;
 
 namespace Administrator.Controllers
 {
@@ -74,9 +73,12 @@ namespace Administrator.Controllers
             {
                 if (LockOutUser.InsertAttemps(email_clean))
                 {
-                    HttpCookie attempCookie = new HttpCookie("_attempts");
-                    attempCookie.Value = "bloqueado";
-                    attempCookie.Expires = DateTime.Now.AddMinutes(2);
+                    HttpCookie attempCookie = new HttpCookie("_attempts")
+                    {
+                        Value = "bloqueado",
+                        Expires = DateTime.Now.AddMinutes(2)
+                    };
+
                     Response.Cookies.Add(attempCookie);
 
                     LockOutUser.InsertCycle(email_clean);
@@ -96,19 +98,19 @@ namespace Administrator.Controllers
             return Result;
         }
 
-        private ActionResult SingInUser(Tbl_Usuarios objetcModel, bool Rememberme, string returnUrl)
+        private ActionResult SingInUser(Tbl_Users objetcModel, bool Rememberme, string returnUrl)
         {
             ActionResult Result;
 
             List<Claim> claims = new List<Claim>
             {
-                new Claim(ClaimTypes.NameIdentifier, objetcModel.id.ToString()),
-                new Claim("fullname", $"{objetcModel.nombre_usuario} {objetcModel.apellidoP_usuario}")
+                new Claim(ClaimTypes.NameIdentifier, objetcModel.Id.ToString()),
+                new Claim("fullname", $"{objetcModel.Name_user} {objetcModel.LnameP_user}")
             };
 
-            if (objetcModel.userType_usuario != 0)
+            if (objetcModel.Type_user != 0)
             {
-                int usetType = objetcModel.userType_usuario;
+                int usetType = objetcModel.Type_user;
 
                 switch (usetType)
                 {
