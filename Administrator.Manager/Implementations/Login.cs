@@ -111,7 +111,7 @@ namespace Administrator.Manager.Implementations
         {
             using (DataModels ctx = new DataModels())
             {
-                Tbl_Users find_user = ctx.Tbl_Users.Find(Email);
+                Tbl_Users find_user = ctx.Tbl_Users.Where(w => w.Email_user == Email).FirstOrDefault();
 
                 var insert_attemp = new Tbl_Users()
                 {
@@ -144,7 +144,7 @@ namespace Administrator.Manager.Implementations
         {
             using (DataModels ctx = new DataModels())
             {
-                Tbl_Users find_user = ctx.Tbl_Users.Find(Email);
+                Tbl_Users find_user = ctx.Tbl_Users.Where(w => w.Email_user == Email).FirstOrDefault();
 
                 var cycle_attemp = new Tbl_Users()
                 {
@@ -193,7 +193,7 @@ namespace Administrator.Manager.Implementations
         {
             using (DataModels ctx = new DataModels())
             {
-                Tbl_Users find_user = ctx.Tbl_Users.Find(Email);
+                Tbl_Users find_user = ctx.Tbl_Users.Where(w => w.Email_user == Email).FirstOrDefault();
 
                 var reset_attemp = new Tbl_Users()
                 {

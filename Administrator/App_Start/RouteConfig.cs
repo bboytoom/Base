@@ -60,6 +60,18 @@ namespace Administrator
                 url: "lockout",
                 defaults: new { controller = "Default", action = "LockOutLogin" }
             );
+
+            routes.MapRoute(
+                name: "grupos",
+                url: "catalogos/grupos",
+                defaults: new { controller = "Catalogs", action = "ViwerGroups" }
+            );
+
+            routes.MapRoute(
+                name: "usuarios",
+                url: "catalogos/usuarios",
+                defaults: new { controller = "Catalogs", action = "ViwerUsers" }
+            );
         }
     }
 }

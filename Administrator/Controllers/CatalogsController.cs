@@ -14,5 +14,15 @@ namespace Administrator.Controllers
         {
             return View();
         }
+
+        public ActionResult ViwerGroups()
+        {
+            return View();
+        }
+
+        public ActionResult ViwerUsers()
+        {
+            return View();
+        }
     }
 }
