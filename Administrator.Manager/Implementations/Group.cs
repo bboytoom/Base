@@ -245,7 +245,7 @@ namespace Administrator.Manager.Implementations
     public class ReadGroupImp : IReadGroup
     {
         private DataModels ctx;
-        private ReadGroupImp()
+        public ReadGroupImp()
         {
             ctx = new DataModels();
         }
@@ -259,14 +259,31 @@ namespace Administrator.Manager.Implementations
     public class ReadAllGroupImp : IReadAllGroup
     {
         private DataModels ctx;
-        private ReadAllGroupImp()
+        public ReadAllGroupImp()
         {
             ctx = new DataModels();
         }
 
-        public List<Tbl_Groups> ReadAllGroup()
+        public List<Tbl_Groups> ReadAllGroup(string sortorder, string searchstring)
         {
-            throw new NotImplementedException();
+            var show_group = from s in ctx.Tbl_Groups select s;
+
+            if (!String.IsNullOrEmpty(searchstring))
+            {
+                show_group = show_group.Where(s => s.Name_group.Contains(searchstring));
+            }
+
+            switch (sortorder)
+            {
+                case "name_desc":
+                    show_group = show_group.OrderByDescending(s => s.Name_group);
+                    break;
+                default:
+                    show_group = show_group.OrderBy(s => s.Name_group);
+                    break;
+            }
+
+            return show_group.ToList();
         }
     }
 }

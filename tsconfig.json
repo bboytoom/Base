@@ -1,6 +1,7 @@
 {
   "files": [
     "src/ts/main.ts",
+    "src/ts/general.ts",
     "src/ts/helpers.ts",
     "src/ts/interfaces.ts",
     "src/ts/LoginClass.ts"

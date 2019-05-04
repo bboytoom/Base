@@ -41,6 +41,6 @@ namespace Administrator.Manager.Interfaces
 
     public interface IReadAllGroup
     {
-        List<Tbl_Groups> ReadAllGroup();
+        List<Tbl_Groups> ReadAllGroup(string sortOrder, string searchstring);
     }
 }

@@ -88,8 +88,29 @@ gulp.task('custom-js', function () {
         .pipe(gulp.dest(Destino + 'js'));
 });
 
+gulp.task('general-js', function () {
+    return browserify({
+        basedir: '.',
+        debug: true,
+        entries: ['src/ts/general.ts'],
+        cache: {},
+        packageCache: {}
+    })
+        .plugin(tsify)
+        .transform('babelify', {
+            presets: ['es2015'],
+            extensions: ['.ts']
+        })
+        .bundle()
+        .pipe(source('bundle-general.js'))
+        .pipe(buffer())
+        .pipe(sourcemaps.init({ loadMaps: true }))
+        .pipe(sourcemaps.write('./'))
+        .pipe(gulp.dest(Destino + 'js'));
+});
+
 gulp.watch(Destino + 'css/*.css', gulp.series('global-css', 'manager-css'));
-gulp.watch(Destino + 'js/*.js', gulp.series('global-js', 'globalLibs-js', 'custom-js'));
+gulp.watch(Destino + 'js/*.js', gulp.series('global-js', 'globalLibs-js', 'custom-js', 'general-js'));
 
 gulp.task('default',
     gulp.parallel(

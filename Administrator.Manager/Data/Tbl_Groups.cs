@@ -22,6 +22,7 @@ namespace Administrator.Manager.Data
         [StringLength(30)]
         public string Name_group { get; set; }
 
+
         [Column(TypeName = "VARCHAR")]
         [StringLength(200)]
         public string Description_group { get; set; }

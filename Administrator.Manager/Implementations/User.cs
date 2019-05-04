@@ -259,14 +259,31 @@ namespace Administrator.Manager.Implementations
     public class ReadAllUserImp : IReadAllUser
     {
         private DataModels ctx;
-        private ReadAllUserImp()
+        public ReadAllUserImp()
         {
             ctx = new DataModels();
         }
 
-        public List<Tbl_Users> ReadAllUser()
+        public List<Tbl_Users> ReadAllUser(string sortorder, string searchstring)
         {
-            throw new NotImplementedException();
+            var show_user = from s in ctx.Tbl_Users select s;
+
+            if (!String.IsNullOrEmpty(searchstring))
+            {
+                show_user = show_user.Where(s => s.Name_user.Contains(searchstring));
+            }
+
+            switch (sortorder)
+            {
+                case "name_desc":
+                    show_user = show_user.OrderByDescending(s => s.Name_user);
+                    break;
+                default:
+                    show_user = show_user.OrderBy(s => s.Name_user);
+                    break;
+            }
+
+            return show_user.ToList();
         }
     }
 }

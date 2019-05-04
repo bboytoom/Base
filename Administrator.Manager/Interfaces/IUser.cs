@@ -37,6 +37,6 @@ namespace Administrator.Manager.Interfaces
 
     public interface IReadAllUser
     {
-        List<Tbl_Users> ReadAllUser();
+        List<Tbl_Users> ReadAllUser(string sortorder, string searchstring);
     }
 }
