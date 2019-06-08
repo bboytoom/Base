@@ -4,7 +4,8 @@
     "src/ts/general.ts",
     "src/ts/helpers.ts",
     "src/ts/interfaces.ts",
-    "src/ts/LoginClass.ts"
+    "src/ts/LoginClass.ts",
+    "src/ts/GroupClass.ts"
   ],
   "compilerOptions": {
     "noImplicitAny": true,

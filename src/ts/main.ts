@@ -1,5 +1,4 @@
 import { LoginClass } from "./LoginClass";
-import Swal from "sweetalert2";
 
 const login_section = <HTMLInputElement>document.getElementById('section-login');
 const input_TextEmail = <HTMLInputElement>document.getElementById('TextEmail');

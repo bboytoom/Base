@@ -122,8 +122,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Assets\css\build-manager.min.css" />
-    <Content Include="Assets\css\build.min.css" />
+    <Content Include="Assets\js\build-libs.min.js" />
+    <Content Include="Assets\js\build.min.js" />
+    <Content Include="Assets\js\bundle-general.js" />
+    <Content Include="Assets\js\bundle.js" />
     <Content Include="Content\PagedList.css" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
@@ -166,8 +168,8 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Assets\css\" />
     <Folder Include="Assets\images\" />
-    <Folder Include="Assets\js\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Administrator.Manager\Administrator.Manager.csproj">

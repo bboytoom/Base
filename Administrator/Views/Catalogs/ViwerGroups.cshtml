@@ -15,6 +15,8 @@
                 <h3 class="h3">Grupos</h3>
             </div>
 
+
+            @Html.Hidden("infohidde", @Request.Cookies[".AspNet.ApplicationCookie"].Value.ToString())
             <div class="col-md-6">
                 @using (Html.BeginForm("ViwerGroups", "Catalogs", FormMethod.Post, new { autocomplete = "off" }))
                 {
@@ -33,7 +35,7 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header text-right">
-                            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" type="button">
+                            <button id="add_group_btn" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" type="button">
                                 Agregar nuevo grupo
                             </button>
                         </div>
@@ -93,3 +95,5 @@
         </div>
     </main>
 </section>
+
+<script src="/Assets/js/bundle-general.js"></script>

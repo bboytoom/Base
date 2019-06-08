@@ -23,7 +23,7 @@ namespace Administrator.Manager.Implementations
             string name_clean;
             var insertTime = DateTime.Now;
 
-            if (Data.Name == "" || Data.HighUser == 0)
+            if (Data.Name == "" || Data.HighUser == "")
             {
                 CustomErrorDetail customError = new CustomErrorDetail(400, "Datos Faltantes", "Faltan algunos datos necesarios en la petición");
                 throw new WebFaultException<CustomErrorDetail>(customError, HttpStatusCode.BadRequest);
@@ -47,7 +47,7 @@ namespace Administrator.Manager.Implementations
                     Name_group = name_clean,
                     Description_group = WebUtility.HtmlEncode(Data.Description),
                     Active_group = true,
-                    CreateU_group = Data.HighUser,
+                    CreateU_group = 1,
                     CreateD_group = insertTime
                 };
 
@@ -107,7 +107,7 @@ namespace Administrator.Manager.Implementations
         {
             string name_clean;
 
-            if (Data.Name == "" || Data.HighUser == 0 || Data.Id == 0)
+            if (Data.Name == "" || Data.HighUser == "" || Data.Id == 0)
             {
                 CustomErrorDetail customError = new CustomErrorDetail(400, "Datos Faltantes", "Faltan algunos datos necesarios en la petición");
                 throw new WebFaultException<CustomErrorDetail>(customError, HttpStatusCode.BadRequest);
@@ -139,7 +139,7 @@ namespace Administrator.Manager.Implementations
                     Name_group = name_clean,
                     Description_group = WebUtility.HtmlEncode(Data.Description),
                     Active_group = Data.Status,
-                    UpdateU_group = Data.HighUser,
+                    UpdateU_group = 1,
                     UpdateD_group = DateTime.Now
                 };
 
@@ -197,7 +197,7 @@ namespace Administrator.Manager.Implementations
 
         public string DeleteGroup(ViewModelGroup Data)
         {
-            if (Data.Id == 0 || Data.HighUser == 0)
+            if (Data.Id == 0 || Data.HighUser == "")
             {
                 CustomErrorDetail customError = new CustomErrorDetail(400, "Datos Faltantes", "Faltan algunos datos necesarios en la petición");
                 throw new WebFaultException<CustomErrorDetail>(customError, HttpStatusCode.BadRequest);
@@ -219,7 +219,7 @@ namespace Administrator.Manager.Implementations
                     Name_group = search_group.Name_group,
                     Description_group = search_group.Description_group,
                     Active_group = false,
-                    DeleteU_group = Data.HighUser,
+                    DeleteU_group = 1,
                     DeleteD_group = DateTime.Now,
                     Delete_stautus_group = true
                 };
