@@ -25,7 +25,7 @@ export namespace Interfaces {
         _Updateemail: boolean,
         _Deleteemail: boolean,
         _Status: boolean,
-        _HighUser: string
+        _HighUser: number
     }
 }
 

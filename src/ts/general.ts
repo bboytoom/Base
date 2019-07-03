@@ -4,6 +4,11 @@ import Swal from "sweetalert2";
 const add_group_btn = (<HTMLInputElement>document.getElementById('add_group_btn'));
 const infouser = (<HTMLInputElement>document.getElementById('infohidde')).value;
 
+
+function EditGroup(value: number) {
+    console.log('hola');
+}
+
 add_group_btn.addEventListener('click', () => {
     Swal.fire({
         confirmButtonText: 'Guardar',
@@ -42,19 +47,19 @@ add_group_btn.addEventListener('click', () => {
                                     <div class='col-md-6 mb-2'>
                                         <div class='custom-control custom-switch'>
                                             <input id='update_group' class='custom-control-input' type='checkbox'>
-                                            <label class='custom-control-label' for='create_group'>Actualizar</label>
+                                            <label class='custom-control-label' for='update_group'>Actualizar</label>
                                         </div>
                                     </div>
                                     <div class='col-md-6 mb-2'>
                                         <div class='custom-control custom-switch'>
                                             <input id='delete_group' class='custom-control-input' type='checkbox'>
-                                            <label class='custom-control-label' for='create_group'>Eliminar</label>
+                                            <label class='custom-control-label' for='delete_group'>Eliminar</label>
                                         </div>
                                     </div>
                                     <div class='col-md-6 mb-2'>
                                         <div class='custom-control custom-switch'>
                                             <input id='read_group' class='custom-control-input' type='checkbox'>
-                                            <label class='custom-control-label' for='create_group'>Mostrar</label>
+                                            <label class='custom-control-label' for='read_group'>Mostrar</label>
                                         </div>
                                     </div>
                                 </div>
@@ -69,25 +74,25 @@ add_group_btn.addEventListener('click', () => {
                                     <div class='col-md-6 mb-2'>
                                         <div class='custom-control custom-switch'>
                                             <input id='create_user' class='custom-control-input' type='checkbox'>
-                                            <label class='custom-control-label' for='create_group'>Crear</label>
+                                            <label class='custom-control-label' for='create_user'>Crear</label>
                                         </div>
                                     </div>
                                     <div class='col-md-6 mb-2'>
                                         <div class='custom-control custom-switch'>
                                             <input id='update_user' class='custom-control-input' type='checkbox'>
-                                            <label class='custom-control-label' for='create_group'>Actualizar</label>
+                                            <label class='custom-control-label' for='update_user'>Actualizar</label>
                                         </div>
                                     </div>
                                     <div class='col-md-6 mb-2'>
                                         <div class='custom-control custom-switch'>
                                             <input id='delete_user' class='custom-control-input' type='checkbox'>
-                                            <label class='custom-control-label' for='create_group'>Eliminar</label>
+                                            <label class='custom-control-label' for='delete_user'>Eliminar</label>
                                         </div>
                                     </div>
                                     <div class='col-md-6 mb-2'>
                                         <div class='custom-control custom-switch'>
                                             <input id='read_user' class='custom-control-input' type='checkbox'>
-                                            <label class='custom-control-label' for='create_group'>Mostrar</label>
+                                            <label class='custom-control-label' for='read_user'>Mostrar</label>
                                         </div>
                                     </div>
                                 </div>
@@ -102,25 +107,25 @@ add_group_btn.addEventListener('click', () => {
                                     <div class='col-md-6 mb-2'>
                                         <div class='custom-control custom-switch'>
                                             <input id='create_permission' class='custom-control-input' type='checkbox'>
-                                            <label class='custom-control-label' for='create_group'>Crear</label>
+                                            <label class='custom-control-label' for='create_permission'>Crear</label>
                                         </div>
                                     </div>
                                     <div class='col-md-6 mb-2'>
                                         <div class='custom-control custom-switch'>
                                             <input id='update_permission' class='custom-control-input' type='checkbox'>
-                                            <label class='custom-control-label' for='create_group'>Actualizar</label>
+                                            <label class='custom-control-label' for='update_permission'>Actualizar</label>
                                         </div>
                                     </div>
                                     <div class='col-md-6 mb-2'>
                                         <div class='custom-control custom-switch'>
                                             <input id='delete_permission' class='custom-control-input' type='checkbox'>
-                                            <label class='custom-control-label' for='create_group'>Eliminar</label>
+                                            <label class='custom-control-label' for='delete_permission'>Eliminar</label>
                                         </div>
                                     </div>
                                     <div class='col-md-6 mb-2'>
                                         <div class='custom-control custom-switch'>
                                             <input id='read_permission' class='custom-control-input' type='checkbox'>
-                                            <label class='custom-control-label' for='create_group'>Mostrar</label>
+                                            <label class='custom-control-label' for='read_permission'>Mostrar</label>
                                         </div>
                                     </div>
                                 </div>
@@ -135,25 +140,25 @@ add_group_btn.addEventListener('click', () => {
                                    <div class='col-md-6 mb-2'>
                                         <div class='custom-control custom-switch'>
                                             <input id='create_email' class='custom-control-input' type='checkbox'>
-                                            <label class='custom-control-label' for='create_group'>Crear</label>
+                                            <label class='custom-control-label' for='create_email'>Crear</label>
                                         </div>
                                     </div>
                                     <div class='col-md-6 mb-2'>
                                         <div class='custom-control custom-switch'>
                                             <input id='update_email' class='custom-control-input' type='checkbox'>
-                                            <label class='custom-control-label' for='create_group'>Actualizar</label>
+                                            <label class='custom-control-label' for='update_email'>Actualizar</label>
                                         </div>
                                     </div>
                                     <div class='col-md-6 mb-2'>
                                         <div class='custom-control custom-switch'>
                                             <input id='delete_email' class='custom-control-input' type='checkbox'>
-                                            <label class='custom-control-label' for='create_group'>Eliminar</label>
+                                            <label class='custom-control-label' for='delete_email'>Eliminar</label>
                                         </div>
                                     </div>
                                     <div class='col-md-6 mb-2'>
                                         <div class='custom-control custom-switch'>
                                             <input id='read_email' class='custom-control-input' type='checkbox'>
-                                            <label class='custom-control-label' for='create_group'>Mostrar</label>
+                                            <label class='custom-control-label' for='read_email'>Mostrar</label>
                                         </div>
                                     </div>
                                 </div>
@@ -183,7 +188,7 @@ add_group_btn.addEventListener('click', () => {
             
             let groupclass = new GroupClass.InsertGroup(0, group_name, group_description, read_user, create_user, update_user, delete_user,
                 read_group, create_group, update_group, delete_group, read_permission, create_permission, update_permission, delete_permission,
-                read_email, create_email, update_email, delete_email, true, infouser );
+                read_email, create_email, update_email, delete_email, true, parseInt(infouser));
 
             if (group_name == '') {
                 console.log('El campo nombre se encuentra vacio');
@@ -193,7 +198,11 @@ add_group_btn.addEventListener('click', () => {
                 } else if (groupclass.validInsertGroup() == 'fail') {
                     console.log('no cuenta con el numero de caracteres correctos');
                 } else {
-                    console.log('correcto');
+                    let url = 'http://localhost:50851/wsgroupcreate.svc/group/create';
+
+                    groupclass.Insert(url).then(function (result) {
+                        console.log(result);
+                    });
                 }
             }
         }

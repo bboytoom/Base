@@ -6,6 +6,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using PagedList;
+using System.Security.Claims;
+using System.Threading;
 
 namespace Administrator.Controllers
 {
@@ -27,25 +29,34 @@ namespace Administrator.Controllers
 
         public ActionResult ViwerGroups(string sortOrder, string searchString, string currentFilter, int? page)
         {
-            ViewBag.CurrentSort = sortOrder;
-            ViewBag.NameSort = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ClaimsPrincipal Principal = Thread.CurrentPrincipal as ClaimsPrincipal;
 
-            if (searchString != null)
+            if (Principal != null && Principal.Identity.IsAuthenticated)
             {
-                page = 1;
+                var Claims = Principal.Claims.ToList();
+
+                ViewBag.IdUsuario = Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier).Value;
+
+                ViewBag.CurrentSort = sortOrder;
+                ViewBag.NameSort = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+
+                if (searchString != null)
+                    page = 1;
+                else
+                    searchString = currentFilter;
+
+                ViewBag.CurrentFilter = searchString;
+
+                var salida = objReadGroup.ReadAllGroup(sortOrder, searchString);
+                int pageSize = 10;
+                int pageNumber = (page ?? 1);
+
+                return View(salida.ToPagedList(pageNumber, pageSize));
             }
             else
             {
-                searchString = currentFilter;
+                return View();
             }
-
-            ViewBag.CurrentFilter = searchString;
-
-            var salida = objReadGroup.ReadAllGroup(sortOrder, searchString);
-            int pageSize = 10;
-            int pageNumber = (page ?? 1);
-
-            return View(salida.ToPagedList(pageNumber, pageSize));
         }
 
         public ActionResult ViwerUsers(string sortOrder, string searchString, string currentFilter, int? page)
@@ -54,14 +65,10 @@ namespace Administrator.Controllers
             ViewBag.NameSort = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
 
             if (searchString != null)
-            {
                 page = 1;
-            }
             else
-            {
                 searchString = currentFilter;
-            }
-
+            
             ViewBag.CurrentFilter = searchString;
 
             var salida = objReadUser.ReadAllUser(sortOrder, searchString);

@@ -23,11 +23,11 @@ export namespace LoginClass {
             let input_email = Validation.cleanInput(this._email);
           
             return fetch(url, {
-                        method: 'POST',
-                        body: JSON.stringify({ 'Email': Validation.cleanInput(input_email) }),
-                        headers: {
-                            'Content-Type': 'application/json'
-                        }
+                method: 'POST',
+                body: JSON.stringify({ 'Email': input_email }),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
             })
             .then(response => response.json())
             .catch(error => console.error(error))

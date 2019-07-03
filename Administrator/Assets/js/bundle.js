@@ -29,7 +29,7 @@ var LoginClass;
                 var input_email = helpers_1.Validation.cleanInput(this._email);
                 return fetch(url, {
                     method: 'POST',
-                    body: JSON.stringify({ 'Email': helpers_1.Validation.cleanInput(input_email) }),
+                    body: JSON.stringify({ 'Email': input_email }),
                     headers: {
                         'Content-Type': 'application/json'
                     }

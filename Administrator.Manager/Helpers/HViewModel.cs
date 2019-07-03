@@ -29,7 +29,7 @@ namespace Administrator.Manager.Helpers
         public bool Updateemail { get; set; }
         public bool Deleteemail { get; set; }
         public bool Status { get; set; }
-        public string HighUser { get; set; }
+        public int HighUser { get; set; }
     }
 
     public class ViewModelEmail

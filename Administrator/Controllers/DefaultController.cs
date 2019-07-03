@@ -104,7 +104,7 @@ namespace Administrator.Controllers
 
             List<Claim> claims = new List<Claim>
             {
-                new Claim(ClaimTypes.NameIdentifier, objetcModel.Id.ToString()),
+                new Claim(ClaimTypes.NameIdentifier, objetcModel.Id.ToString()),              
                 new Claim("fullname", $"{objetcModel.Name_user} {objetcModel.LnameP_user}")
             };
 

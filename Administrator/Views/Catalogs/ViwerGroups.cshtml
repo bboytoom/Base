@@ -15,8 +15,8 @@
                 <h3 class="h3">Grupos</h3>
             </div>
 
+            <input type="hidden" id="infohidde" name="infohidde" value="@ViewBag.IdUsuario">
 
-            @Html.Hidden("infohidde", @Request.Cookies[".AspNet.ApplicationCookie"].Value.ToString())
             <div class="col-md-6">
                 @using (Html.BeginForm("ViwerGroups", "Catalogs", FormMethod.Post, new { autocomplete = "off" }))
                 {
@@ -72,13 +72,13 @@
                                             </td>
 
                                             <td>
-                                                @Html.ActionLink("Ver", "Details", new { id = item.Id })
+                                                @Html.ActionLink("Ver", "Details", new { id = item.Id }, new { @class = "btn btn-outline-success btn-sm  mdl-js-ripple-effect" })
                                             </td>
                                             <td>
-                                                @Html.ActionLink("Editar", "Edit", new { id = item.Id })
+                                                <button type="button" class="btn btn-outline-warning btn-sm" onclick="EditGroup(@Html.DisplayFor(modelItem => item.Id))">Editar</button>
                                             </td>
                                             <td>
-                                                @Html.ActionLink("Eliminar", "Delete", new { id = item.Id })
+                                                @Html.ActionLink("Eliminar", "Delete", new { id = item.Id }, new { @class = "btn btn-outline-danger btn-sm" })
                                             </td>
                                         </tr>
                                     }
