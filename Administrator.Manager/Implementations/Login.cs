@@ -86,7 +86,7 @@ namespace Administrator.Manager.Implementations
         }
     }
 
-    public class LoginImp
+    public class LoginImp : ILogin
     {
         private DataModels ctx;
         public LoginImp()
@@ -100,8 +100,28 @@ namespace Administrator.Manager.Implementations
 
             password_clean = HEncrypt.PasswordEncryp(data.Password);
 
-            return ctx.Tbl_Users.Where(w => w.Email_user == data.Email && w.Password_user == password_clean)
-                .FirstOrDefault();
+            return ctx.Tbl_Users.Where(w => w.Email_user == data.Email && w.Password_user == password_clean).FirstOrDefault();
+        }
+    }
+
+    #region Inicia las clases estaticas
+
+    public static class CStatusUser
+    {
+        public static bool StatusUser(string Email)
+        {
+            using (DataModels ctx = new DataModels())
+            {
+                try
+                {
+                    Tbl_Users find_user = ctx.Tbl_Users.Where(w => w.Email_user == Email).FirstOrDefault();
+                    return find_user.Active_user;
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+            }
         }
     }
 
@@ -111,63 +131,11 @@ namespace Administrator.Manager.Implementations
         {
             using (DataModels ctx = new DataModels())
             {
-                Tbl_Users find_user = ctx.Tbl_Users.Where(w => w.Email_user == Email).FirstOrDefault();
-
-                var insert_attemp = new Tbl_Users()
+                try
                 {
-                    Id = find_user.Id,
-                    Id_group = find_user.Id_group,
-                    Type_user = find_user.Type_user,
-                    Photo_user = find_user.Photo_user,
-                    Email_user = find_user.Email_user,
-                    Password_user = find_user.Password_user,
-                    Name_user = find_user.Name_user,
-                    LnameP_user = find_user.LnameP_user,
-                    LnameM_user = find_user.LnameM_user,
-                    Active_user = find_user.Active_user,
-                    Attemp_user = (find_user.Attemp_user + 1)
-                };
+                    Tbl_Users find_user = ctx.Tbl_Users.Where(w => w.Email_user == Email).FirstOrDefault();
 
-                ctx.Entry(find_user).CurrentValues.SetValues(insert_attemp);
-                ctx.SaveChanges();
-
-                if (find_user.Attemp_user == 3)
-                {
-                    return true;
-                }
-
-                return false;
-            }
-        }
-
-        public static void InsertCycle(string Email)
-        {
-            using (DataModels ctx = new DataModels())
-            {
-                Tbl_Users find_user = ctx.Tbl_Users.Where(w => w.Email_user == Email).FirstOrDefault();
-
-                var cycle_attemp = new Tbl_Users()
-                {
-                    Id = find_user.Id,
-                    Id_group = find_user.Id_group,
-                    Type_user = find_user.Type_user,
-                    Photo_user = find_user.Photo_user,
-                    Email_user = find_user.Email_user,
-                    Password_user = find_user.Password_user,
-                    Name_user = find_user.Name_user,
-                    LnameP_user = find_user.LnameP_user,
-                    LnameM_user = find_user.LnameM_user,
-                    Active_user = find_user.Active_user,
-                    Attemp_user = 0,
-                    Cycle_user = (find_user.Cycle_user + 1)
-                };
-
-                ctx.Entry(find_user).CurrentValues.SetValues(cycle_attemp);
-                ctx.SaveChanges();
-
-                if (find_user.Cycle_user == 3)
-                {
-                    var lockuot_user = new Tbl_Users()
+                    var insert_attemp = new Tbl_Users()
                     {
                         Id = find_user.Id,
                         Id_group = find_user.Id_group,
@@ -178,13 +146,78 @@ namespace Administrator.Manager.Implementations
                         Name_user = find_user.Name_user,
                         LnameP_user = find_user.LnameP_user,
                         LnameM_user = find_user.LnameM_user,
-                        Active_user = false,
-                        Attemp_user = 0,
-                        Cycle_user = 0
+                        Active_user = find_user.Active_user,
+                        Cycle_user = find_user.Cycle_user,
+                        Attemp_user = (find_user.Attemp_user + 1)
                     };
 
-                    ctx.Entry(find_user).CurrentValues.SetValues(lockuot_user);
+                    ctx.Entry(find_user).CurrentValues.SetValues(insert_attemp);
                     ctx.SaveChanges();
+
+                    if (find_user.Attemp_user == 4)
+                        return true;
+
+                    return false;
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+            }
+        }
+
+        public static void InsertCycle(string Email)
+        {
+            using (DataModels ctx = new DataModels())
+            {
+                try
+                {
+                    Tbl_Users find_user = ctx.Tbl_Users.Where(w => w.Email_user == Email).FirstOrDefault();
+
+                    var cycle_attemp = new Tbl_Users()
+                    {
+                        Id = find_user.Id,
+                        Id_group = find_user.Id_group,
+                        Type_user = find_user.Type_user,
+                        Photo_user = find_user.Photo_user,
+                        Email_user = find_user.Email_user,
+                        Password_user = find_user.Password_user,
+                        Name_user = find_user.Name_user,
+                        LnameP_user = find_user.LnameP_user,
+                        LnameM_user = find_user.LnameM_user,
+                        Active_user = find_user.Active_user,
+                        Attemp_user = 0,
+                        Cycle_user = (find_user.Cycle_user + 1)
+                    };
+
+                    ctx.Entry(find_user).CurrentValues.SetValues(cycle_attemp);
+                    ctx.SaveChanges();
+
+                    if (find_user.Cycle_user == 3)
+                    {
+                        var lockuot_user = new Tbl_Users()
+                        {
+                            Id = find_user.Id,
+                            Id_group = find_user.Id_group,
+                            Type_user = find_user.Type_user,
+                            Photo_user = find_user.Photo_user,
+                            Email_user = find_user.Email_user,
+                            Password_user = find_user.Password_user,
+                            Name_user = find_user.Name_user,
+                            LnameP_user = find_user.LnameP_user,
+                            LnameM_user = find_user.LnameM_user,
+                            Active_user = false,
+                            Attemp_user = 0,
+                            Cycle_user = 0
+                        };
+
+                        ctx.Entry(find_user).CurrentValues.SetValues(lockuot_user);
+                        ctx.SaveChanges();
+                    }
+                }
+                catch (Exception)
+                {
+                    throw;
                 }
             }
         }
@@ -193,27 +226,36 @@ namespace Administrator.Manager.Implementations
         {
             using (DataModels ctx = new DataModels())
             {
-                Tbl_Users find_user = ctx.Tbl_Users.Where(w => w.Email_user == Email).FirstOrDefault();
-
-                var reset_attemp = new Tbl_Users()
+                try
                 {
-                    Id = find_user.Id,
-                    Id_group = find_user.Id_group,
-                    Type_user = find_user.Type_user,
-                    Photo_user = find_user.Photo_user,
-                    Email_user = find_user.Email_user,
-                    Password_user = find_user.Password_user,
-                    Name_user = find_user.Name_user,
-                    LnameP_user = find_user.LnameP_user,
-                    LnameM_user = find_user.LnameM_user,
-                    Active_user = true,
-                    Attemp_user = 0,
-                    Cycle_user = 0
-                };
+                    Tbl_Users find_user = ctx.Tbl_Users.Where(w => w.Email_user == Email).FirstOrDefault();
 
-                ctx.Entry(find_user).CurrentValues.SetValues(reset_attemp);
-                ctx.SaveChanges();
+                    var reset_attemp = new Tbl_Users()
+                    {
+                        Id = find_user.Id,
+                        Id_group = find_user.Id_group,
+                        Type_user = find_user.Type_user,
+                        Photo_user = find_user.Photo_user,
+                        Email_user = find_user.Email_user,
+                        Password_user = find_user.Password_user,
+                        Name_user = find_user.Name_user,
+                        LnameP_user = find_user.LnameP_user,
+                        LnameM_user = find_user.LnameM_user,
+                        Active_user = true,
+                        Attemp_user = 0,
+                        Cycle_user = 0
+                    };
+
+                    ctx.Entry(find_user).CurrentValues.SetValues(reset_attemp);
+                    ctx.SaveChanges();
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
             }
         }
     }
+
+    #endregion  
 }

@@ -41,34 +41,27 @@ namespace Administrator.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Index(ViewModelsLogin data, string returnUrl)
+        public JsonResult Index(ViewModelsLogin data, string returnUrl)
         {
-            ActionResult Result;
-            string email_clean;
+            JsonResult Result;
 
+            string email_clean;
+            dynamic showMessageString = string.Empty;
+            
             if (data.Email == null || data.Password == null)
-                return Json(new OutJsonCheck
-                {
-                    Status = 400,
-                    Respuesta = false
-                });
-            
+                return Json(showMessageString = new { Status = 404, Respuesta = "El correo y/o password se encuentran vacios" }, JsonRequestBehavior.AllowGet);
+
             if (data.Email == "" || data.Password == "")
-                return Json(new OutJsonCheck
-                {
-                    Status = 400,
-                    Respuesta = false
-                });
-            
+                return Json(showMessageString = new { Status = 404,Respuesta = "El correo y/o password se encuentran vacios" }, JsonRequestBehavior.AllowGet);
+
             email_clean = WebUtility.HtmlEncode(data.Email.ToLower());
 
             if (!HCheckEmail.EmailCheck(email_clean))
-                return Json(new OutJsonCheck
-                {
-                    Status = 415,
-                    Respuesta = false
-                });
+                return Json(showMessageString = new { Status = 415, Respuesta = "Correo electronico no valido" }, JsonRequestBehavior.AllowGet);
 
+            if(!CStatusUser.StatusUser(data.Email))
+                return Json(showMessageString = new { Status = 401, Respuesta = "Usuario inactivo, consulte a su administrador" }, JsonRequestBehavior.AllowGet);
+            
             if (objLogin.Login(data) == null)
             {
                 if (LockOutUser.InsertAttemps(email_clean))
@@ -82,11 +75,11 @@ namespace Administrator.Controllers
                     Response.Cookies.Add(attempCookie);
 
                     LockOutUser.InsertCycle(email_clean);
-                    return RedirectToAction("AttempsLogin", "Default");
+                    return Json(showMessageString = new { Status = 403, Respuesta = "Usuario bloqueado temporalmente" }, JsonRequestBehavior.AllowGet);
                 }
                 
                 ModelState.Clear();
-                Result = View();
+                return Json(showMessageString = new { Status = 203, Respuesta = "La contraseña no es correcta" }, JsonRequestBehavior.AllowGet);
             }
             else
             {
@@ -98,9 +91,9 @@ namespace Administrator.Controllers
             return Result;
         }
 
-        private ActionResult SingInUser(Tbl_Users objetcModel, bool Rememberme, string returnUrl)
+        private JsonResult SingInUser(Tbl_Users objetcModel, bool Rememberme, string returnUrl)
         {
-            ActionResult Result;
+            dynamic showMessageString = string.Empty;
 
             List<Claim> claims = new List<Claim>
             {
@@ -141,10 +134,8 @@ namespace Administrator.Controllers
             {
                 returnUrl = @Url.Action("Index", "Default");
             }
-
-            Result = RedirectToAction("Index", "Dashboard");
-
-            return Result;
+            
+            return Json(showMessageString = new { Status = 200, Respuesta = "Valid" }, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult LogOff()

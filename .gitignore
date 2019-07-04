@@ -264,4 +264,7 @@ paket-files/
 __pycache__/
 *.pyc
 
+*.js.map
+package-lock.json
 test/
+package-lock.json

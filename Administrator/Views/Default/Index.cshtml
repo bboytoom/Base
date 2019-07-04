@@ -12,13 +12,13 @@
                 <div class="card-body p-0">
                     <div class="p-5 text-center">
                        
-                        @using (Html.BeginForm("Index", "Default", FormMethod.Post, new { autocomplete = "off" }))
+                        @using (Ajax.BeginForm("Index", "Default", new AjaxOptions { HttpMethod = "POST", OnSuccess = "LoginSuccess", OnFailure = "LoginFail" }, new { autocomplete = "off" }))
                         {
                             @Html.AntiForgeryToken()
 
                             <div class="form-group">
                                 <div class="input-group">
-                                    @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @id = "TextEmail", @class = "form-control", @placeholder = "Correo del usuario", @maxlength = "80" } })
+                                    @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @id = "TextEmail", @class = "form-control", @placeholder = "Correo del usuario", @maxlength = "80", required = "required" } })
                                     <div class="input-group-append">
                                         <span class="input-group-text"><i id="search_email_loader" class="fas fa-lg"></i></span>
                                     </div>
@@ -26,7 +26,7 @@
                             </div>
 
                             <div class="form-group">
-                                @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @id = "TextPassword", @class = "form-control", @placeholder = "Contraseña del usuario", @maxlength = "19" } })
+                                @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @id = "TextPassword", @class = "form-control", @placeholder = "Contraseña del usuario", @maxlength = "19", required = "required" } })
                             </div>
 
                             <div class="form-group">
@@ -45,5 +45,3 @@
         </div>
     </div>
 </section>
-
-<script src="/Assets/js/bundle.js"></script>

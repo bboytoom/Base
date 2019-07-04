@@ -8,22 +8,20 @@ let uglify = require('gulp-uglify');
 let cssnano = require('gulp-cssnano');
 let imagemin = require('gulp-imagemin');
 
-var browserify = require('browserify');
-var source = require('vinyl-source-stream');
-var tsify = require('tsify');
-var sourcemaps = require('gulp-sourcemaps');
-var buffer = require('vinyl-buffer');
-
 let GlobalSass = './src/sass/main.scss';
 let ManagerSass = './src/sass/custom-manager.scss';
 let BaseImage = './src/images/';
+let OrigenJs = './src/js/';
+
+let Destino = './Administrator/Assets/';
+
+let SweetAlertCss = './node_modules/sweetalert2/dist/sweetalert2.min.css';
 
 let Jquery = './node_modules/jquery/dist/jquery.min.js';
 let Popper = './node_modules/popper.js/dist/umd/popper.min.js';
 let BootstrapJs = './node_modules/bootstrap/dist/js/bootstrap.min.js';
 let MaterialJs = './node_modules/material-design-lite/material.min.js';
-
-let Destino = './Administrator/Assets/';
+let SweetAlertJs = './node_modules/sweetalert2/dist/sweetalert2.min.js';
 
 gulp.task('global-css', function () {
     return gulp.src(GlobalSass)
@@ -36,7 +34,13 @@ gulp.task('global-css', function () {
         .pipe(gulp.dest(Destino + 'css'));
 });
 
-gulp.task('manager-css', function () {
+gulp.task('libs-css', function () {
+    return gulp.src(SweetAlertCss)
+        .pipe(concat('build-libs.min.css'))
+        .pipe(gulp.dest(Destino + 'css'));
+});
+
+gulp.task('manager-css', function () {                                      
     return gulp.src(ManagerSass)
         .pipe(sass({ outputStyle: 'compressed' }).on('error', sass.logError))
         .pipe(autoprefixer({
@@ -61,61 +65,27 @@ gulp.task('global-js', function () {
 });
 
 gulp.task('globalLibs-js', function () {
-    return gulp.src([BootstrapJs, MaterialJs])
+    return gulp.src([BootstrapJs, MaterialJs, SweetAlertJs])
         .pipe(concat('build-libs.min.js'))
         .pipe(uglify())
         .pipe(gulp.dest(Destino + 'js'));
 });
 
 gulp.task('custom-js', function () {
-    return browserify({
-            basedir: '.',
-            debug: true,
-            entries: ['src/ts/main.ts'],
-            cache: {},
-            packageCache: {}
-        })
-        .plugin(tsify)
-        .transform('babelify', {
-            presets: ['es2015'],
-            extensions: ['.ts']
-        })
-        .bundle()
-        .pipe(source('bundle.js'))
-        .pipe(buffer())
-        .pipe(sourcemaps.init({ loadMaps: true }))
-        .pipe(sourcemaps.write('./'))
-        .pipe(gulp.dest(Destino + 'js'));
-});
-
-gulp.task('general-js', function () {
-    return browserify({
-        basedir: '.',
-        debug: true,
-        entries: ['src/ts/general.ts'],
-        cache: {},
-        packageCache: {}
-    })
-        .plugin(tsify)
-        .transform('babelify', {
-            presets: ['es2015'],
-            extensions: ['.ts']
-        })
-        .bundle()
-        .pipe(source('bundle-general.js'))
-        .pipe(buffer())
-        .pipe(sourcemaps.init({ loadMaps: true }))
-        .pipe(sourcemaps.write('./'))
+    return gulp.src(OrigenJs + 'index.js' )
+        .pipe(concat('custom.min.js'))
+        .pipe(uglify())
         .pipe(gulp.dest(Destino + 'js'));
 });
 
 gulp.watch(Destino + 'css/*.css', gulp.series('global-css', 'manager-css'));
-gulp.watch(Destino + 'js/*.js', gulp.series('global-js', 'globalLibs-js', 'custom-js', 'general-js'));
+gulp.watch(Destino + 'js/*.js', gulp.series('global-js', 'globalLibs-js', 'custom-js'));
 
 gulp.task('default',
     gulp.parallel(
         'global-css',
         'manager-css',
+        'libs-css',
         'global-image',
         'global-js',
         'globalLibs-js',

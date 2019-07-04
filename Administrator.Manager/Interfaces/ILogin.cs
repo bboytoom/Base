@@ -1,5 +1,5 @@
-﻿using Administrator.Manager.Helpers;
-using System.Linq;
+﻿using Administrator.Manager.Data;
+using Administrator.Manager.Helpers;
 using System.ServiceModel;
 using System.ServiceModel.Web;
 
@@ -7,7 +7,7 @@ namespace Administrator.Manager.Interfaces
 {
     public interface ILogin
     {
-        IQueryable Login(ViewModelsLogin data);
+        Tbl_Users Login(ViewModelsLogin data);
     }
 
     [ServiceContract]
