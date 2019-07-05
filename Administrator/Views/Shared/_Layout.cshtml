@@ -29,6 +29,8 @@
         <script src="/Assets/js/build.min.js"></script>
         <script src="/Assets/js/build-libs.min.js"></script>
         <script src="/Scripts/jquery.unobtrusive-ajax.js"></script>
-        <script src="/Assets/js/custom.min.js"></script>
+        @{
+            Html.RenderAction("MScrips", "Shared");
+        }
     </body>
 </html>

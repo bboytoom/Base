@@ -1,9 +1,7 @@
 ﻿using Administrator.App_Start;
 using Administrator.Manager.Implementations;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using PagedList;
 using System.Security.Claims;
@@ -57,6 +55,12 @@ namespace Administrator.Controllers
             {
                 return View();
             }
+        }
+
+        [HttpGet]
+        public ActionResult PartialViewGroupF()
+        {
+            return PartialView("_PartialViewGroupF");
         }
 
         public ActionResult ViwerUsers(string sortOrder, string searchString, string currentFilter, int? page)

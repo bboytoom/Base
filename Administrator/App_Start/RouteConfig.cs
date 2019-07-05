@@ -13,6 +13,9 @@ namespace Administrator
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
+
+            #region Inician las rutas generales
+
             routes.MapRoute(
                 name: "default",
                 url: "",
@@ -44,6 +47,22 @@ namespace Administrator
             );
 
             routes.MapRoute(
+                name: "grupos",
+                url: "catalogos/grupos",
+                defaults: new { controller = "Catalogs", action = "ViwerGroups" }
+            );
+
+            routes.MapRoute(
+                name: "usuarios",
+                url: "catalogos/usuarios",
+                defaults: new { controller = "Catalogs", action = "ViwerUsers" }
+            );
+
+            #endregion
+
+            #region Inician las funcion
+
+            routes.MapRoute(
                 name: "salir",
                 url: "salir",
                 defaults: new { controller = "Default", action = "LogOff" }
@@ -61,17 +80,24 @@ namespace Administrator
                 defaults: new { controller = "Default", action = "LockOutLogin" }
             );
 
+            #endregion
+
+            #region Inician las ViewPartial
+
             routes.MapRoute(
-                name: "grupos",
-                url: "catalogos/grupos",
-                defaults: new { controller = "Catalogs", action = "ViwerGroups" }
+                name: "script",
+                url: "script",
+                defaults: new { controller = "Shared", action = "MScrips" }
             );
 
             routes.MapRoute(
-                name: "usuarios",
-                url: "catalogos/usuarios",
-                defaults: new { controller = "Catalogs", action = "ViwerUsers" }
+                name: "groupform",
+                url: "grupos/form",
+                defaults: new { controller = "Catalogs", action = "PartialViewGroupF" }
             );
+
+            #endregion
+
         }
     }
 }

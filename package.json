@@ -24,8 +24,13 @@
   },
   "homepage": "https://github.com/bboytoom/Base#readme",
   "devDependencies": {
+    "@babel/core": "^7.5.0",
+    "@babel/preset-env": "^7.5.0",
+    "babel-core": "^6.26.3",
+    "babel-preset-env": "^1.7.0",
     "gulp": "^4.0.0",
     "gulp-autoprefixer": "^6.0.0",
+    "gulp-babel": "^8.0.0",
     "gulp-cli": "^2.1.0",
     "gulp-concat": "^2.6.1",
     "gulp-cssnano": "^2.1.3",

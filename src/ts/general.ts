@@ -5,10 +5,6 @@ const add_group_btn = (<HTMLInputElement>document.getElementById('add_group_btn'
 const infouser = (<HTMLInputElement>document.getElementById('infohidde')).value;
 
 
-function EditGroup(value: number) {
-    console.log('hola');
-}
-
 add_group_btn.addEventListener('click', () => {
     Swal.fire({
         confirmButtonText: 'Guardar',

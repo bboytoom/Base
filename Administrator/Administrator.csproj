@@ -123,6 +123,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\js\custom.min.js" />
+    <Content Include="Assets\js\general.min.js" />
     <Content Include="Content\PagedList.css" />
     <Content Include="Global.asax" />
     <None Include="Scripts\jquery-1.8.0.intellisense.js" />
@@ -141,6 +142,7 @@
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\DefaultController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
+    <Compile Include="Controllers\SharedController.cs" />
     <Compile Include="Controllers\ToolsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -162,6 +164,9 @@
     <Content Include="Views\Default\LockOutLogin.cshtml" />
     <Content Include="Views\Catalogs\ViwerGroups.cshtml" />
     <Content Include="Views\Catalogs\ViwerUsers.cshtml" />
+    <Content Include="Views\Shared\_Scrips.cshtml" />
+    <Content Include="Views\Catalogs\_PartialViewGroupF.cshtml" />
+    <Content Include="Views\Catalogs\_pppprueba.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
