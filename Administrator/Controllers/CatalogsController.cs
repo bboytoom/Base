@@ -6,6 +6,8 @@ using System.Web.Mvc;
 using PagedList;
 using System.Security.Claims;
 using System.Threading;
+using Administrator.Manager.Helpers;
+using System.Collections.Generic;
 
 namespace Administrator.Controllers
 {
@@ -13,10 +15,13 @@ namespace Administrator.Controllers
     public class CatalogsController : Controller
     {
         private ReadAllGroupImp objReadGroup;
+        private ReadGroupImp objReadOnlyGroup;
         private ReadAllUserImp objReadUser;
+
         public CatalogsController()
         {
             objReadGroup = new ReadAllGroupImp();
+            objReadOnlyGroup = new ReadGroupImp();
             objReadUser = new ReadAllUserImp();
         }
 
@@ -61,6 +66,20 @@ namespace Administrator.Controllers
         public ActionResult PartialViewGroupF()
         {
             return PartialView("_PartialViewGroupF");
+        }
+
+        [HttpPost]
+        public JsonResult ReadViewGroup(int Id)
+        {
+            dynamic showMessageString = string.Empty;
+
+            if (Id != 0)
+            {
+                List<ViewModelGroup> salida = objReadOnlyGroup.ReadGroup(Id);
+                return Json(showMessageString = new { Status = 200, Respuesta = salida }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(showMessageString = new { Status = 404, Respuesta = "Falta datos necesarios para realizar la peticion" }, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult ViwerUsers(string sortOrder, string searchString, string currentFilter, int? page)

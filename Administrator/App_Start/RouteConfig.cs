@@ -51,7 +51,7 @@ namespace Administrator
                 url: "catalogos/grupos",
                 defaults: new { controller = "Catalogs", action = "ViwerGroups" }
             );
-
+            
             routes.MapRoute(
                 name: "usuarios",
                 url: "catalogos/usuarios",
@@ -94,6 +94,12 @@ namespace Administrator
                 name: "groupform",
                 url: "grupos/form",
                 defaults: new { controller = "Catalogs", action = "PartialViewGroupF" }
+            );
+
+            routes.MapRoute(
+                name: "readgroup",
+                url: "grupos/read",
+                defaults: new { controller = "Catalogs", action = "ReadViewGroup" }
             );
 
             #endregion

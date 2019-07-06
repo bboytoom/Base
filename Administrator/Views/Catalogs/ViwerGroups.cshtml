@@ -72,13 +72,19 @@
                                             </td>
 
                                             <td>
-                                                @Html.ActionLink("Ver", "Details", new { id = item.Id }, new { @class = "btn btn-outline-success btn-sm  mdl-js-ripple-effect" })
+                                                <a class="btn btn-outline-success btn-sm" href="#" role="button">
+                                                    ver más <i class="fas fa-eye"></i>
+                                                </a>
                                             </td>
                                             <td>
-                                                <button type="button" class="btn btn-outline-warning btn-sm" onclick="EditGroup(@Html.DisplayFor(modelItem => item.Id))">Editar</button>
+                                                <button type="button" class="btn btn-outline-warning btn-sm"onclick="EditGroup(@Html.DisplayFor(modelItem => item.Id))">
+                                                    Editar <i class="fas fa-edit"></i>
+                                                </button>
                                             </td>
                                             <td>
-                                                @Html.ActionLink("Eliminar", "Delete", new { id = item.Id }, new { @class = "btn btn-outline-danger btn-sm" })
+                                                <button type="button" class="btn btn-outline-danger btn-sm" onclick="DeleteGroup(@Html.DisplayFor(modelItem => item.Id))">
+                                                    Eliminar <i class="fas fa-trash-alt"></i>
+                                                </button>
                                             </td>
                                         </tr>
                                     }

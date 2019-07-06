@@ -252,7 +252,39 @@ namespace Administrator.Manager.Implementations
 
         public List<ViewModelGroup> ReadGroup(int Id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                List<ViewModelGroup> salida = ctx.Tbl_Groups.Join(ctx.Tbl_Permissions,
+                pk => pk.Id, fk => fk.Id_group, (pk, fk) => new ViewModelGroup
+                {
+                    Id = pk.Id,
+                    Name = pk.Name_group,
+                    Description = pk.Description_group,
+                    Readuser = fk.Read_user_permission,
+                    Createuser = fk.Create_user_permission,
+                    Updateuser = fk.Update_user_permission,
+                    Deleteuser = fk.Delete_user_permission,
+                    Readgroup = fk.Read_group_permission,
+                    Creategroup = fk.Create_group_permission,
+                    Updategroup = fk.Update_group_permission,
+                    Deletegroup = fk.Delete_group_permission,
+                    Readpermission = fk.Read_permission_permission,
+                    Createpermission = fk.Create_permission_permission,
+                    Updatepermission = fk.Update_permission_permission,
+                    Deletepermission = fk.Delete_permission_permission,
+                    Reademail = fk.Read_email_permission,
+                    Createemail = fk.Create_email_permission,
+                    Updateemail = fk.Update_email_permission,
+                    Deleteemail = fk.Delete_email_permission,
+                    Status = pk.Active_group
+                }).Where(w => w.Id == Id).ToList();
+
+                return salida;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
     }
 
