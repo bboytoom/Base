@@ -166,7 +166,6 @@
     <Content Include="Views\Catalogs\ViwerUsers.cshtml" />
     <Content Include="Views\Shared\_Scrips.cshtml" />
     <Content Include="Views\Catalogs\_PartialViewGroupF.cshtml" />
-    <Content Include="Views\Catalogs\_pppprueba.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
