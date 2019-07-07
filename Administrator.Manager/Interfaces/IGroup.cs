@@ -31,7 +31,7 @@ namespace Administrator.Manager.Interfaces
     {
         [OperationContract]
         [WebInvoke(RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "/delete", Method = "POST", BodyStyle = WebMessageBodyStyle.Wrapped)]
-        string DeleteGroup(ViewModelGroup Data);
+        string DeleteGroup(int Id, int HighUser);
     }
 
     public interface IReadGroup

@@ -10,6 +10,8 @@ using System.ServiceModel.Web;
 
 namespace Administrator.Manager.Implementations
 {
+    #region Crear grupo
+
     public class CreateGroupImp : ICreateGroup
     {
         private DataModels ctx;
@@ -58,7 +60,7 @@ namespace Administrator.Manager.Implementations
 
                 var create_permission = new Tbl_Permissions()
                 {
-                    Id_group = search_id.Id ,
+                    Id_group = search_id.Id,
                     Read_user_permission = Data.Readuser,
                     Update_user_permission = Data.Updateuser,
                     Create_user_permission = Data.Createuser,
@@ -94,6 +96,10 @@ namespace Administrator.Manager.Implementations
             }
         }
     }
+
+    #endregion
+
+    #region Actualizar grupo
 
     public class UpdateGroupImp : IUpdateGroup
     {
@@ -187,6 +193,10 @@ namespace Administrator.Manager.Implementations
         }
     }
 
+    #endregion
+
+    #region Eliminar grupo
+
     public class DeleteGroupImp : IDeleteGroup
     {
         private DataModels ctx;
@@ -195,15 +205,15 @@ namespace Administrator.Manager.Implementations
             ctx = new DataModels();
         }
 
-        public string DeleteGroup(ViewModelGroup Data)
+        public string DeleteGroup(int Id, int HighUser)
         {
-            if (Data.Id == 0 || Data.HighUser == 0)
+            if (Id == 0 || HighUser == 0)
             {
                 CustomErrorDetail customError = new CustomErrorDetail(400, "Datos Faltantes", "Faltan algunos datos necesarios en la petición");
                 throw new WebFaultException<CustomErrorDetail>(customError, HttpStatusCode.BadRequest);
             }
 
-            var search_group = ctx.Tbl_Groups.Where(w => w.Id == Data.Id).FirstOrDefault();
+            var search_group = ctx.Tbl_Groups.Where(w => w.Id == Id).FirstOrDefault();
 
             if (search_group == null)
             {
@@ -219,7 +229,7 @@ namespace Administrator.Manager.Implementations
                     Name_group = search_group.Name_group,
                     Description_group = search_group.Description_group,
                     Active_group = false,
-                    DeleteU_group = Data.HighUser,
+                    DeleteU_group = HighUser,
                     DeleteD_group = DateTime.Now,
                     Delete_stautus_group = true
                 };
@@ -241,6 +251,10 @@ namespace Administrator.Manager.Implementations
             }
         }
     }
+
+    #endregion
+
+    #region Mostrar grupo
 
     public class ReadGroupImp : IReadGroup
     {
@@ -318,4 +332,6 @@ namespace Administrator.Manager.Implementations
             return show_group.ToList();
         }
     }
+
+    #endregion
 }

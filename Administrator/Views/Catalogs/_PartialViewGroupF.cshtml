@@ -6,6 +6,9 @@
 
 @using (Html.BeginForm("", "", FormMethod.Post, new { id = "form_group", @class = "row", autocomplete = "off" }))
 {
+    @Html.AntiForgeryToken()
+
+    <input type="hidden" id="infohidde" name="infohidde" value="@ViewBag.IdUsuario">
 
     <div class='col-12'>
         <div class="row">
@@ -30,13 +33,13 @@
                         @Html.CheckBoxFor(model => model.Status, new { @id = "group_status", @class = "custom-control-input ckeck__group" })
                         <label class='custom-control-label' for='group_status'>Estatus</label>
                     </div>
-                </div>                
+                </div>
             </div>
         </div>
 
         <div class='form-group mt-5 text-left'>
             <label for="group_description">Descripcion del grupo</label>
-            @Html.TextAreaFor(model => model.Description, new { @id = "group_description", @class = "form-control", @rows = "3", @placeholder = "Descripción del grupo" } )
+            @Html.TextAreaFor(model => model.Description, new { @id = "group_description", @class = "form-control", @rows = "3", @placeholder = "Descripción del grupo" })
         </div>
     </div>
     <div class='col-md-12 mb-4'>
@@ -49,25 +52,25 @@
                 <div class='row'>
                     <div class='col-md-6 mb-2'>
                         <div class='custom-control custom-switch'>
-                            @Html.CheckBoxFor(model => model.Creategroup, new { @id = "create_group", @class = "custom-control-input ckeck__group" } )
+                            @Html.CheckBoxFor(model => model.Creategroup, new { @id = "create_group", @class = "custom-control-input ckeck__group" })
                             <label class='custom-control-label' for='create_group'>Crear</label>
                         </div>
                     </div>
                     <div class='col-md-6 mb-2'>
                         <div class='custom-control custom-switch'>
-                            @Html.CheckBoxFor(model => model.Updategroup,  new { @id = "update_group", @class = "custom-control-input ckeck__group" } )
+                            @Html.CheckBoxFor(model => model.Updategroup, new { @id = "update_group", @class = "custom-control-input ckeck__group" })
                             <label class='custom-control-label' for='update_group'>Actualizar</label>
                         </div>
                     </div>
                     <div class='col-md-6 mb-2'>
                         <div class='custom-control custom-switch'>
-                            @Html.CheckBoxFor(model => model.Deletegroup,  new { @id = "delete_group", @class = "custom-control-input ckeck__group" } )
+                            @Html.CheckBoxFor(model => model.Deletegroup, new { @id = "delete_group", @class = "custom-control-input ckeck__group" })
                             <label class='custom-control-label' for='delete_group'>Eliminar</label>
                         </div>
                     </div>
                     <div class='col-md-6 mb-2'>
                         <div class='custom-control custom-switch'>
-                            @Html.CheckBoxFor(model => model.Readgroup,  new { @id = "read_group", @class = "custom-control-input ckeck__group" } )
+                            @Html.CheckBoxFor(model => model.Readgroup, new { @id = "read_group", @class = "custom-control-input ckeck__group" })
                             <label class='custom-control-label' for='read_group'>Mostrar</label>
                         </div>
                     </div>
@@ -82,25 +85,25 @@
                 <div class='row'>
                     <div class='col-md-6 mb-2'>
                         <div class='custom-control custom-switch'>
-                            @Html.CheckBoxFor(model => model.Createuser, new { @id = "create_user", @class = "custom-control-input ckeck__group" } )
+                            @Html.CheckBoxFor(model => model.Createuser, new { @id = "create_user", @class = "custom-control-input ckeck__group" })
                             <label class='custom-control-label' for='create_user'>Crear</label>
                         </div>
                     </div>
                     <div class='col-md-6 mb-2'>
                         <div class='custom-control custom-switch'>
-                            @Html.CheckBoxFor(model => model.Updateuser,  new { @id = "update_user", @class = "custom-control-input ckeck__group" } )
+                            @Html.CheckBoxFor(model => model.Updateuser, new { @id = "update_user", @class = "custom-control-input ckeck__group" })
                             <label class='custom-control-label' for='update_user'>Actualizar</label>
                         </div>
                     </div>
                     <div class='col-md-6 mb-2'>
                         <div class='custom-control custom-switch'>
-                            @Html.CheckBoxFor(model => model.Deleteuser,  new { @id = "delete_user", @class = "custom-control-input ckeck__group" } )
+                            @Html.CheckBoxFor(model => model.Deleteuser, new { @id = "delete_user", @class = "custom-control-input ckeck__group" })
                             <label class='custom-control-label' for='delete_user'>Eliminar</label>
                         </div>
                     </div>
                     <div class='col-md-6 mb-2'>
                         <div class='custom-control custom-switch'>
-                            @Html.CheckBoxFor(model => model.Readuser, new { @id = "read_user", @class = "custom-control-input ckeck__group" } )
+                            @Html.CheckBoxFor(model => model.Readuser, new { @id = "read_user", @class = "custom-control-input ckeck__group" })
                             <label class='custom-control-label' for='read_user'>Mostrar</label>
                         </div>
                     </div>
@@ -115,25 +118,25 @@
                 <div class='row'>
                     <div class='col-md-6 mb-2'>
                         <div class='custom-control custom-switch'>
-                            @Html.CheckBoxFor(model => model.Createpermission,  new { @id = "create_permission", @class = "custom-control-input ckeck__group" } )
+                            @Html.CheckBoxFor(model => model.Createpermission, new { @id = "create_permission", @class = "custom-control-input ckeck__group" })
                             <label class='custom-control-label' for='create_permission'>Crear</label>
                         </div>
                     </div>
                     <div class='col-md-6 mb-2'>
                         <div class='custom-control custom-switch'>
-                            @Html.CheckBoxFor(model => model.Updatepermission, new { @id = "update_permission", @class = "custom-control-input ckeck__group" } )
+                            @Html.CheckBoxFor(model => model.Updatepermission, new { @id = "update_permission", @class = "custom-control-input ckeck__group" })
                             <label class='custom-control-label' for='update_permission'>Actualizar</label>
                         </div>
                     </div>
                     <div class='col-md-6 mb-2'>
                         <div class='custom-control custom-switch'>
-                            @Html.CheckBoxFor(model => model.Deletepermission,  new { @id = "delete_permission", @class = "custom-control-input ckeck__group" } )
+                            @Html.CheckBoxFor(model => model.Deletepermission, new { @id = "delete_permission", @class = "custom-control-input ckeck__group" })
                             <label class='custom-control-label' for='delete_permission'>Eliminar</label>
                         </div>
                     </div>
                     <div class='col-md-6 mb-2'>
                         <div class='custom-control custom-switch'>
-                            @Html.CheckBoxFor(model => model.Readpermission, new { @id = "read_permission", @class = "custom-control-input ckeck__group" } )
+                            @Html.CheckBoxFor(model => model.Readpermission, new { @id = "read_permission", @class = "custom-control-input ckeck__group" })
                             <label class='custom-control-label' for='read_permission'>Mostrar</label>
                         </div>
                     </div>
@@ -148,26 +151,26 @@
                 <div class='row'>
                     <div class='col-md-6 mb-2'>
                         <div class='custom-control custom-switch'>
-                            @Html.CheckBoxFor(model => model.Createemail, new { @id = "create_email", @class = "custom-control-input ckeck__group" } )
+                            @Html.CheckBoxFor(model => model.Createemail, new { @id = "create_email", @class = "custom-control-input ckeck__group" })
                             <label class='custom-control-label' for='create_email'>Crear</label>
                         </div>
                     </div>
                     <div class='col-md-6 mb-2'>
                         <div class='custom-control custom-switch'>
-                            @Html.CheckBoxFor(model => model.Updateemail,  new { @id = "update_email", @class = "custom-control-input ckeck__group" } )
+                            @Html.CheckBoxFor(model => model.Updateemail, new { @id = "update_email", @class = "custom-control-input ckeck__group" })
                             <label class='custom-control-label' for='update_email'>Actualizar</label>
                         </div>
                     </div>
                     <div class='col-md-6 mb-2'>
                         <div class='custom-control custom-switch'>
-                            @Html.CheckBoxFor(model => model.Deleteemail,  new { @id = "delete_email", @class = "custom-control-input ckeck__group" } )
+                            @Html.CheckBoxFor(model => model.Deleteemail, new { @id = "delete_email", @class = "custom-control-input ckeck__group" })
                             <label class='custom-control-label' for='delete_email'>Eliminar</label>
                         </div>
                     </div>
                     <div class='col-md-6 mb-2'>
                         <div class='custom-control custom-switch'>
                             <input id='read_email' class='custom-control-input' type='checkbox'>
-                            @Html.CheckBoxFor(model => model.Reademail, new { @id = "read_email", @class = "custom-control-input ckeck__group" } )
+                            @Html.CheckBoxFor(model => model.Reademail, new { @id = "read_email", @class = "custom-control-input ckeck__group" })
                             <label class='custom-control-label' for='read_email'>Mostrar</label>
                         </div>
                     </div>

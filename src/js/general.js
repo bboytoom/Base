@@ -1,6 +1,6 @@
 "use strict";
 
-var add_group_btn = document.getElementById('add_group_btn');
+var add_btn = document.getElementById('add_btn');
 
 function cleanInput(InputEmail) {
     return String(InputEmail).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
@@ -53,8 +53,53 @@ function petitionsGroup(Input_name, valueId) {
             if (data.status == 400)
                 Swal.showValidationMessage(data.responseJSON.ErrorDetails);
 
+            if (data.status == 404)
+                Swal.showValidationMessage(data.responseJSON.ErrorDetails);
+
             if (data.status == 410)
                 Swal.showValidationMessage(data.responseJSON.ErrorDetails);
+        });
+}
+
+function DeleteGroup(valueId) {
+    Swal.fire({
+        type: 'question',
+        text: 'Estas seguro que deseas eliminar el grupo',
+        showCloseButton: true,
+        showCancelButton: true,
+        confirmButtonText: 'Aceptar',
+        cancelButtonText: 'Cancelar'
+    })
+        .then((result) => {
+            if (result.value) {
+                Swal.fire({
+                    type: 'error',
+                    title: 'Eliminado correctamente',
+                    preConfirm: () => {
+                        var hieguser = parseInt(document.getElementById('infohidde').value);
+                        var URL = 'http://localhost:50851/wsgroupdelete.svc/group/delete';
+
+                        $.ajax({
+                            method: "POST",
+                            url: URL,
+                            data: JSON.stringify({ 'Id': valueId, HighUser: hieguser }),
+                            contentType: "application/json",
+                            dataType: "json",
+                        })
+                            .done(function (data, textStatus, xhr) {
+                                if (data.status == 200)
+                                    return true;
+                            })
+                            .fail(function (data, textStatus, xhr) {
+                                if (data.status == 400)
+                                    Swal.showValidationMessage(data.responseJSON.ErrorDetails);
+
+                                if (data.status == 404)
+                                    Swal.showValidationMessage(data.responseJSON.ErrorDetails);
+                            });
+                    }
+                })
+            }
         });
 }
 
@@ -135,18 +180,19 @@ function LoadModal(valueId) {
                     }
                 },
                 allowOutsideClick: () => !Swal.isLoading()
-            }).then((result) => {
-                if (result.value)
-                    Swal.fire({
-                        type: 'success',
-                        confirmButtonText: 'Cerrar'
-                    });
-
-            });
+            })
+                .then((result) => {
+                    if (result.value)
+                        Swal.fire({
+                            type: 'success',
+                            confirmButtonText: 'Cerrar'
+                        });
+                });
         }
     });
 }
 
-add_group_btn.addEventListener('click', () => {
+add_btn.addEventListener('click', () => {
+    console.log(this.name);
     LoadModal(0);
 });

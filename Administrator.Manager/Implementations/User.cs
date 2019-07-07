@@ -10,6 +10,8 @@ using System.ServiceModel.Web;
 
 namespace Administrator.Manager.Implementations
 {
+    #region Crear usuario
+
     public class CreateUserImp : ICreateUser
     {
         private DataModels ctx;
@@ -90,6 +92,10 @@ namespace Administrator.Manager.Implementations
             }
         }
     }
+
+    #endregion
+
+    #region Actualizar usuario
 
     public class UpdateUserImp : IUpdateUser
     {
@@ -181,6 +187,10 @@ namespace Administrator.Manager.Implementations
         }
     }
 
+    #endregion
+
+    #region Eliminar usuario
+
     public class DeleteUserImp : IDeleteUser
     {
         private DataModels ctx;
@@ -242,6 +252,10 @@ namespace Administrator.Manager.Implementations
         }
     }
 
+    #endregion
+
+    #region Mostrar usuario
+
     public class ReadUserImp : IReadUser
     {
         private DataModels ctx;
@@ -286,4 +300,6 @@ namespace Administrator.Manager.Implementations
             return show_user.ToList();
         }
     }
+
+    #endregion   
 }

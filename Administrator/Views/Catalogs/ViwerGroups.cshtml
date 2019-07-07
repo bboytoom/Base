@@ -15,8 +15,6 @@
                 <h3 class="h3">Grupos</h3>
             </div>
 
-            <input type="hidden" id="infohidde" name="infohidde" value="@ViewBag.IdUsuario">
-
             <div class="col-md-6">
                 @using (Html.BeginForm("ViwerGroups", "Catalogs", FormMethod.Post, new { autocomplete = "off" }))
                 {
@@ -35,7 +33,7 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header text-right">
-                            <button id="add_group_btn" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" type="button">
+                            <button id="add_btn" name="GRUPO" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" type="button">
                                 Agregar nuevo grupo
                             </button>
                         </div>
@@ -72,9 +70,9 @@
                                             </td>
 
                                             <td>
-                                                <a class="btn btn-outline-success btn-sm" href="#" role="button">
+                                                <button type="button" class="btn btn-outline-success btn-sm" onclick="">
                                                     ver más <i class="fas fa-eye"></i>
-                                                </a>
+                                                </button>
                                             </td>
                                             <td>
                                                 <button type="button" class="btn btn-outline-warning btn-sm"onclick="EditGroup(@Html.DisplayFor(modelItem => item.Id))">

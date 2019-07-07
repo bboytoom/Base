@@ -10,6 +10,8 @@ using System.ServiceModel.Web;
 
 namespace Administrator.Manager.Implementations
 {
+    #region Crear email
+
     public class CreateEmailImp : ICreateEmail
     {
         private DataModels ctx;
@@ -21,7 +23,7 @@ namespace Administrator.Manager.Implementations
         public string CreateEmail(ViewModelEmail Data)
         {
             string email_clean;
-            
+
             if (Data.Iduser == 0 || Data.HighUser == 0)
             {
                 CustomErrorDetail customError = new CustomErrorDetail(400, "Datos Faltantes", "Faltan algunos datos necesarios en la petición");
@@ -80,6 +82,10 @@ namespace Administrator.Manager.Implementations
             }
         }
     }
+
+    #endregion
+
+    #region Actualizar email
 
     public class UpdateEmailImp : IUpdateEmail
     {
@@ -161,6 +167,10 @@ namespace Administrator.Manager.Implementations
         }
     }
 
+    #endregion
+
+    #region Eliminar email
+
     public class DeleteEmailImp : IDeleteEmail
     {
         private DataModels ctx;
@@ -218,6 +228,10 @@ namespace Administrator.Manager.Implementations
         }
     }
 
+    #endregion
+
+    #region Mostrar email
+
     public class ReadEmailImp : IReadEmail
     {
         private DataModels ctx;
@@ -245,4 +259,6 @@ namespace Administrator.Manager.Implementations
             throw new NotImplementedException();
         }
     }
+
+    #endregion
 }

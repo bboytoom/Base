@@ -22,19 +22,5 @@ namespace Administrator.Controllers
 
             return PartialView("_Scrips");
         }
-
-        public ActionResult MHeader()
-        {
-            if (User.Identity.IsAuthenticated)
-            {
-                ViewBag.tipo = "interno";
-            }
-            else
-            {
-                ViewBag.tipo = "externo";
-            }
-
-            return PartialView("_Header");
-        }
     }
 }

@@ -30,7 +30,29 @@ namespace Administrator.Controllers
             return View();
         }
 
+        #region Inician los controladores del grupo
+
         public ActionResult ViwerGroups(string sortOrder, string searchString, string currentFilter, int? page)
+        {
+            ViewBag.CurrentSort = sortOrder;
+            ViewBag.NameSort = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+
+            if (searchString != null)
+                page = 1;
+            else
+                searchString = currentFilter;
+
+            ViewBag.CurrentFilter = searchString;
+
+            var salida = objReadGroup.ReadAllGroup(sortOrder, searchString);
+            int pageSize = 10;
+            int pageNumber = (page ?? 1);
+
+            return View(salida.ToPagedList(pageNumber, pageSize));
+        }
+
+        [HttpGet]
+        public ActionResult PartialViewGroupF()
         {
             ClaimsPrincipal Principal = Thread.CurrentPrincipal as ClaimsPrincipal;
 
@@ -39,33 +61,10 @@ namespace Administrator.Controllers
                 var Claims = Principal.Claims.ToList();
 
                 ViewBag.IdUsuario = Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier).Value;
-
-                ViewBag.CurrentSort = sortOrder;
-                ViewBag.NameSort = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
-
-                if (searchString != null)
-                    page = 1;
-                else
-                    searchString = currentFilter;
-
-                ViewBag.CurrentFilter = searchString;
-
-                var salida = objReadGroup.ReadAllGroup(sortOrder, searchString);
-                int pageSize = 10;
-                int pageNumber = (page ?? 1);
-
-                return View(salida.ToPagedList(pageNumber, pageSize));
+                return PartialView("_PartialViewGroupF");
             }
-            else
-            {
-                return View();
-            }
-        }
 
-        [HttpGet]
-        public ActionResult PartialViewGroupF()
-        {
-            return PartialView("_PartialViewGroupF");
+            return View("ViwerGroups");
         }
 
         [HttpPost]
@@ -82,6 +81,10 @@ namespace Administrator.Controllers
             return Json(showMessageString = new { Status = 404, Respuesta = "Falta datos necesarios para realizar la peticion" }, JsonRequestBehavior.AllowGet);
         }
 
+        #endregion
+
+        #region Inician los controladores del usuario
+
         public ActionResult ViwerUsers(string sortOrder, string searchString, string currentFilter, int? page)
         {
             ViewBag.CurrentSort = sortOrder;
@@ -91,7 +94,7 @@ namespace Administrator.Controllers
                 page = 1;
             else
                 searchString = currentFilter;
-            
+
             ViewBag.CurrentFilter = searchString;
 
             var salida = objReadUser.ReadAllUser(sortOrder, searchString);
@@ -100,5 +103,23 @@ namespace Administrator.Controllers
 
             return View(salida.ToPagedList(pageNumber, pageSize));
         }
+
+        [HttpGet]
+        public ActionResult PartialViewUserF()
+        {
+            ClaimsPrincipal Principal = Thread.CurrentPrincipal as ClaimsPrincipal;
+
+            if (Principal != null && Principal.Identity.IsAuthenticated)
+            {
+                var Claims = Principal.Claims.ToList();
+
+                ViewBag.IdUsuario = Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier).Value;
+                return PartialView("_PartialViewUserF");
+            }
+
+            return View("ViwerUsers");
+        }
+
+        #endregion
     }
 }
