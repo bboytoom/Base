@@ -45,7 +45,7 @@ class Grupos extends Strategy {
                         document.getElementById('delete_email').checked = datos.Deleteemail;
                         document.getElementById('read_email').checked = datos.Reademail;
                         document.getElementById('group_status').checked = datos.Status;
-                    }, 200);
+                    }, 300);
                 } else {
                     Swal.fire({
                         type: 'error',

@@ -108,6 +108,12 @@ namespace Administrator
                 defaults: new { controller = "Catalogs", action = "ReadViewGroup" }
             );
 
+            routes.MapRoute(
+                name: "readuser",
+                url: "usuarios/read/{Id}",
+                defaults: new { controller = "Catalogs", action = "ReadViewUser", Id = UrlParameter.Optional }
+            );
+
             #endregion
 
         }

@@ -13,6 +13,37 @@ class Usuarios extends Strategy {
         var ID = this._ID;
         var USUARIO = this._USUARIO;
 
+        $.ajax({
+            method: "POST",
+            url: "/usuarios/read",
+            data: JSON.stringify({ 'Id': this._ID }),
+            contentType: "application/json",
+            dataType: 'json',
+            success: function (data) {
+                if (data.Status == 200) {
+                    var datos = data.Respuesta[0];
+
+                    console.log(datos);
+
+                    /*LoadModalUser(ID, USUARIO);
+
+                    setTimeout(function () {
+                        document.getElementById('user_foto').value = datos.Photo;
+                        document.getElementById('user_idgrupo').value = datos.Idgroup;
+                        document.getElementById('user_nombre').value = datos.Name;
+                        document.getElementById('user_apaterno').value = datos.Lnamep;
+                        document.getElementById('user_amaterno').value = datos.Lnamem;
+                        document.getElementById('user_correo').value = datos.Email;
+                    }, 600); */
+                } else {
+                    Swal.fire({
+                        type: 'error',
+                        text: 'Error al realizar la peticion',
+                        confirmButtonText: 'Cerrar'
+                    });
+                }
+            }
+        });
     }
 
     eliminar() {
@@ -32,7 +63,7 @@ class Usuarios extends Strategy {
 
 function LoadModalUser(ID, USUARIO) {
     $.ajax({
-        url: "/usuarios/form",
+        url: "/usuarios/form/?Id=" + USUARIO,
         dataType: 'html',
         success: function (data) {
             Swal.fire({

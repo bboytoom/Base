@@ -10,50 +10,41 @@
 
     <div class="col-md-12">
         <div class="row">
-            <div class="col-sm-9">
-                <div class="form-group mt-3">
-                    <label for="user_foto">Foto</label>
-
-                    <div class='input-group'>
-                        @Html.EditorFor(model => model.Photo, new { htmlAttributes = new { @id = "user_foto", @class = "form-control", @placeholder = "Foto del usuario", @maxlength = "30" } })
-                    </div>
-                </div>
+            <div class="col-md-6">
+                <img src="~/Assets/images/default.png" class="card-img-top upload__image-user m-4" alt="default.png">
             </div>
 
-            <div class="col-sm-3">
-                <div class="form-group mt-5">
-                    <div class='custom-control custom-switch text-right'>
-                        @Html.EditorFor(model => model.Status, new { @id = "user_status", @class = "custom-control-input" })
-                        <label class='custom-control-label' for='user_status'>Estatus</label>
+            <div class="col-md-6 mt-4">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="input-group">
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input" id="user_imagen" name="user_imagen">
+                                <label class="custom-file-label" for="user_imagen">Subir archivo</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-9 mt-3">
+                        <div class='custom-control custom-switch'>
+                            @Html.CheckBoxFor(model => model.Status, new { @id = "user_estado", @class = "custom-control-input" })
+                            <label class='custom-control-label' for='user_estado'>Estado</label>
+                        </div> 
+                    </div>
+
+                    <div class="col-md-3 mt-3">
+                        @Html.DisplayFor(model => model.Idgroup)
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="col-md-12">
+    <div class="col-md-12 mt-4 text-left">
         <div class="row">
-            <div class="form-group">
-                @Html.EditorFor(model => model.Idgroup, new { htmlAttributes = new { @class = "form-control" } })
-            </div>
-        </div>
-    </div>
-
-    <div class="col-md-12">
-        <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-6">
                 <div class="form-group">
-                    <label for="user_nombre">Nombre</label>
-
-                    <div class='input-group'>
-                        @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @id = "user_nombre", @class = "form-control", @placeholder = "Nombre de usuario", @maxlength = "30" } })
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-4">
-                <div class="form-group">
-                    <label for="user_apaterno">Apellido paterno</label>
+                    <label for="user_apaterno">* Apellido paterno</label>
 
                     <div class='input-group'>
                         @Html.EditorFor(model => model.Lnamep, new { htmlAttributes = new { @id = "user_apaterno", @class = "form-control", @placeholder = "Apellido paterno", @maxlength = "30" } })
@@ -61,7 +52,7 @@
                 </div>
             </div>
 
-            <div class="col-md-4">
+            <div class="col-md-6">
                 <div class="form-group">
                     <label for="user_amaterno">Apellido materno</label>
 
@@ -72,29 +63,29 @@
             </div>
         </div>
     </div>
- 
-    <div class="col-md-12">
+
+    <div class="col-md-12 mt-4 text-left">
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
-                    <label for="user_correo">Correo de usuario</label>
+                    <label for="user_nombre">* Nombre</label>
 
                     <div class='input-group'>
-                        @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @id = "user_correo", @class = "form-control", @placeholder = "Correo de usuario", @maxlength = "30" } })
+                        @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @id = "user_nombre", @class = "form-control", @placeholder = "Nombre de usuario", @maxlength = "50" } })
                     </div>
                 </div>
             </div>
 
             <div class="col-md-6">
                 <div class="form-group">
-                    <label for="user_password">Contraseña</label>
+                    <label for="user_correo">* Correo de usuario</label>
 
                     <div class='input-group'>
-                        @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @id = "user_password", @class = "form-control", @placeholder = "Contraseña", @maxlength = "30" } })
+                        @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @id = "user_correo", @class = "form-control", @placeholder = "Correo de usuario", @maxlength = "80" } })
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    
+
 }

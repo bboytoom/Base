@@ -259,14 +259,35 @@ namespace Administrator.Manager.Implementations
     public class ReadUserImp : IReadUser
     {
         private DataModels ctx;
-        private ReadUserImp()
+        public ReadUserImp()
         {
             ctx = new DataModels();
         }
 
         public List<ViewModelUser> ReadUser(int Id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                List<ViewModelUser> salida = ctx.Tbl_Users.Where(w => w.Id == Id)
+                    .Select(s => new ViewModelUser
+                    {
+                        Id = s.Id,
+                        Idgroup = s.Id_group,
+                        Typeuser = s.Type_user,
+                        Photo = s.Photo_user,
+                        Email = s.Email_user,
+                        Name = s.Name_user,
+                        Lnamep = s.LnameP_user,
+                        Lnamem = s.LnameM_user,
+                        Status = s.Active_user
+                    }).ToList();
+
+                return salida;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
     }
 

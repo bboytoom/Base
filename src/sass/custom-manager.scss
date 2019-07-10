@@ -97,3 +97,12 @@ button:focus {
 .card-header{
     border: none;
 }
+
+.custom-file-input ~ .custom-file-label::after {
+    content: "Subir";
+}
+
+.upload__image-user {
+    width: 100px;
+    margin: 0 auto;
+}

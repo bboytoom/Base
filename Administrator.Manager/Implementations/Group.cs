@@ -332,6 +332,6 @@ namespace Administrator.Manager.Implementations
             return show_group.ToList();
         }
     }
-
+    
     #endregion
 }

@@ -17,12 +17,14 @@ namespace Administrator.Controllers
         private ReadAllGroupImp objReadGroup;
         private ReadGroupImp objReadOnlyGroup;
         private ReadAllUserImp objReadUser;
+        private ReadUserImp objReadOnlyUser;
 
         public CatalogsController()
         {
             objReadGroup = new ReadAllGroupImp();
             objReadOnlyGroup = new ReadGroupImp();
             objReadUser = new ReadAllUserImp();
+            objReadOnlyUser = new ReadUserImp();
         }
 
         public ActionResult Index()
@@ -115,9 +117,26 @@ namespace Administrator.Controllers
         }
 
         [HttpGet]
-        public ActionResult PartialViewUserF()
-        {
+        public ActionResult PartialViewUserF(int id)
+        {          
             return PartialView("_PartialViewUserF");
+        }
+
+        [HttpPost]
+        public JsonResult ReadViewUser(int Id)
+        {
+            dynamic showMessageString = string.Empty;
+
+            if (Id != 0)
+            {               
+                return Json(showMessageString = new
+                {
+                    Status = 200,
+                    Respuesta = objReadOnlyUser.ReadUser(Id)
+                }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(showMessageString = new { Status = 404, Respuesta = "Falta datos necesarios para realizar la peticion" }, JsonRequestBehavior.AllowGet);
         }
 
         #endregion
