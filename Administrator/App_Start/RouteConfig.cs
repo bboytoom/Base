@@ -97,6 +97,12 @@ namespace Administrator
             );
 
             routes.MapRoute(
+                name: "userform",
+                url: "usuarios/form",
+                defaults: new { controller = "Catalogs", action = "PartialViewUserF" }
+            );
+
+            routes.MapRoute(
                 name: "readgroup",
                 url: "grupos/read",
                 defaults: new { controller = "Catalogs", action = "ReadViewGroup" }

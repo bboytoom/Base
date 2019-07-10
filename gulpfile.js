@@ -7,7 +7,8 @@ let concat = require('gulp-concat');
 let uglify = require('gulp-uglify');
 let cssnano = require('gulp-cssnano');
 let imagemin = require('gulp-imagemin');
-const babel = require('gulp-babel');
+let sourcemaps = require("gulp-sourcemaps");
+let babel = require('gulp-babel');
 
 let GlobalSass = './src/sass/main.scss';
 let ManagerSass = './src/sass/custom-manager.scss';
@@ -74,26 +75,29 @@ gulp.task('globalLibs-js', function () {
 
 gulp.task('custom-js', function () {
     return gulp.src(OrigenJs + 'index.js')
+        .pipe(sourcemaps.init())
         .pipe(babel({
-            "presets": ["env"]
-        })) 
+            presets: ["@babel/preset-env"],
+            plugins: ["@babel/plugin-transform-classes"]
+        }))
         .pipe(concat('custom.min.js'))
         .pipe(uglify())
+        .pipe(sourcemaps.write("."))
         .pipe(gulp.dest(Destino + 'js'));
 });
 
 gulp.task('general-js', function () {
-    return gulp.src(OrigenJs + 'general.js')
+    return gulp.src([OrigenJs + 'contexto.js', OrigenJs + 'estrategia.js', OrigenJs + 'grupos.js', OrigenJs + 'usuarios.js', OrigenJs + 'general.js'])
+        .pipe(sourcemaps.init())
         .pipe(babel({
-            "presets": ["env"]
-        })) 
+            presets: ["@babel/preset-env"],
+            plugins: ["@babel/plugin-transform-classes"]
+        }))
         .pipe(concat('general.min.js'))
         .pipe(uglify())
+        .pipe(sourcemaps.write("."))
         .pipe(gulp.dest(Destino + 'js'));
 });
-
-gulp.watch(Destino + 'css/*.css', gulp.series('global-css', 'manager-css'));
-gulp.watch(Destino + 'js/*.js', gulp.series('global-js', 'globalLibs-js', 'custom-js', 'general-js'));
 
 gulp.task('default',
     gulp.parallel(

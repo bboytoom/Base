@@ -33,11 +33,13 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header text-right">
-                            <button id="add_btn" name="GRUPO" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" type="button">
+                            <button id="add_btn" name="@ViewBag.Title" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" type="button">
                                 Agregar nuevo grupo
                             </button>
                         </div>
                         <div class="table-responsive">
+                            <input type="hidden" id="infohidde" name="infohidde" value="@ViewBag.IdUsuario">
+
                             <table class="table mdl-data-table table-striped table-hover">
                                 <thead>
                                     <tr>
@@ -75,12 +77,12 @@
                                                 </button>
                                             </td>
                                             <td>
-                                                <button type="button" class="btn btn-outline-warning btn-sm"onclick="EditGroup(@Html.DisplayFor(modelItem => item.Id))">
+                                                <button type="button" class="btn btn-outline-warning btn-sm" onclick="Edit(@Html.DisplayFor(modelItem => item.Id), '@ViewBag.Title')">
                                                     Editar <i class="fas fa-edit"></i>
                                                 </button>
                                             </td>
                                             <td>
-                                                <button type="button" class="btn btn-outline-danger btn-sm" onclick="DeleteGroup(@Html.DisplayFor(modelItem => item.Id))">
+                                                <button type="button" class="btn btn-outline-danger btn-sm" onclick="Delete(@Html.DisplayFor(modelItem => item.Id), '@ViewBag.Title')">
                                                     Eliminar <i class="fas fa-trash-alt"></i>
                                                 </button>
                                             </td>

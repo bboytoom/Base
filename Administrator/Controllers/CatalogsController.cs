@@ -34,26 +34,6 @@ namespace Administrator.Controllers
 
         public ActionResult ViwerGroups(string sortOrder, string searchString, string currentFilter, int? page)
         {
-            ViewBag.CurrentSort = sortOrder;
-            ViewBag.NameSort = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
-
-            if (searchString != null)
-                page = 1;
-            else
-                searchString = currentFilter;
-
-            ViewBag.CurrentFilter = searchString;
-
-            var salida = objReadGroup.ReadAllGroup(sortOrder, searchString);
-            int pageSize = 10;
-            int pageNumber = (page ?? 1);
-
-            return View(salida.ToPagedList(pageNumber, pageSize));
-        }
-
-        [HttpGet]
-        public ActionResult PartialViewGroupF()
-        {
             ClaimsPrincipal Principal = Thread.CurrentPrincipal as ClaimsPrincipal;
 
             if (Principal != null && Principal.Identity.IsAuthenticated)
@@ -61,10 +41,30 @@ namespace Administrator.Controllers
                 var Claims = Principal.Claims.ToList();
 
                 ViewBag.IdUsuario = Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier).Value;
-                return PartialView("_PartialViewGroupF");
+                ViewBag.CurrentSort = sortOrder;
+                ViewBag.NameSort = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+
+                if (searchString != null)
+                    page = 1;
+                else
+                    searchString = currentFilter;
+
+                ViewBag.CurrentFilter = searchString;
+
+                var salida = objReadGroup.ReadAllGroup(sortOrder, searchString);
+                int pageSize = 10;
+                int pageNumber = (page ?? 1);
+
+                return View(salida.ToPagedList(pageNumber, pageSize));
             }
 
-            return View("ViwerGroups");
+            return View("Index");
+        }
+
+        [HttpGet]
+        public ActionResult PartialViewGroupF()
+        {
+            return PartialView("_PartialViewGroupF");
         }
 
         [HttpPost]
@@ -87,26 +87,6 @@ namespace Administrator.Controllers
 
         public ActionResult ViwerUsers(string sortOrder, string searchString, string currentFilter, int? page)
         {
-            ViewBag.CurrentSort = sortOrder;
-            ViewBag.NameSort = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
-
-            if (searchString != null)
-                page = 1;
-            else
-                searchString = currentFilter;
-
-            ViewBag.CurrentFilter = searchString;
-
-            var salida = objReadUser.ReadAllUser(sortOrder, searchString);
-            int pageSize = 10;
-            int pageNumber = (page ?? 1);
-
-            return View(salida.ToPagedList(pageNumber, pageSize));
-        }
-
-        [HttpGet]
-        public ActionResult PartialViewUserF()
-        {
             ClaimsPrincipal Principal = Thread.CurrentPrincipal as ClaimsPrincipal;
 
             if (Principal != null && Principal.Identity.IsAuthenticated)
@@ -114,10 +94,30 @@ namespace Administrator.Controllers
                 var Claims = Principal.Claims.ToList();
 
                 ViewBag.IdUsuario = Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier).Value;
-                return PartialView("_PartialViewUserF");
-            }
+                ViewBag.CurrentSort = sortOrder;
+                ViewBag.NameSort = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
 
-            return View("ViwerUsers");
+                if (searchString != null)
+                    page = 1;
+                else
+                    searchString = currentFilter;
+
+                ViewBag.CurrentFilter = searchString;
+
+                var salida = objReadUser.ReadAllUser(sortOrder, searchString);
+                int pageSize = 10;
+                int pageNumber = (page ?? 1);
+
+                return View(salida.ToPagedList(pageNumber, pageSize));
+            }
+            
+            return View("Index");
+        }
+
+        [HttpGet]
+        public ActionResult PartialViewUserF()
+        {
+            return PartialView("_PartialViewUserF");
         }
 
         #endregion
