@@ -160,11 +160,11 @@ namespace Administrator.Manager.Implementations
                     Type_user = Data.Typeuser,
                     Photo_user = Data.Photo,
                     Email_user = email_clean,
-                    Password_user = Data.Password,
+                    Password_user = find_user.Password_user,
                     Name_user = Data.Name,
                     LnameP_user = Data.Lnamep,
                     LnameM_user = Data.Lnamem,
-                    Active_user = true,
+                    Active_user = Data.Status,
                     UpdateU_user = Data.HighUser,
                     UpdateD_user = DateTime.Now
                 };
@@ -199,15 +199,15 @@ namespace Administrator.Manager.Implementations
             ctx = new DataModels();
         }
 
-        public string DeleteUser(ViewModelUser Data)
+        public string DeleteUser(int Id, int HighUser)
         {
-            if (Data.Id == 0 || Data.HighUser == 0)
+            if (Id == 0 || HighUser == 0)
             {
                 CustomErrorDetail customError = new CustomErrorDetail(400, "Datos Faltantes", "Faltan algunos datos necesarios en la petición");
                 throw new WebFaultException<CustomErrorDetail>(customError, HttpStatusCode.BadRequest);
             }
 
-            Tbl_Users find_user = ctx.Tbl_Users.Find(Data.Id);
+            Tbl_Users find_user = ctx.Tbl_Users.Find(Id);
 
             if (find_user == null)
             {
@@ -219,7 +219,7 @@ namespace Administrator.Manager.Implementations
             {
                 var delete_user = new Tbl_Users()
                 {
-                    Id = Data.Id,
+                    Id = Id,
                     Id_group = find_user.Id_group,
                     Type_user = find_user.Type_user,
                     Photo_user = find_user.Photo_user,
@@ -229,7 +229,7 @@ namespace Administrator.Manager.Implementations
                     LnameP_user = find_user.LnameP_user,
                     LnameM_user = find_user.LnameM_user,
                     Active_user = false,
-                    DeleteU_user = Data.HighUser,
+                    DeleteU_user = HighUser,
                     DeleteD_user = DateTime.Now,
                     Delete_stautus_user = true
                 };
@@ -264,11 +264,11 @@ namespace Administrator.Manager.Implementations
             ctx = new DataModels();
         }
 
-        public List<ViewModelUser> ReadUser(int Id)
+        public ViewModelUser ReadUser(int Id)
         {
             try
             {
-                List<ViewModelUser> salida = ctx.Tbl_Users.Where(w => w.Id == Id)
+                ViewModelUser salida = ctx.Tbl_Users.Where(w => w.Id == Id)
                     .Select(s => new ViewModelUser
                     {
                         Id = s.Id,
@@ -280,7 +280,7 @@ namespace Administrator.Manager.Implementations
                         Lnamep = s.LnameP_user,
                         Lnamem = s.LnameM_user,
                         Status = s.Active_user
-                    }).ToList();
+                    }).FirstOrDefault();
 
                 return salida;
             }

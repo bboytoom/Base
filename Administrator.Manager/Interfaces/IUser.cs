@@ -27,12 +27,12 @@ namespace Administrator.Manager.Interfaces
     {
         [OperationContract]
         [WebInvoke(RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "/delete", Method = "POST", BodyStyle = WebMessageBodyStyle.Wrapped)]
-        string DeleteUser(ViewModelUser Data);
+        string DeleteUser(int Id, int HighUser);
     }
 
     public interface IReadUser
     {
-        List<ViewModelUser> ReadUser(int Id);
+        ViewModelUser ReadUser(int Id);
     }
 
     public interface IReadAllUser

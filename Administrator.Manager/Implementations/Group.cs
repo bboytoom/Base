@@ -332,6 +332,27 @@ namespace Administrator.Manager.Implementations
             return show_group.ToList();
         }
     }
-    
+
+    public class ReadGroupUserImp : IReadGroupUser
+    {
+        private DataModels ctx;
+        public ReadGroupUserImp()
+        {
+            ctx = new DataModels();
+        }
+
+        public List<Tbl_Groups> ReadGroupUser()
+        {
+            try
+            {
+                return ctx.Tbl_Groups.ToList();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+    }
+
     #endregion
 }

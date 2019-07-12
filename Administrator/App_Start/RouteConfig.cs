@@ -98,8 +98,8 @@ namespace Administrator
 
             routes.MapRoute(
                 name: "userform",
-                url: "usuarios/form",
-                defaults: new { controller = "Catalogs", action = "PartialViewUserF" }
+                url: "usuarios/form/{Id}/{Tipo}",
+                defaults: new { controller = "Catalogs", action = "PartialViewUserF", Id = UrlParameter.Optional, Tipo = UrlParameter.Optional }
             );
 
             routes.MapRoute(
@@ -107,13 +107,7 @@ namespace Administrator
                 url: "grupos/read",
                 defaults: new { controller = "Catalogs", action = "ReadViewGroup" }
             );
-
-            routes.MapRoute(
-                name: "readuser",
-                url: "usuarios/read/{Id}",
-                defaults: new { controller = "Catalogs", action = "ReadViewUser", Id = UrlParameter.Optional }
-            );
-
+            
             #endregion
 
         }

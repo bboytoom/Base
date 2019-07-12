@@ -144,7 +144,6 @@ function LoadModalGroup(ID, USUARIO) {
 function petitionsGroup(INPUT, ID, USUARIO) {
     var serializer_form_check = document.getElementsByClassName('ckeck__group');
     var URL = '';
-
     var check_array = {
         'HighUser': USUARIO,
         'Name': INPUT,

@@ -4,19 +4,33 @@
     Los registros que tienen * son obligatorios
 </div>
 
-@using (Html.BeginForm("", "", FormMethod.Post, new { id = "form_group", @class = "row", autocomplete = "off" }))
+@using (Html.BeginForm("", "", FormMethod.Post, new { id = "form_user", @class = "row", autocomplete = "off" }))
 {
     @Html.AntiForgeryToken()
 
     <div class="col-md-12">
         <div class="row">
-            <div class="col-md-6">
-                <img src="~/Assets/images/default.png" class="card-img-top upload__image-user m-4" alt="default.png">
+            
+            <div class="col-md-4 mt-4">
+
+                @{
+
+                    if (@ViewBag.defaultImg != null)
+                    {
+                        <img id="user_img" src="~/Assets/images/@ViewBag.defaultImg" class="card-img-top upload__image-user" alt="@ViewBag.defaultImg">
+                    }
+                    else
+                    {
+                        <img id="user_img" src="~/Assets/images/@Html.DisplayFor(model => model.Photo)" class="card-img-top upload__image-user" alt="@Html.DisplayFor(model => model.Photo)">
+                    }
+
+                }
+
             </div>
 
-            <div class="col-md-6 mt-4">
+            <div class="col-md-8 mt-4">
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-md-8">
                         <div class="input-group">
                             <div class="custom-file">
                                 <input type="file" class="custom-file-input" id="user_imagen" name="user_imagen">
@@ -25,15 +39,29 @@
                         </div>
                     </div>
 
-                    <div class="col-md-9 mt-3">
-                        <div class='custom-control custom-switch'>
+                    <div class="col-md-4 text-right">
+                        <div class='custom-control custom-switch mt-2'>
                             @Html.CheckBoxFor(model => model.Status, new { @id = "user_estado", @class = "custom-control-input" })
                             <label class='custom-control-label' for='user_estado'>Estado</label>
-                        </div> 
+                        </div>
                     </div>
 
-                    <div class="col-md-3 mt-3">
-                        @Html.DisplayFor(model => model.Idgroup)
+                    <div class="col-md-6 mt-4 text-left">
+                        <label for="user_group">* Seleccion un grupo</label>
+
+                        <div class="input-group mb-2">
+                            @Html.DropDownListFor(model => model.Idgroup, new SelectList(ViewBag.groupUser, "Id", "Name_group"), "Selecciona el grupo", new { @id = "user_group", @class = "custom-select" })
+                        </div>
+                        <span id="lable_group" style="display:none; color: red;">No selecciono un grupo</span>
+                    </div>
+
+                    <div class="col-md-6 mt-4 text-left">
+                        <label for="user_type">* Seleccion el tipo de usuario</label>
+
+                        <div class="input-group mb-2">
+                            @Html.DropDownListFor(model => model.Typeuser, new SelectList(ViewBag.userType, "Value", "Text"), "Selecciona tipo de usuario", new { @id = "user_type", @class = "custom-select" })
+                        </div>
+                        <span id="tipo_" style="display:none; color: red;">No selecciono el tipo de usuario</span>
                     </div>
                 </div>
             </div>
@@ -46,9 +74,10 @@
                 <div class="form-group">
                     <label for="user_apaterno">* Apellido paterno</label>
 
-                    <div class='input-group'>
+                    <div class='input-group mb-2'>
                         @Html.EditorFor(model => model.Lnamep, new { htmlAttributes = new { @id = "user_apaterno", @class = "form-control", @placeholder = "Apellido paterno", @maxlength = "30" } })
                     </div>
+                    <span id="lable_paterno" style="display:none; color: red;">El registro de apellido paterno se encuentra vacio o no cuenta con los caracteres minimos</span>
                 </div>
             </div>
 
@@ -70,9 +99,10 @@
                 <div class="form-group">
                     <label for="user_nombre">* Nombre</label>
 
-                    <div class='input-group'>
+                    <div class='input-group mb-2'>
                         @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @id = "user_nombre", @class = "form-control", @placeholder = "Nombre de usuario", @maxlength = "50" } })
                     </div>
+                    <span id="lable_nombre" style="display:none; color: red;">El registro de nombre se encuentra vacio o no cuenta con los caracteres minimos</span>
                 </div>
             </div>
 
@@ -80,8 +110,19 @@
                 <div class="form-group">
                     <label for="user_correo">* Correo de usuario</label>
 
-                    <div class='input-group'>
+                    <div class='input-group mb-2'>
                         @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @id = "user_correo", @class = "form-control", @placeholder = "Correo de usuario", @maxlength = "80" } })
+                    </div>
+                    <span id="lable_email" style="display:none; color: red;">El registro de correo se encuentra vacio o no cuenta con los caracteres minimos</span>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="user_password">* Contraseña</label>
+
+                    <div class='input-group mb-2'>
+                        @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @id = "user_password", @class = "form-control", @placeholder = "Contraseña", @maxlength = "80" } })
                     </div>
                 </div>
             </div>

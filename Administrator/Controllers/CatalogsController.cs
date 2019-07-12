@@ -18,6 +18,7 @@ namespace Administrator.Controllers
         private ReadGroupImp objReadOnlyGroup;
         private ReadAllUserImp objReadUser;
         private ReadUserImp objReadOnlyUser;
+        private ReadGroupUserImp objReadGroupUser;
 
         public CatalogsController()
         {
@@ -25,6 +26,7 @@ namespace Administrator.Controllers
             objReadOnlyGroup = new ReadGroupImp();
             objReadUser = new ReadAllUserImp();
             objReadOnlyUser = new ReadUserImp();
+            objReadGroupUser = new ReadGroupUserImp();
         }
 
         public ActionResult Index()
@@ -117,26 +119,26 @@ namespace Administrator.Controllers
         }
 
         [HttpGet]
-        public ActionResult PartialViewUserF(int id)
-        {          
-            return PartialView("_PartialViewUserF");
-        }
-
-        [HttpPost]
-        public JsonResult ReadViewUser(int Id)
+        public ActionResult PartialViewUserF(int Id, string Tipo)
         {
-            dynamic showMessageString = string.Empty;
+            try
+            {
+                ViewBag.groupUser = objReadGroupUser.ReadGroupUser();
+                ViewBag.userType = HCatalogs.GetTypeUser();
 
-            if (Id != 0)
-            {               
-                return Json(showMessageString = new
+                if (Id != 0 && Tipo == "actualizar")
                 {
-                    Status = 200,
-                    Respuesta = objReadOnlyUser.ReadUser(Id)
-                }, JsonRequestBehavior.AllowGet);
-            }
+                    var usuario = objReadOnlyUser.ReadUser(Id);
+                    return PartialView("_PartialViewUserF", usuario);
+                }
 
-            return Json(showMessageString = new { Status = 404, Respuesta = "Falta datos necesarios para realizar la peticion" }, JsonRequestBehavior.AllowGet);
+                ViewBag.defaultImg = "default.png";
+                return PartialView("_PartialViewUserF");
+            }
+            catch (Exception)
+            {
+                throw;
+            }            
         }
 
         #endregion

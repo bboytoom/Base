@@ -43,4 +43,9 @@ namespace Administrator.Manager.Interfaces
     {
         List<Tbl_Groups> ReadAllGroup(string sortOrder, string searchstring);
     }
+
+    public interface IReadGroupUser
+    {
+        List<Tbl_Groups> ReadGroupUser();
+    }
 }

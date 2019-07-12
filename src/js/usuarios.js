@@ -6,44 +6,11 @@ class Usuarios extends Strategy {
     }
 
     crear() {
-        LoadModalUser(0, this._USUARIO);
+        LoadModalUser('crear', 0, this._USUARIO);
     }
 
-    actualizar() {
-        var ID = this._ID;
-        var USUARIO = this._USUARIO;
-
-        $.ajax({
-            method: "POST",
-            url: "/usuarios/read",
-            data: JSON.stringify({ 'Id': this._ID }),
-            contentType: "application/json",
-            dataType: 'json',
-            success: function (data) {
-                if (data.Status == 200) {
-                    var datos = data.Respuesta[0];
-
-                    console.log(datos);
-
-                    /*LoadModalUser(ID, USUARIO);
-
-                    setTimeout(function () {
-                        document.getElementById('user_foto').value = datos.Photo;
-                        document.getElementById('user_idgrupo').value = datos.Idgroup;
-                        document.getElementById('user_nombre').value = datos.Name;
-                        document.getElementById('user_apaterno').value = datos.Lnamep;
-                        document.getElementById('user_amaterno').value = datos.Lnamem;
-                        document.getElementById('user_correo').value = datos.Email;
-                    }, 600); */
-                } else {
-                    Swal.fire({
-                        type: 'error',
-                        text: 'Error al realizar la peticion',
-                        confirmButtonText: 'Cerrar'
-                    });
-                }
-            }
-        });
+    actualizar() {  
+        LoadModalUser('actualizar', this._ID, this._USUARIO);
     }
 
     eliminar() {
@@ -56,14 +23,41 @@ class Usuarios extends Strategy {
             cancelButtonText: 'Cancelar'
         })
             .then((result) => {
-                
+                if (result.value) {
+                    Swal.fire({
+                        type: 'error',
+                        title: 'Eliminado correctamente',
+                        preConfirm: () => {
+                            var URL = 'http://localhost:50851/wsuserdelete.svc/user/delete';
+
+                            $.ajax({
+                                method: "POST",
+                                url: URL,
+                                data: JSON.stringify({ 'Id': this._ID, HighUser: this._USUARIO }),
+                                contentType: "application/json",
+                                dataType: "json",
+                            })
+                                .done(function (data, textStatus, xhr) {
+                                    if (data.status == 200)
+                                        return true;
+                                })
+                                .fail(function (data, textStatus, xhr) {
+                                    if (data.status == 400)
+                                        Swal.showValidationMessage(data.responseJSON.ErrorDetails);
+
+                                    if (data.status == 404)
+                                        Swal.showValidationMessage(data.responseJSON.ErrorDetails);
+                                });
+                        }
+                    })
+                }
             });
     }
 }
 
-function LoadModalUser(ID, USUARIO) {
+function LoadModalUser(TIPO, ID, USUARIO) {
     $.ajax({
-        url: "/usuarios/form/?Id=" + USUARIO,
+        url: "/usuarios/form/?Id=" + ID + "&Tipo=" + TIPO,
         dataType: 'html',
         success: function (data) {
             Swal.fire({
@@ -73,15 +67,67 @@ function LoadModalUser(ID, USUARIO) {
                 allowEscapeKey: false,
                 allowOutsideClick: false,
                 width: '65rem',
-                html: data
+                html: data,
+                preConfirm: () => {
+                    var input_paterno = cleanInput(document.getElementById('user_apaterno').value);
+                    var input_nombre = cleanInput(document.getElementById('user_nombre').value);
+                    var input_correo = cleanInput(document.getElementById('user_correo').value);
+                   
+                    petitionsUser(ID, USUARIO);                    
+                },
+                allowOutsideClick: () => !Swal.isLoading()
             })
                 .then((result) => {
-                    
+                    if (result.value)
+                        Swal.fire({
+                            type: 'success',
+                            confirmButtonText: 'Cerrar'
+                        });
                 });
         }
     });
 }
 
-function petitionsGroup(ID, USUARIO) {
+function petitionsUser(ID, USUARIO) {
+    var URL = '';
+    var check_array = {
+        'Id': ID,
+        'Idgroup': document.getElementById('user_group').value,
+        'Typeuser': document.getElementById('user_type').value,
+        'Photo': document.getElementById('user_img').getAttribute('alt'),
+        'Email': document.getElementById('user_correo').value,
+        'Name': document.getElementById('user_nombre').value,
+        'Lnamep': document.getElementById('user_apaterno').value,
+        'Lnamem': document.getElementById('user_amaterno').value,
+        'Status': document.getElementById('user_estado').value,
+        'Password': document.getElementById('user_password').value,
+        'HighUser': USUARIO
+    };
 
+    if (ID == 0)
+        URL = 'http://localhost:50851/wsusercreate.svc/user/create';
+    else
+        URL = 'http://localhost:50851/wsuserupdate.svc/user/update';
+
+    $.ajax({
+        method: "POST",
+        url: URL,
+        data: JSON.stringify({ 'Data': check_array }),
+        contentType: "application/json",
+        dataType: "json",
+    })
+        .done(function (data, textStatus, xhr) {
+            if (data.status == 200)
+                return true;
+        })
+        .fail(function (data, textStatus, xhr) {
+            if (data.status == 400)
+                Swal.showValidationMessage(data.responseJSON.ErrorDetails);
+
+            if (data.status == 404)
+                Swal.showValidationMessage(data.responseJSON.ErrorDetails);
+
+            if (data.status == 410)
+                Swal.showValidationMessage(data.responseJSON.ErrorDetails);
+        });
 }
