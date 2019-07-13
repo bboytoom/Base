@@ -4,7 +4,7 @@
     Los registros que tienen * son obligatorios
 </div>
 
-@using (Html.BeginForm("", "", FormMethod.Post, new { id = "form_user", @class = "row", autocomplete = "off" }))
+@using (Html.BeginForm("", "", FormMethod.Post, new { id = "form_user", @class = "row", enctype = "multipart/form-data", autocomplete = "off" }))
 {
     @Html.AntiForgeryToken()
 
@@ -12,20 +12,7 @@
         <div class="row">
             
             <div class="col-md-4 mt-4">
-
-                @{
-
-                    if (@ViewBag.defaultImg != null)
-                    {
-                        <img id="user_img" src="~/Assets/images/@ViewBag.defaultImg" class="card-img-top upload__image-user" alt="@ViewBag.defaultImg">
-                    }
-                    else
-                    {
-                        <img id="user_img" src="~/Assets/images/@Html.DisplayFor(model => model.Photo)" class="card-img-top upload__image-user" alt="@Html.DisplayFor(model => model.Photo)">
-                    }
-
-                }
-
+                <img id="user_img" src="~/Assets/images/@ViewBag.defaultImg" class="card-img-top upload__image-user" alt="@ViewBag.defaultImg">
             </div>
 
             <div class="col-md-8 mt-4">

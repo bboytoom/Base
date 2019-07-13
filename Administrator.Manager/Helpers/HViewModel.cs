@@ -48,7 +48,6 @@ namespace Administrator.Manager.Helpers
         public int Id { get; set; }
         public int Idgroup { get; set; }
         public int Typeuser { get; set; }
-        public string Photo { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
         public string Name { get; set; }

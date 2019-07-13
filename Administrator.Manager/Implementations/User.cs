@@ -4,6 +4,7 @@ using Administrator.Manager.Interfaces;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.ServiceModel.Web;
@@ -64,7 +65,6 @@ namespace Administrator.Manager.Implementations
                 {
                     Id_group = Data.Idgroup,
                     Type_user = Data.Typeuser,
-                    Photo_user = Data.Photo,
                     Email_user = email_clean,
                     Password_user = Data.Password,
                     Name_user = Data.Name,
@@ -158,7 +158,6 @@ namespace Administrator.Manager.Implementations
                     Id = Data.Id,
                     Id_group = Data.Idgroup,
                     Type_user = Data.Typeuser,
-                    Photo_user = Data.Photo,
                     Email_user = email_clean,
                     Password_user = find_user.Password_user,
                     Name_user = Data.Name,
@@ -274,7 +273,6 @@ namespace Administrator.Manager.Implementations
                         Id = s.Id,
                         Idgroup = s.Id_group,
                         Typeuser = s.Type_user,
-                        Photo = s.Photo_user,
                         Email = s.Email_user,
                         Name = s.Name_user,
                         Lnamep = s.LnameP_user,
@@ -322,5 +320,18 @@ namespace Administrator.Manager.Implementations
         }
     }
 
-    #endregion   
+    #endregion
+
+    #region Manejo de archivos
+
+    public class UploadImgUserImp : IUploadImgUser
+    {
+        public void UploadImgUser(string fileName, Stream fileStream)
+        {
+            Console.WriteLine(fileStream);
+        }
+    }
+
+    #endregion
+
 }
