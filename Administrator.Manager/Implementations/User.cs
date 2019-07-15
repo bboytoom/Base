@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.ServiceModel.Activation;
 using System.ServiceModel.Web;
 
 namespace Administrator.Manager.Implementations
@@ -71,20 +72,15 @@ namespace Administrator.Manager.Implementations
                     LnameP_user = Data.Lnamep,
                     LnameM_user = Data.Lnamem,
                     Active_user = true,
+                    Photo_user = "default.png",
                     CreateU_user = Data.HighUser,
                     CreateD_user = DateTime.Now
                 };
 
                 ctx.Tbl_Users.Add(insert_user);
                 ctx.SaveChanges();
-
-                return JsonConvert.SerializeObject(
-                    new OutJsonCheck
-                    {
-                        Status = 200,
-                        Respuesta = true
-                    }
-                );
+                
+                return JsonConvert.SerializeObject(new { Status = 200, Respuesta = true });
             }
             catch (Exception)
             {
@@ -163,21 +159,18 @@ namespace Administrator.Manager.Implementations
                     Name_user = Data.Name,
                     LnameP_user = Data.Lnamep,
                     LnameM_user = Data.Lnamem,
+                    Photo_user = find_user.Photo_user,
                     Active_user = Data.Status,
                     UpdateU_user = Data.HighUser,
-                    UpdateD_user = DateTime.Now
+                    UpdateD_user = DateTime.Now,
+                    CreateU_user = find_user.CreateU_user,
+                    CreateD_user = find_user.CreateD_user
                 };
 
                 ctx.Entry(find_user).CurrentValues.SetValues(update_user);
                 ctx.SaveChanges();
-
-                return JsonConvert.SerializeObject(
-                    new OutJsonCheck
-                    {
-                        Status = 200,
-                        Respuesta = true
-                    }
-                );
+                
+                return JsonConvert.SerializeObject(new { Status = 200, Respuesta = true });
             }
             catch (Exception)
             {
@@ -275,6 +268,7 @@ namespace Administrator.Manager.Implementations
                         Typeuser = s.Type_user,
                         Email = s.Email_user,
                         Name = s.Name_user,
+                        Nameimg = s.Photo_user,
                         Lnamep = s.LnameP_user,
                         Lnamem = s.LnameM_user,
                         Status = s.Active_user
@@ -322,16 +316,49 @@ namespace Administrator.Manager.Implementations
 
     #endregion
 
-    #region Manejo de archivos
+    #region carga de imagenes
 
-    public class UploadImgUserImp : IUploadImgUser
+    public class UploadImgImp : IUploadImg
     {
-        public void UploadImgUser(string fileName, Stream fileStream)
+        private DataModels ctx;
+        private UploadImgImp()
         {
-            Console.WriteLine(fileStream);
+            ctx = new DataModels();
+        }
+
+        public void UploadImg(ViewModelUploadImg File)
+        {
+            if (File.Image != null || File.Image != "")
+            {
+                Tbl_Users find_user = ctx.Tbl_Users.Find(File.Id);
+
+                var update_user = new Tbl_Users()
+                {
+                    Id = File.Id,
+                    Photo_user = File.Name,
+                    Type_user = find_user.Type_user,
+                    Id_group = find_user.Id_group,
+                    Email_user = find_user.Email_user,
+                    Password_user = find_user.Password_user,
+                    Active_user = find_user.Active_user,
+                    Name_user = find_user.Name_user,
+                    LnameM_user = find_user.LnameM_user,
+                    LnameP_user = find_user.LnameP_user,
+                    UpdateD_user = find_user.UpdateD_user,
+                    UpdateU_user = find_user.UpdateU_user,
+                    CreateD_user = find_user.CreateD_user,
+                    CreateU_user = find_user.CreateU_user
+                };
+
+                ctx.Entry(find_user).CurrentValues.SetValues(update_user);
+                ctx.SaveChanges();
+
+                HImages.ImagesSys(File.Image, File.Name, "/Administrator/Assets/images");
+            }
         }
     }
 
     #endregion
 
 }
+ 

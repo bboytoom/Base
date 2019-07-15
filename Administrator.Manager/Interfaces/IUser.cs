@@ -2,6 +2,7 @@
 using Administrator.Manager.Helpers;
 using System.Collections.Generic;
 using System.IO;
+using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.ServiceModel.Web;
 
@@ -32,11 +33,11 @@ namespace Administrator.Manager.Interfaces
     }
 
     [ServiceContract]
-    public interface IUploadImgUser
+    public interface IUploadImg
     {
         [OperationContract]
-        [WebInvoke(Method = "POST", UriTemplate = "uploaduser?fileName={fileName}")]
-        void UploadImgUser(string fileName, Stream fileStream);
+        [WebInvoke(RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "/upload", Method = "POST", BodyStyle = WebMessageBodyStyle.Wrapped)]
+        void UploadImg(ViewModelUploadImg File);
     }
 
     public interface IReadUser

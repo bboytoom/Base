@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -53,8 +54,16 @@ namespace Administrator.Manager.Helpers
         public string Name { get; set; }
         public string Lnamep { get; set; }
         public string Lnamem { get; set; }
+        public string Nameimg { get; set; }
         public bool Status { get; set; }
         public int HighUser { get; set; }
+    }
+
+    public class ViewModelUploadImg
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string Image { get; set; }
     }
 
     public class ViewModelsLogin

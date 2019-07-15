@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Serialization;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Runtime.Serialization;
 
 namespace Administrator.Manager.Helpers
 {
@@ -12,7 +7,7 @@ namespace Administrator.Manager.Helpers
         public int Status { get; set; }
         public bool Respuesta { get; set; }
     }
-
+    
     [DataContract]
     public class CustomErrorDetail
     {

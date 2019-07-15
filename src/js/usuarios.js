@@ -91,7 +91,7 @@ function LoadModalUser(TIPO, ID, USUARIO) {
 function petitionsUser(ID, USUARIO) {
     var URL = '';
     var photo = document.getElementById("user_imagen").files[0];
-    var form_data = new FormData();
+    
     var check_array = {
         'Id': ID,
         'Idgroup': document.getElementById('user_group').value,
@@ -104,25 +104,8 @@ function petitionsUser(ID, USUARIO) {
         'Password': document.getElementById('user_password').value,
         'HighUser': USUARIO
     };
-
-  
-    $.ajax({
-        url: 'http://localhost:50851/wsuploadimguser.svc/user/uploaduser?fileName=' + photo.name,
-        type: 'POST',
-        data: photo,
-        cache: false,
-        dataType: 'json',
-        processData: false,
-        contentType: "application/octet-stream", 
-        success: function (data) {
-            alert('successful..');
-        },
-        error: function (data) {
-            alert('Some error Occurred!');
-        }
-    });
-
-    /*if (ID == 0)
+    
+    if (ID == 0)
         URL = 'http://localhost:50851/wsusercreate.svc/user/create';
     else
         URL = 'http://localhost:50851/wsuserupdate.svc/user/update';
@@ -135,17 +118,39 @@ function petitionsUser(ID, USUARIO) {
         dataType: "json",
     })
         .done(function (data, textStatus, xhr) {
-            if (data.status == 200)
-                return true;
+            if (typeof photo != 'undefined') 
+                ImageBit(ID, photo.name, photo);
+               
+            return true;
         })
         .fail(function (data, textStatus, xhr) {
             if (data.status == 400)
                 Swal.showValidationMessage(data.responseJSON.ErrorDetails);
-
             if (data.status == 404)
                 Swal.showValidationMessage(data.responseJSON.ErrorDetails);
-
             if (data.status == 410)
                 Swal.showValidationMessage(data.responseJSON.ErrorDetails);
-        });*/
+        });
+}
+
+function ImageBit(ID, NAME, FILE) {
+    var reader = new FileReader();
+
+    reader.onload = function (e) {
+        var image_upload = {
+            'Id': ID,
+            'Name': NAME,
+            'Image': e.target.result
+        };
+        
+        $.ajax({
+            method: "POST",
+            url: 'http://localhost:50851/wsupload.svc/images/upload',
+            data: JSON.stringify({ 'File': image_upload }),
+            contentType: "application/json",
+            dataType: "json",
+        })
+    };
+    
+    reader.readAsDataURL(FILE);
 }
