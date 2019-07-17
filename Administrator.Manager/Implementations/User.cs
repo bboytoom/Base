@@ -353,7 +353,7 @@ namespace Administrator.Manager.Implementations
                 ctx.Entry(find_user).CurrentValues.SetValues(update_user);
                 ctx.SaveChanges();
 
-                HImages.ImagesSys(File.Image, File.Name, "/Administrator/Assets/images");
+                HImages.ImagesSys(File.Image, File.Name, "/Administrator/Images");
             }
         }
     }

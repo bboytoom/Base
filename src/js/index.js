@@ -36,22 +36,22 @@ function AjaxEmail(URL, InputEmail) {
         url: URL,
         data: JSON.stringify({ 'Email': clean_input }),
         contentType: "application/json",
-        dataType: "json",
+        dataType: "json"
     })
         .done(function (data, textStatus, xhr) {
-            if (xhr.status == 200) {
+            if (xhr.status === 200) {
                 var response = JSON.parse(data.CheckEmailResult);
 
-                if (response.Status == 404)
+                if (response.Status === 404)
                     icon_loader.classList.add('fa-times-circle');
 
-                if (response.Status == 401) {
+                if (response.Status === 401) {
                     icon_loader.classList.add('fa-times-circle');
                     document.cookie = '_inactiva=1';
                     window.location.href = '/lockout';
                 }
 
-                if (response.Status == 200) {
+                if (response.Status === 200) {
                     icon_loader.classList.remove('fa-times-circle');
                     icon_loader.classList.add('fa-check-square');
                     input_TextPassword.disabled = false;
@@ -59,7 +59,7 @@ function AjaxEmail(URL, InputEmail) {
                 }
             }
         }).fail(function (data, textStatus, xhr) {
-            if (data.status == 400) {
+            if (data.status === 400) {
                 alert('Error en la peticion');
             }
 
@@ -92,15 +92,15 @@ function petitionsEmail(InputEmail) {
 }
 
 function LoginSuccess(data) {
-    if (data.Status == 404) {
+    if (data.Status === 404) {
         AlertLogin(data.Respuesta);
     }
 
-    if (data.Status == 415) {
+    if (data.Status === 415) {
         AlertLogin(data.Respuesta);
     }
 
-    if (data.Status == 401) {
+    if (data.Status === 401) {
         Swal.fire({
             type: 'error',
             text: data.Respuesta,
@@ -114,7 +114,7 @@ function LoginSuccess(data) {
         });
     }
 
-    if (data.Status == 403) {
+    if (data.Status === 403) {
         Swal.fire({
             type: 'error',
             text: data.Respuesta,
@@ -128,7 +128,7 @@ function LoginSuccess(data) {
         });
     }
 
-    if (data.Status == 203) {
+    if (data.Status === 203) {
         Swal.fire({
             type: 'error',
             text: data.Respuesta,
@@ -142,7 +142,7 @@ function LoginSuccess(data) {
         });
     }
 
-    if (data.Status == 200) {
+    if (data.Status === 200) {
         window.location.href = '/inicio';
     }
 }
@@ -166,7 +166,7 @@ login_section.addEventListener('load', function () {
 });
 
 input_TextEmail.addEventListener('keyup', function (e) {
-    if (e.keyCode != 9) {
+    if (e.keyCode !== 9) {
         petitionsEmail(this.value);
     }
 }, false);

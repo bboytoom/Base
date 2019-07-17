@@ -9,6 +9,8 @@ using System.ServiceModel.Web;
 
 namespace Administrator.Manager.Implementations
 {
+    #region verifica correo
+
     public class CheckEmailImp : ICheckEmail
     {
         private DataModels ctx;
@@ -46,7 +48,7 @@ namespace Administrator.Manager.Implementations
                 var query_failed = ctx.Tbl_Users
                     .Where(w => w.Email_user == email_clean && w.Active_user == false)
                     .FirstOrDefault();
-                
+
                 if (query_failed == null)
                 {
                     var query = ctx.Tbl_Users
@@ -86,6 +88,9 @@ namespace Administrator.Manager.Implementations
         }
     }
 
+    #endregion
+
+    #region verifica credenciales
     public class LoginImp : ILogin
     {
         private DataModels ctx;
@@ -103,6 +108,7 @@ namespace Administrator.Manager.Implementations
             return ctx.Tbl_Users.Where(w => w.Email_user == data.Email && w.Password_user == password_clean).FirstOrDefault();
         }
     }
+    #endregion
 
     #region Inicia las clases estaticas
 

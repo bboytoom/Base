@@ -264,11 +264,11 @@ namespace Administrator.Manager.Implementations
             ctx = new DataModels();
         }
 
-        public List<ViewModelGroup> ReadGroup(int Id)
+        public ViewModelGroup ReadGroup(int Id)
         {
             try
             {
-                List<ViewModelGroup> salida = ctx.Tbl_Groups.Join(ctx.Tbl_Permissions,
+                ViewModelGroup salida = ctx.Tbl_Groups.Join(ctx.Tbl_Permissions,
                 pk => pk.Id, fk => fk.Id_group, (pk, fk) => new ViewModelGroup
                 {
                     Id = pk.Id,
@@ -291,9 +291,30 @@ namespace Administrator.Manager.Implementations
                     Updateemail = fk.Update_email_permission,
                     Deleteemail = fk.Delete_email_permission,
                     Status = pk.Active_group
-                }).Where(w => w.Id == Id).ToList();
+                }).Where(w => w.Id == Id).FirstOrDefault();
 
                 return salida;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+    }
+
+    public class ReadGroupUserImp : IReadGroupUser
+    {
+        private DataModels ctx;
+        public ReadGroupUserImp()
+        {
+            ctx = new DataModels();
+        }
+
+        public List<Tbl_Groups> ReadGroupUser()
+        {
+            try
+            {
+                return ctx.Tbl_Groups.ToList();
             }
             catch (Exception)
             {
@@ -330,27 +351,6 @@ namespace Administrator.Manager.Implementations
             }
 
             return show_group.ToList();
-        }
-    }
-
-    public class ReadGroupUserImp : IReadGroupUser
-    {
-        private DataModels ctx;
-        public ReadGroupUserImp()
-        {
-            ctx = new DataModels();
-        }
-
-        public List<Tbl_Groups> ReadGroupUser()
-        {
-            try
-            {
-                return ctx.Tbl_Groups.ToList();
-            }
-            catch (Exception)
-            {
-                throw;
-            }
         }
     }
 

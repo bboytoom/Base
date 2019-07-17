@@ -69,10 +69,12 @@ artifacts/
 *.pidb
 *.svclog
 *.scc
-*.min.css.map
 *.css.map
-*.min.js
 *.min.css
+*.min.css.map
+*.js.map
+*.min.js
+*.min.js.map
 
 # Chutzpah Test files
 _Chutzpah*
@@ -267,4 +269,7 @@ __pycache__/
 *.js.map
 package-lock.json
 test/
+Administrator/Content/
+Administrator/Images/
+Administrator/Scripts/
 package-lock.json

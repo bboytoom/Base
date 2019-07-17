@@ -7,7 +7,7 @@ function cleanInput(InputEmail) {
 function valid_Name(Input_name) {
     var clean_input = cleanInput(Input_name);
 
-    if (Input_name == "")
+    if (Input_name === "")
         return false;
 
     if (clean_input.length > 3 && clean_input.length < 29)

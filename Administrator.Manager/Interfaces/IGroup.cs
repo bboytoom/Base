@@ -36,7 +36,7 @@ namespace Administrator.Manager.Interfaces
 
     public interface IReadGroup
     {
-        List<ViewModelGroup> ReadGroup(int Id);
+        ViewModelGroup ReadGroup(int Id);
     }
 
     public interface IReadAllGroup

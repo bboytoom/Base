@@ -35,21 +35,21 @@ class Usuarios extends Strategy {
                                 url: URL,
                                 data: JSON.stringify({ 'Id': this._ID, HighUser: this._USUARIO }),
                                 contentType: "application/json",
-                                dataType: "json",
+                                dataType: "json"
                             })
                                 .done(function (data, textStatus, xhr) {
-                                    if (data.status == 200)
+                                    if (data.status === 200)
                                         return true;
                                 })
                                 .fail(function (data, textStatus, xhr) {
-                                    if (data.status == 400)
+                                    if (data.status === 400)
                                         Swal.showValidationMessage(data.responseJSON.ErrorDetails);
 
-                                    if (data.status == 404)
+                                    if (data.status === 404)
                                         Swal.showValidationMessage(data.responseJSON.ErrorDetails);
                                 });
                         }
-                    })
+                    });
                 }
             });
     }
@@ -69,13 +69,8 @@ function LoadModalUser(TIPO, ID, USUARIO) {
                 width: '65rem',
                 html: data,
                 preConfirm: () => {
-                    var input_paterno = cleanInput(document.getElementById('user_apaterno').value);
-                    var input_nombre = cleanInput(document.getElementById('user_nombre').value);
-                    var input_correo = cleanInput(document.getElementById('user_correo').value);
-                   
                     petitionsUser(ID, USUARIO);                    
-                },
-                allowOutsideClick: () => !Swal.isLoading()
+                }
             })
                 .then((result) => {
                     if (result.value)
@@ -105,7 +100,7 @@ function petitionsUser(ID, USUARIO) {
         'HighUser': USUARIO
     };
     
-    if (ID == 0)
+    if (ID === 0)
         URL = 'http://localhost:50851/wsusercreate.svc/user/create';
     else
         URL = 'http://localhost:50851/wsuserupdate.svc/user/update';
@@ -115,20 +110,20 @@ function petitionsUser(ID, USUARIO) {
         url: URL,
         data: JSON.stringify({ 'Data': check_array}),
         contentType: "application/json",
-        dataType: "json",
+        dataType: "json"
     })
         .done(function (data, textStatus, xhr) {
-            if (typeof photo != 'undefined') 
+            if (typeof photo !== 'undefined') 
                 ImageBit(ID, photo.name, photo);
                
             return true;
         })
-        .fail(function (data, textStatus, xhr) {
-            if (data.status == 400)
+        .fail(function (data) {
+            if (data.status === 400)
                 Swal.showValidationMessage(data.responseJSON.ErrorDetails);
-            if (data.status == 404)
+            if (data.status === 404)
                 Swal.showValidationMessage(data.responseJSON.ErrorDetails);
-            if (data.status == 410)
+            if (data.status === 410)
                 Swal.showValidationMessage(data.responseJSON.ErrorDetails);
         });
 }
@@ -148,8 +143,8 @@ function ImageBit(ID, NAME, FILE) {
             url: 'http://localhost:50851/wsupload.svc/images/upload',
             data: JSON.stringify({ 'File': image_upload }),
             contentType: "application/json",
-            dataType: "json",
-        })
+            dataType: "json"
+        });
     };
     
     reader.readAsDataURL(FILE);

@@ -15,6 +15,7 @@ namespace Administrator.Manager.Helpers
             typeuser.Add(new SelectListItem() { Text = "Administrador", Value = "3" });
             typeuser.Add(new SelectListItem() { Text = "Usuario", Value = "4" });
             typeuser.Add(new SelectListItem() { Text = "Proveedor", Value = "5" });
+            typeuser.Add(new SelectListItem() { Text = "Cliente", Value = "6" });
 
             return typeuser;
         }

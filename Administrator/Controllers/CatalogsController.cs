@@ -66,23 +66,15 @@ namespace Administrator.Controllers
         }
 
         [HttpGet]
-        public ActionResult PartialViewGroupF()
+        public ActionResult PartialViewGroupF(int Id, string Tipo)
         {
-            return PartialView("_PartialViewGroupF");
-        }
-
-        [HttpPost]
-        public JsonResult ReadViewGroup(int Id)
-        {
-            dynamic showMessageString = string.Empty;
-
-            if (Id != 0)
+            if (Id != 0 && Tipo == "actualizar")
             {
-                List<ViewModelGroup> salida = objReadOnlyGroup.ReadGroup(Id);
-                return Json(showMessageString = new { Status = 200, Respuesta = salida }, JsonRequestBehavior.AllowGet);
+                var grupos = objReadOnlyGroup.ReadGroup(Id);
+                return PartialView("_PartialViewGroupF", grupos);
             }
 
-            return Json(showMessageString = new { Status = 404, Respuesta = "Falta datos necesarios para realizar la peticion" }, JsonRequestBehavior.AllowGet);
+            return PartialView("_PartialViewGroupF");
         }
 
         #endregion
@@ -121,24 +113,17 @@ namespace Administrator.Controllers
         [HttpGet]
         public ActionResult PartialViewUserF(int Id, string Tipo)
         {
-            try
+            ViewBag.groupUser = objReadGroupUser.ReadGroupUser();
+            ViewBag.userType = HCatalogs.GetTypeUser();
+
+            if (Id != 0 && Tipo == "actualizar")
             {
-                ViewBag.groupUser = objReadGroupUser.ReadGroupUser();
-                ViewBag.userType = HCatalogs.GetTypeUser();
-
-                if (Id != 0 && Tipo == "actualizar")
-                {
-                    var usuario = objReadOnlyUser.ReadUser(Id);
-                    return PartialView("_PartialViewUserF", usuario);
-                }
-
-                ViewBag.defaultImg = "default.png";
-                return PartialView("_PartialViewUserF");
+                var usuario = objReadOnlyUser.ReadUser(Id);
+                return PartialView("_PartialViewUserF", usuario);
             }
-            catch (Exception)
-            {
-                throw;
-            }            
+
+            ViewBag.defaultImg = "default.png";
+            return PartialView("_PartialViewUserF");
         }
 
         #endregion
