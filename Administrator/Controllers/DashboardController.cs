@@ -7,7 +7,7 @@ using System.Web.Mvc;
 
 namespace Administrator.Controllers
 {
-    [CustomAuthorize]
+    [Authorize(Roles = "Administrador,Usuario")]
     public class DashboardController : Controller
     {
         public ActionResult Index()

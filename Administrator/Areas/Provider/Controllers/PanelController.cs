@@ -1,14 +1,13 @@
-﻿using Administrator.App_Start;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace Administrator.Controllers
+namespace Administrator.Areas.Provider.Controllers
 {
-    [Authorize(Roles = "Administrador,Usuario")]
-    public class ToolsController : Controller
+    [Authorize(Roles = "Proveedor")]
+    public class PanelController : Controller
     {
         public ActionResult Index()
         {

@@ -81,6 +81,7 @@
     <Reference Include="PagedList.Mvc, Version=4.5.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
       <HintPath>..\packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
     </Reference>
+    <Reference Include="System.Numerics" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -124,6 +125,16 @@
   <ItemGroup>
     <Content Include="Content\PagedList.css" />
     <Content Include="Global.asax" />
+    <Content Include="Areas\Super\Views\web.config" />
+    <Content Include="Areas\Super\Views\Panel\Index.cshtml" />
+    <Content Include="Areas\Provider\Views\web.config" />
+    <Content Include="Areas\Provider\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Provider\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\Provider\Views\Panel\Index.cshtml" />
+    <Content Include="Areas\Client\Views\web.config" />
+    <Content Include="Areas\Client\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Client\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\Client\Views\Panel\Index.cshtml" />
     <None Include="Scripts\jquery-1.8.0.intellisense.js" />
     <Content Include="Scripts\jquery-1.8.0.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
@@ -134,6 +145,12 @@
     <Compile Include="App_Start\CustomAuthorizeAttribute.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.cs" />
+    <Compile Include="Areas\Client\ClientAreaRegistration.cs" />
+    <Compile Include="Areas\Client\Controllers\PanelController.cs" />
+    <Compile Include="Areas\Provider\Controllers\PanelController.cs" />
+    <Compile Include="Areas\Provider\ProviderAreaRegistration.cs" />
+    <Compile Include="Areas\Super\Controllers\PanelController.cs" />
+    <Compile Include="Areas\Super\SuperAreaRegistration.cs" />
     <Compile Include="Controllers\CatalogsController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\DefaultController.cs" />
@@ -163,6 +180,8 @@
     <Content Include="Views\Shared\_Scrips.cshtml" />
     <Content Include="Views\Catalogs\_PartialViewGroupF.cshtml" />
     <Content Include="Views\Catalogs\_PartialViewUserF.cshtml" />
+    <Content Include="Areas\Super\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\Super\Views\_ViewStart.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

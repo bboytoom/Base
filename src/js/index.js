@@ -139,7 +139,11 @@ function LoginSuccess(data) {
     }
 
     if (data.Status === 200) {
-        window.location.href = '/inicio';
+        if (data.Respuesta === 3 || data.Respuesta === 4)
+            window.location.href = '/inicio';
+
+        if (data.Respuesta === 1 || data.Respuesta === 2)
+            window.location.href = '/super/panel';
     }
 }
 

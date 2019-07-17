@@ -11,7 +11,7 @@ using System.Collections.Generic;
 
 namespace Administrator.Controllers
 {
-    [CustomAuthorize]
+    [Authorize(Roles = "Administrador,Usuario")]
     public class CatalogsController : Controller
     {
         private ReadAllGroupImp objReadGroup;

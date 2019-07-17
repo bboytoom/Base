@@ -7,7 +7,7 @@ using System.Web.Mvc;
 
 namespace Administrator.Controllers
 {
-    [CustomAuthorize]
+    [Authorize(Roles = "Administrador,Usuario")]
     public class ProfileController : Controller
     {
         public ActionResult Index()

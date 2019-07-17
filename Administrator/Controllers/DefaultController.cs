@@ -41,7 +41,7 @@ namespace Administrator.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public JsonResult Index(ViewModelsLogin data, string returnUrl)
+        public JsonResult Index(ViewModelsLogin data)
         {
             JsonResult Result;
             string email_clean;
@@ -83,13 +83,13 @@ namespace Administrator.Controllers
             {
                 Response.Cookies["_attempts"].Expires = DateTime.Now.AddMinutes(-1);
                 LockOutUser.ResetAttemps(email_clean);
-                Result = SingInUser(objLogin.Login(data), data.Rememberme, returnUrl);
+                Result = SingInUser(objLogin.Login(data), data.Rememberme);
             }
 
             return Result;
         }
 
-        private JsonResult SingInUser(Tbl_Users objetcModel, bool Rememberme, string returnUrl)
+        private JsonResult SingInUser(Tbl_Users objetcModel, bool Rememberme)
         {           
             List<Claim> claims = new List<Claim>
             {
@@ -129,7 +129,12 @@ namespace Administrator.Controllers
             IAuthenticationManager authenticationManager = HttpContext.GetOwinContext().Authentication;
             authenticationManager.SignIn(new AuthenticationProperties() { IsPersistent = Rememberme }, Identity);
             
-            return Json(new { Status = 200, Respuesta = "Valid" }, JsonRequestBehavior.AllowGet);
+            return ReturnJson(objetcModel.Type_user);
+        }
+
+        private JsonResult ReturnJson(int tipo)
+        {
+            return Json(new { Status = 200, Respuesta = tipo }, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult LogOff()

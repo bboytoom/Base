@@ -5,10 +5,10 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace Administrator.Controllers
+namespace Administrator.Areas.Super.Controllers
 {
-    [Authorize(Roles = "Administrador,Usuario")]
-    public class ToolsController : Controller
+    [Authorize(Roles ="Root,Staff")]
+    public class PanelController : Controller
     {
         public ActionResult Index()
         {
