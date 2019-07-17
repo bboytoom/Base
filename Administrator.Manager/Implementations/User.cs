@@ -229,13 +229,7 @@ namespace Administrator.Manager.Implementations
                 ctx.Entry(find_user).CurrentValues.SetValues(delete_user);
                 ctx.SaveChanges();
 
-                return JsonConvert.SerializeObject(
-                    new OutJsonCheck
-                    {
-                        Status = 200,
-                        Respuesta = true
-                    }
-                );
+                return JsonConvert.SerializeObject(new { Status = 200, Respuesta = true });
             }
             catch (Exception)
             {

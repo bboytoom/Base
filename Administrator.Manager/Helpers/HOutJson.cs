@@ -1,13 +1,7 @@
 ﻿using System.Runtime.Serialization;
 
 namespace Administrator.Manager.Helpers
-{
-    public class OutJsonCheck
-    {
-        public int Status { get; set; }
-        public bool Respuesta { get; set; }
-    }
-    
+{ 
     [DataContract]
     public class CustomErrorDetail
     {

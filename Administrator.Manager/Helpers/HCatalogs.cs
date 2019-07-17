@@ -24,7 +24,6 @@ namespace Administrator.Manager.Helpers
         {
             List<SelectListItem> typedata = new List<SelectListItem>();
 
-            typedata.Add(new SelectListItem() { Text = "--- Selecciona ---", Value = "0", });
             typedata.Add(new SelectListItem() { Text = "Usuario", Value = "1" });
             typedata.Add(new SelectListItem() { Text = "Oficina", Value = "2" });
             typedata.Add(new SelectListItem() { Text = "Casa", Value = "3" });
@@ -37,7 +36,6 @@ namespace Administrator.Manager.Helpers
         {
             List<SelectListItem> typephono = new List<SelectListItem>();
 
-            typephono.Add(new SelectListItem() { Text = "--- Selecciona ---", Value = "0", });
             typephono.Add(new SelectListItem() { Text = "Fijo", Value = "1" });
             typephono.Add(new SelectListItem() { Text = "Movil", Value = "2" });
 

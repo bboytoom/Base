@@ -68,13 +68,7 @@ namespace Administrator.Manager.Implementations
                 ctx.Tbl_Emails.Add(create_email);
                 ctx.SaveChanges();
 
-                return JsonConvert.SerializeObject(
-                    new OutJsonCheck
-                    {
-                        Status = 200,
-                        Respuesta = true
-                    }
-                );
+                return JsonConvert.SerializeObject(new { Status = 200, Respuesta = true });
             }
             catch (Exception)
             {
@@ -152,13 +146,7 @@ namespace Administrator.Manager.Implementations
                 ctx.Entry(find_email).CurrentValues.SetValues(update_email);
                 ctx.SaveChanges();
 
-                return JsonConvert.SerializeObject(
-                    new OutJsonCheck
-                    {
-                        Status = 200,
-                        Respuesta = true
-                    }
-                );
+                return JsonConvert.SerializeObject(new { Status = 200, Respuesta = true });
             }
             catch (Exception)
             {
@@ -213,13 +201,7 @@ namespace Administrator.Manager.Implementations
                 ctx.Entry(find_email).CurrentValues.SetValues(delete_email);
                 ctx.SaveChanges();
 
-                return JsonConvert.SerializeObject(
-                    new OutJsonCheck
-                    {
-                        Status = 200,
-                        Respuesta = true
-                    }
-                );
+                return JsonConvert.SerializeObject(new { Status = 200, Respuesta = true });
             }
             catch (Exception)
             {

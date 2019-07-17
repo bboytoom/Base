@@ -82,13 +82,7 @@ namespace Administrator.Manager.Implementations
                 ctx.Tbl_Permissions.Add(create_permission);
                 ctx.SaveChanges();
 
-                return JsonConvert.SerializeObject(
-                    new OutJsonCheck
-                    {
-                        Status = 200,
-                        Respuesta = true
-                    }
-                );
+                return JsonConvert.SerializeObject(new { Status = 200, Respuesta = true });
             }
             catch (Exception)
             {
@@ -178,13 +172,7 @@ namespace Administrator.Manager.Implementations
                 ctx.Entry(find_permission).CurrentValues.SetValues(update_permission);
                 ctx.SaveChanges();
 
-                return JsonConvert.SerializeObject(
-                    new OutJsonCheck
-                    {
-                        Status = 200,
-                        Respuesta = true
-                    }
-                );
+                return JsonConvert.SerializeObject(new { Status = 200, Respuesta = true });
             }
             catch (Exception)
             {
@@ -237,13 +225,7 @@ namespace Administrator.Manager.Implementations
                 ctx.Entry(search_group).CurrentValues.SetValues(delete_group);
                 ctx.SaveChanges();
 
-                return JsonConvert.SerializeObject(
-                    new OutJsonCheck
-                    {
-                        Status = 200,
-                        Respuesta = true
-                    }
-                );
+                return JsonConvert.SerializeObject(new { Status = 200, Respuesta = true });
             }
             catch (Exception)
             {

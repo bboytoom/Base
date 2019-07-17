@@ -24,24 +24,12 @@ namespace Administrator.Manager.Implementations
             string email_clean;
 
             if (Email == "" || Email == null)
-                return JsonConvert.SerializeObject(
-                    new OutJsonCheck
-                    {
-                        Status = 200,
-                        Respuesta = false
-                    }
-                );
+                return JsonConvert.SerializeObject(new { Status = 200, Respuesta = false });
 
             email_clean = WebUtility.HtmlEncode(Email.ToLower());
 
             if (!HCheckEmail.EmailCheck(email_clean))
-                return JsonConvert.SerializeObject(
-                    new OutJsonCheck
-                    {
-                        Status = 200,
-                        Respuesta = false
-                    }
-                );
+                return JsonConvert.SerializeObject(new { Status = 200, Respuesta = false });
 
             try
             {
@@ -55,30 +43,12 @@ namespace Administrator.Manager.Implementations
                     .Where(w => w.Email_user == email_clean).FirstOrDefault();
 
                     if (query == null)
-                        return JsonConvert.SerializeObject(
-                            new OutJsonCheck
-                            {
-                                Status = 404,
-                                Respuesta = false
-                            }
-                        );
+                        return JsonConvert.SerializeObject(new { Status = 404, Respuesta = false });
 
-                    return JsonConvert.SerializeObject(
-                        new OutJsonCheck
-                        {
-                            Status = 200,
-                            Respuesta = true
-                        }
-                    );
+                    return JsonConvert.SerializeObject(new { Status = 200, Respuesta = true });
                 }
 
-                return JsonConvert.SerializeObject(
-                    new OutJsonCheck
-                    {
-                        Status = 401,
-                        Respuesta = false
-                    }
-                );
+                return JsonConvert.SerializeObject(new { Status = 401, Respuesta = false });
             }
             catch (Exception)
             {

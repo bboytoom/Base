@@ -38,32 +38,28 @@ function AjaxEmail(URL, InputEmail) {
         contentType: "application/json",
         dataType: "json"
     })
-        .done(function (data, textStatus, xhr) {
-            if (xhr.status === 200) {
-                var response = JSON.parse(data.CheckEmailResult);
+        .done(function (data) {
+            var response = JSON.parse(data.CheckEmailResult);
 
-                if (response.Status === 404)
-                    icon_loader.classList.add('fa-times-circle');
+            if (response.Status === 404)
+                icon_loader.classList.add('fa-times-circle');
 
-                if (response.Status === 401) {
-                    icon_loader.classList.add('fa-times-circle');
-                    document.cookie = '_inactiva=1';
-                    window.location.href = '/lockout';
-                }
-
-                if (response.Status === 200) {
-                    icon_loader.classList.remove('fa-times-circle');
-                    icon_loader.classList.add('fa-check-square');
-                    input_TextPassword.disabled = false;
-                    btn_BtnLogin.disabled = false;
-                }
+            if (response.Status === 401) {
+                icon_loader.classList.add('fa-times-circle');
+                document.cookie = '_inactiva=1';
+                window.location.href = '/lockout';
             }
-        }).fail(function (data, textStatus, xhr) {
+
+            if (response.Status === 200) {
+                icon_loader.classList.remove('fa-times-circle');
+                icon_loader.classList.add('fa-check-square');
+                input_TextPassword.disabled = false;
+                btn_BtnLogin.disabled = false;
+            }
+        }).fail(function (data) {
             if (data.status === 400) {
                 alert('Error en la peticion');
             }
-
-            console.log(xhr);
         });
 }
 

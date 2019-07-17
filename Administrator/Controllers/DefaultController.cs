@@ -44,23 +44,21 @@ namespace Administrator.Controllers
         public JsonResult Index(ViewModelsLogin data, string returnUrl)
         {
             JsonResult Result;
-
             string email_clean;
-            dynamic showMessageString = string.Empty;
             
             if (data.Email == null || data.Password == null)
-                return Json(showMessageString = new { Status = 404, Respuesta = "El correo y/o password se encuentran vacios" }, JsonRequestBehavior.AllowGet);
+                return Json(new { Status = 404, Respuesta = "El correo y/o password se encuentran vacios" }, JsonRequestBehavior.AllowGet);
 
             if (data.Email == "" || data.Password == "")
-                return Json(showMessageString = new { Status = 404,Respuesta = "El correo y/o password se encuentran vacios" }, JsonRequestBehavior.AllowGet);
+                return Json(new { Status = 404,Respuesta = "El correo y/o password se encuentran vacios" }, JsonRequestBehavior.AllowGet);
 
             email_clean = WebUtility.HtmlEncode(data.Email.ToLower());
 
             if (!HCheckEmail.EmailCheck(email_clean))
-                return Json(showMessageString = new { Status = 415, Respuesta = "Correo electronico no valido" }, JsonRequestBehavior.AllowGet);
+                return Json(new { Status = 415, Respuesta = "Correo electronico no valido" }, JsonRequestBehavior.AllowGet);
 
             if(!CStatusUser.StatusUser(data.Email))
-                return Json(showMessageString = new { Status = 401, Respuesta = "Usuario inactivo, consulte a su administrador" }, JsonRequestBehavior.AllowGet);
+                return Json(new { Status = 401, Respuesta = "Usuario inactivo, consulte a su administrador" }, JsonRequestBehavior.AllowGet);
             
             if (objLogin.Login(data) == null)
             {
@@ -75,11 +73,11 @@ namespace Administrator.Controllers
                     Response.Cookies.Add(attempCookie);
 
                     LockOutUser.InsertCycle(email_clean);
-                    return Json(showMessageString = new { Status = 403, Respuesta = "Usuario bloqueado temporalmente" }, JsonRequestBehavior.AllowGet);
+                    return Json(new { Status = 403, Respuesta = "Usuario bloqueado temporalmente" }, JsonRequestBehavior.AllowGet);
                 }
                 
                 ModelState.Clear();
-                return Json(showMessageString = new { Status = 203, Respuesta = "La contraseña no es correcta" }, JsonRequestBehavior.AllowGet);
+                return Json(new { Status = 203, Respuesta = "La contraseña no es correcta" }, JsonRequestBehavior.AllowGet);
             }
             else
             {
@@ -92,9 +90,7 @@ namespace Administrator.Controllers
         }
 
         private JsonResult SingInUser(Tbl_Users objetcModel, bool Rememberme, string returnUrl)
-        {
-            dynamic showMessageString = string.Empty;
-
+        {           
             List<Claim> claims = new List<Claim>
             {
                 new Claim(ClaimTypes.NameIdentifier, objetcModel.Id.ToString()),              
@@ -122,6 +118,9 @@ namespace Administrator.Controllers
                     case 5:
                         claims.Add(new Claim(ClaimTypes.Role, "Proveedor"));
                         break;
+                    case 6:
+                        claims.Add(new Claim(ClaimTypes.Role, "Cliente"));
+                        break;
                 }
             }
 
@@ -129,13 +128,8 @@ namespace Administrator.Controllers
 
             IAuthenticationManager authenticationManager = HttpContext.GetOwinContext().Authentication;
             authenticationManager.SignIn(new AuthenticationProperties() { IsPersistent = Rememberme }, Identity);
-
-            if (string.IsNullOrWhiteSpace(returnUrl))
-            {
-                returnUrl = @Url.Action("Index", "Default");
-            }
             
-            return Json(showMessageString = new { Status = 200, Respuesta = "Valid" }, JsonRequestBehavior.AllowGet);
+            return Json(new { Status = 200, Respuesta = "Valid" }, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult LogOff()
