@@ -3,11 +3,11 @@
 
 @{
     ViewBag.Title = "Usuarios";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Areas/Super/Views/Shared/_Layout.cshtml";
 }
 
 <section class="mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
-    @Html.Partial("Header")
+    @Html.Partial("_Header")
 
     <main class="mdl-layout__content">
         <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center mb-4 border-bottom">
@@ -33,13 +33,9 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header text-right">
-                            <button id="add_btn" name="@ViewBag.Title" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" type="button">
-                                Agregar nuevo usuario
-                            </button>
+                            @Html.ActionLink("Agregar nuevo usuario", "CreateUsers", "Catalogs", new { @class = "mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" })
                         </div>
                         <div class="table-responsive">
-                            <input type="hidden" id="infohidde" name="infohidde" value="@ViewBag.IdUsuario">
-
                             <table class="table mdl-data-table table-striped table-hover">
                                 <thead>
                                     <tr>
@@ -64,6 +60,7 @@
                                         <th scope="col">
                                             Estatus
                                         </th>
+                                        <th></th>
                                         <th></th>
                                         <th></th>
                                     </tr>
@@ -94,12 +91,17 @@
                                                 @Html.DisplayFor(modelItem => item.Active_user)
                                             </td>
                                             <td>
-                                                <button type="button" class="btn btn-outline-warning btn-sm" onclick="Edit(@Html.DisplayFor(modelItem => item.Id), '@ViewBag.Title')">
+                                                <button type="button" class="btn btn-outline-success btn-sm">
+                                                    ver más <i class="fas fa-eye"></i>
+                                                </button>
+                                            </td>
+                                            <td>
+                                                <button type="button" class="btn btn-outline-warning btn-sm">
                                                     Editar <i class="fas fa-edit"></i>
                                                 </button>
                                             </td>
                                             <td>
-                                                <button type="button" class="btn btn-outline-danger btn-sm" onclick="Delete(@Html.DisplayFor(modelItem => item.Id), '@ViewBag.Title')">
+                                                <button type="button" class="btn btn-outline-danger btn-sm">
                                                     Eliminar <i class="fas fa-trash-alt"></i>
                                                 </button>
                                             </td>

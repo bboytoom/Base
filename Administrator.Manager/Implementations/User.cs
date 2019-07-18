@@ -291,6 +291,37 @@ namespace Administrator.Manager.Implementations
 
             if (!String.IsNullOrEmpty(searchstring))
             {
+                show_user = show_user.Where(s => s.Name_user.Contains(searchstring) && s.Type_user != 1 && s.Type_user != 2);
+            }
+
+            switch (sortorder)
+            {
+                case "name_desc":
+                    show_user = show_user.OrderByDescending(s => s.Name_user);
+                    break;
+                default:
+                    show_user = show_user.OrderBy(s => s.Name_user);
+                    break;
+            }
+
+            return show_user.ToList();
+        }
+    }
+
+    public class ReadAllSuperImp: IReadAllUser
+    {
+        private DataModels ctx;
+        public ReadAllSuperImp()
+        {
+            ctx = new DataModels();
+        }
+
+        public List<Tbl_Users> ReadAllUser(string sortorder, string searchstring)
+        {
+            var show_user = from s in ctx.Tbl_Users select s;
+
+            if (!String.IsNullOrEmpty(searchstring))
+            {
                 show_user = show_user.Where(s => s.Name_user.Contains(searchstring));
             }
 
@@ -353,6 +384,5 @@ namespace Administrator.Manager.Implementations
     }
 
     #endregion
-
 }
  

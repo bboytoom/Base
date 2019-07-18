@@ -25,6 +25,18 @@ namespace Administrator.Areas.Super
                 "super/catalogo",
                 new { Controller = "Catalogs", action = "Index" }
             );
+
+            context.MapRoute(
+                "usuarios_super",
+                "super/usuarios",
+                new { Controller = "Catalogs", action = "ViwerUsers" }
+            );
+
+            context.MapRoute(
+                "crearusuarios_super",
+                "super/usuarios/crear",
+                new { Controller = "Catalogs", action = "CreateUsers" }
+            );
         }
     }
 }
