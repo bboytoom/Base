@@ -22,6 +22,8 @@ namespace Administrator.Manager.Data
 
         public int Type_user { get; set; }
 
+        public int MainU_user { get; set; }
+
         [StringLength(60)]
         public string Photo_user { get; set; }
 

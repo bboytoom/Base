@@ -14,6 +14,8 @@ namespace Administrator.Manager.Data
         [ForeignKey("Tbl_Users")]
         public int Id_user { get; set; }
 
+        public int MainU_email { get; set; }
+        
         public int Type_email { get; set; }
 
         [Required]

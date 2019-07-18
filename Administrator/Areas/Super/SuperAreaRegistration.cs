@@ -19,6 +19,12 @@ namespace Administrator.Areas.Super
                 "super/panel",
                 new { Controller = "Panel", action = "Index" }
             );
+
+            context.MapRoute(
+                "catalogs_super",
+                "super/catalogo",
+                new { Controller = "Catalogs", action = "Index" }
+            );
         }
     }
 }

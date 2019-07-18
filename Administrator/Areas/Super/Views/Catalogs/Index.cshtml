@@ -1,7 +1,7 @@
 ﻿
 @{
-    ViewBag.Title = "Catálogos";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Catalogos";
+    Layout = "~/Areas/Super/Views/Shared/_Layout.cshtml";
 }
 
 <section class="mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
@@ -19,7 +19,7 @@
                 <div class="card">
                     <div class="mdl-card__title"></div>
                     <div class="mdl-card__actions mdl-card--border text-right">
-                        <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" href="@Url.Action("ViwerGroups", "Catalogs")">
+                        <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" href="#">
                             Grupos
                         </a>
                     </div>
@@ -28,13 +28,12 @@
                 <div class="card">
                     <div class="mdl-card__title"></div>
                     <div class="mdl-card__actions mdl-card--border text-right">
-                        <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" href="@Url.Action("ViwerUsers", "Catalogs")">
+                        <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" href="#">
                             Usuarios
                         </a>
                     </div>
                 </div>
-            </div>     
+            </div>
         </div>
     </main>
 </section>
-

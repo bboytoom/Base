@@ -17,6 +17,8 @@ namespace Administrator.Manager.Data
         [Key]
         public int Id { get; set; }
 
+        public int MainU_group { get; set; }
+        
         [Required]
         [Column(TypeName = "VARCHAR")]
         [StringLength(30)]

@@ -139,6 +139,8 @@ namespace Administrator.Manager.Implementations
                     Name_group = name_clean,
                     Description_group = WebUtility.HtmlEncode(Data.Description),
                     Active_group = Data.Status,
+                    CreateU_group = search_group.CreateU_group,
+                    CreateD_group = search_group.CreateD_group,
                     UpdateU_group = Data.HighUser,
                     UpdateD_group = DateTime.Now
                 };
