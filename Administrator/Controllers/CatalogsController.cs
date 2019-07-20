@@ -43,8 +43,19 @@ namespace Administrator.Controllers
             if (Principal != null && Principal.Identity.IsAuthenticated)
             {
                 var Claims = Principal.Claims.ToList();
+                string id_usuario = Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier).Value;
+                
+                if (Claims.FirstOrDefault(x => x.Type == ClaimTypes.Role).Value == "Administrador")
+                {
+                    ViewBag.Main = id_usuario;
+                }
+                else
+                {
+                    string id_main = Claims.FirstOrDefault(x => x.Type == "MainUser").Value;
+                    ViewBag.Main = id_main;
+                }
 
-                ViewBag.IdUsuario = Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier).Value;
+                ViewBag.IdUsuario = id_usuario;
                 ViewBag.CurrentSort = sortOrder;
                 ViewBag.NameSort = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
 
@@ -55,7 +66,7 @@ namespace Administrator.Controllers
 
                 ViewBag.CurrentFilter = searchString;
 
-                var salida = objReadGroup.ReadAllGroup(sortOrder, searchString);
+                var salida = objReadGroup.ReadAllGroup(sortOrder, searchString, Convert.ToInt32(id_usuario));
                 int pageSize = 10;
                 int pageNumber = (page ?? 1);
 
@@ -88,8 +99,19 @@ namespace Administrator.Controllers
             if (Principal != null && Principal.Identity.IsAuthenticated)
             {
                 var Claims = Principal.Claims.ToList();
+                string id_usuario = Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier).Value;
 
-                ViewBag.IdUsuario = Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier).Value;
+                if (Claims.FirstOrDefault(x => x.Type == ClaimTypes.Role).Value == "Administrador")
+                {
+                    ViewBag.Main = id_usuario;
+                }
+                else
+                {
+                    string id_main = Claims.FirstOrDefault(x => x.Type == "MainUser").Value;
+                    ViewBag.Main = id_main;
+                }
+
+                ViewBag.IdUsuario = id_usuario;
                 ViewBag.CurrentSort = sortOrder;
                 ViewBag.NameSort = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
 
@@ -100,7 +122,7 @@ namespace Administrator.Controllers
 
                 ViewBag.CurrentFilter = searchString;
 
-                var salida = objReadUser.ReadAllUser(sortOrder, searchString);
+                var salida = objReadUser.ReadAllUser(sortOrder, searchString, Convert.ToInt32(id_usuario));
                 int pageSize = 10;
                 int pageNumber = (page ?? 1);
 
@@ -113,7 +135,7 @@ namespace Administrator.Controllers
         [HttpGet]
         public ActionResult PartialViewUserF(int Id, string Tipo)
         {
-            ViewBag.groupUser = objReadGroupUser.ReadGroupUser();
+            ViewBag.groupUser = objReadGroupUser.ReadGroupUser(Id);
             ViewBag.userType = HCatalogs.GetTypeUser();
 
             if (Id != 0 && Tipo == "actualizar")

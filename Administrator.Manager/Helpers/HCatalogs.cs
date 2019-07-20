@@ -5,13 +5,21 @@ namespace Administrator.Manager.Helpers
 {
     public static class HCatalogs
     {
-        public static List<SelectListItem> GetTypeUser()
+        public static List<SelectListItem> GetTypeUserSuper()
         {
             List<SelectListItem> typeuser = new List<SelectListItem>();
 
             typeuser.Add(new SelectListItem() { Text = "Root", Value = "1" });
             typeuser.Add(new SelectListItem() { Text = "Staff", Value = "2" });
             typeuser.Add(new SelectListItem() { Text = "Administrador", Value = "3" });
+
+            return typeuser;
+        }
+
+        public static List<SelectListItem> GetTypeUser()
+        {
+            List<SelectListItem> typeuser = new List<SelectListItem>();
+
             typeuser.Add(new SelectListItem() { Text = "Usuario", Value = "4" });
             typeuser.Add(new SelectListItem() { Text = "Proveedor", Value = "5" });
             typeuser.Add(new SelectListItem() { Text = "Cliente", Value = "6" });

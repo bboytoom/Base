@@ -17,7 +17,8 @@ namespace Administrator.Areas.Client
             context.MapRoute(
                 "panel_client",
                 "client/panel",
-                new { action = "Index", id = UrlParameter.Optional }
+                new { action = "Index", id = UrlParameter.Optional },
+                namespaces: new[] { "Administrator.Areas.Client.Controllers" }
             );
         }
     }

@@ -294,11 +294,11 @@ namespace Administrator.Manager.Implementations
             ctx = new DataModels();
         }
 
-        public List<Tbl_Groups> ReadGroupUser()
+        public List<Tbl_Groups> ReadGroupUser(int Id)
         {
             try
             {
-                return ctx.Tbl_Groups.ToList();
+                return ctx.Tbl_Groups.Where(w => w.MainU_group == Id).ToList();
             }
             catch (Exception)
             {
@@ -315,9 +315,9 @@ namespace Administrator.Manager.Implementations
             ctx = new DataModels();
         }
 
-        public List<Tbl_Groups> ReadAllGroup(string sortorder, string searchstring)
+        public List<Tbl_Groups> ReadAllGroup(string sortorder, string searchstring, int id_main)
         {
-            var show_group = from s in ctx.Tbl_Groups select s;
+            var show_group = from s in ctx.Tbl_Groups where s.MainU_group == id_main select s;
 
             if (!String.IsNullOrEmpty(searchstring))
             {

@@ -53,7 +53,7 @@ namespace Administrator.Manager.Interfaces
 
     public interface IReadAllUser
     {
-        List<Tbl_Users> ReadAllUser(string sortorder, string searchstring);
+        List<Tbl_Users> ReadAllUser(string sortorder, string searchstring, int id_main);
     }
 
     public interface IUserSuper

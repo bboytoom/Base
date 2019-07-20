@@ -408,13 +408,13 @@ namespace Administrator.Manager.Implementations
             ctx = new DataModels();
         }
 
-        public List<Tbl_Users> ReadAllUser(string sortorder, string searchstring)
+        public List<Tbl_Users> ReadAllUser(string sortorder, string searchstring, int id_main)
         {
-            var show_user = from s in ctx.Tbl_Users select s;
+            var show_user = from s in ctx.Tbl_Users where s.MainU_user == id_main select s;
 
             if (!String.IsNullOrEmpty(searchstring))
             {
-                show_user = show_user.Where(s => s.Name_user.Contains(searchstring) && s.Type_user != 1 && s.Type_user != 2);
+                show_user = show_user.Where(s => s.Name_user.Contains(searchstring));
             }
 
             switch (sortorder)
@@ -439,9 +439,9 @@ namespace Administrator.Manager.Implementations
             ctx = new DataModels();
         }
 
-        public List<Tbl_Users> ReadAllUser(string sortorder, string searchstring)
+        public List<Tbl_Users> ReadAllUser(string sortorder, string searchstring, int id_main)
         {
-            var show_user = from s in ctx.Tbl_Users select s;
+            var show_user = from s in ctx.Tbl_Users where s.MainU_user == id_main select s;
 
             if (!String.IsNullOrEmpty(searchstring))
             {

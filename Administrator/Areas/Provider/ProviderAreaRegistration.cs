@@ -17,7 +17,8 @@ namespace Administrator.Areas.Provider
             context.MapRoute(
                 "panel_provider",
                 "provider/panel",
-                new { Controller = "Panel", action = "Index" }
+                new { Controller = "Panel", action = "Index" },
+                namespaces: new[] { "Administrator.Areas.Provider.Controllers" }
             );
         }
     }

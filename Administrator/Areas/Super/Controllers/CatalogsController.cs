@@ -37,40 +37,71 @@ namespace Administrator.Areas.Super.Controllers
 
         public ActionResult ViwerUsers(string sortOrder, string searchString, string currentFilter, int? page)
         {
-            ViewBag.CurrentSort = sortOrder;
-            ViewBag.NameSort = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ClaimsPrincipal Principal = Thread.CurrentPrincipal as ClaimsPrincipal;
 
-            if (searchString != null)
-                page = 1;
-            else
-                searchString = currentFilter;
+            if (Principal != null && Principal.Identity.IsAuthenticated)
+            {
+                var Claims = Principal.Claims.ToList();
+                string id_usuario = Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier).Value;
 
-            ViewBag.CurrentFilter = searchString;
+                ViewBag.CurrentSort = sortOrder;
+                ViewBag.NameSort = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
 
-            var salida = objAllUSuper.ReadAllUser(sortOrder, searchString);
-            int pageSize = 10;
-            int pageNumber = (page ?? 1);
+                if (searchString != null)
+                    page = 1;
+                else
+                    searchString = currentFilter;
 
-            return View(salida.ToPagedList(pageNumber, pageSize));
+                ViewBag.CurrentFilter = searchString;
+
+                var salida = objAllUSuper.ReadAllUser(sortOrder, searchString, Convert.ToInt32(id_usuario));
+                int pageSize = 10;
+                int pageNumber = (page ?? 1);
+
+                return View(salida.ToPagedList(pageNumber, pageSize));
+            }
+
+            return View("Index");
         }
 
         [HttpGet]
         public ActionResult CreateUsers()
         {
-            ViewBag.groupUser = objReadGroupUser.ReadGroupUser();
-            ViewBag.userType = HCatalogs.GetTypeUser();
+            ClaimsPrincipal Principal = Thread.CurrentPrincipal as ClaimsPrincipal;
 
-            return View("CreateUsers");
+            if (Principal != null && Principal.Identity.IsAuthenticated)
+            {
+                var Claims = Principal.Claims.ToList();
+                string id_usuario = Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier).Value;
+
+                ViewBag.groupUser = objReadGroupUser.ReadGroupUser(Convert.ToInt32(id_usuario));
+                ViewBag.userType = HCatalogs.GetTypeUserSuper();
+
+                return View("CreateUsers");
+            }
+
+            return View("Index");
         }
 
         [HttpGet]
         public ActionResult UpdateUsers(int Id)
         {
-            ViewBag.groupUser = objReadGroupUser.ReadGroupUser();
-            ViewBag.userType = HCatalogs.GetTypeUser();
+            ClaimsPrincipal Principal = Thread.CurrentPrincipal as ClaimsPrincipal;
 
-            var usuario = objReadOnlyUser.ReadUser(Id);
-            return View("CreateUsers", usuario);
+            if (Principal != null && Principal.Identity.IsAuthenticated)
+            {
+                var Claims = Principal.Claims.ToList();
+                string id_usuario = Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier).Value;
+
+                ViewBag.groupUser = objReadGroupUser.ReadGroupUser(Convert.ToInt32(id_usuario));
+                ViewBag.userType = HCatalogs.GetTypeUserSuper();
+
+                var usuario = objReadOnlyUser.ReadUser(Id);
+
+                return View("CreateUsers", usuario);
+            }
+
+            return View("Index");
         }
 
         [HttpPost]
