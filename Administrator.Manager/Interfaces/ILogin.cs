@@ -5,10 +5,7 @@ using System.ServiceModel.Web;
 
 namespace Administrator.Manager.Interfaces
 {
-    public interface ILogin
-    {
-        Tbl_Users Login(ViewModelsLogin data);
-    }
+    #region Servicios WCF
 
     [ServiceContract]
     public interface ICheckEmail
@@ -17,4 +14,15 @@ namespace Administrator.Manager.Interfaces
         [WebInvoke(RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "/checkemail", Method = "POST", BodyStyle = WebMessageBodyStyle.Wrapped)]
         string CheckEmail(string Email);
     }
+
+    #endregion
+
+    #region Generales
+
+    public interface ILogin
+    {
+        Tbl_Users Login(ViewModelsLogin data);
+    }
+
+    #endregion
 }

@@ -15,9 +15,19 @@ namespace Administrator.Areas.Super.Controllers
     public class CatalogsController : Controller
     {
         private ReadAllSuperImp objAllUSuper;
+        private ReadGroupUserImp objReadGroupUser;
+        private ReadUserImp objReadOnlyUser;
+        private UpdateSuperImp objUpdateUser;
+        private CreateSuperImp objCreateUser;
+        private DeleteUserSuperImp objDeleteUser;
         public CatalogsController()
         {
             objAllUSuper = new ReadAllSuperImp();
+            objReadGroupUser = new ReadGroupUserImp();
+            objReadOnlyUser = new ReadUserImp();
+            objUpdateUser = new UpdateSuperImp();
+            objCreateUser = new CreateSuperImp();
+            objDeleteUser = new DeleteUserSuperImp();
         }
 
         public ActionResult Index()
@@ -47,12 +57,60 @@ namespace Administrator.Areas.Super.Controllers
         [HttpGet]
         public ActionResult CreateUsers()
         {
-            return View();
+            ViewBag.groupUser = objReadGroupUser.ReadGroupUser();
+            ViewBag.userType = HCatalogs.GetTypeUser();
+
+            return View("CreateUsers");
+        }
+
+        [HttpGet]
+        public ActionResult UpdateUsers(int Id)
+        {
+            ViewBag.groupUser = objReadGroupUser.ReadGroupUser();
+            ViewBag.userType = HCatalogs.GetTypeUser();
+
+            var usuario = objReadOnlyUser.ReadUser(Id);
+            return View("CreateUsers", usuario);
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult CreateUsers(ViewModelUser Data)
         {
+            ClaimsPrincipal Principal = Thread.CurrentPrincipal as ClaimsPrincipal;
+
+            if (Principal != null && Principal.Identity.IsAuthenticated)
+            {
+                var Claims = Principal.Claims.ToList();
+                string HieghUser = Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier).Value;
+                string MainUser = Claims.FirstOrDefault(x => x.Type == "MainUser").Value;
+
+                if (Data.Id == 0)
+                {
+                    objCreateUser.UserSuper(Data, HieghUser, MainUser);
+                }
+                else
+                {
+                    objUpdateUser.UserSuper(Data, HieghUser, MainUser);
+                }
+            }
+
+            return View();
+        }
+
+        [HttpGet]
+        public ActionResult DeleteUsers(int Id)
+        {
+            ClaimsPrincipal Principal = Thread.CurrentPrincipal as ClaimsPrincipal;
+
+            if (Principal != null && Principal.Identity.IsAuthenticated)
+            {
+                var Claims = Principal.Claims.ToList();
+                string HieghUser = Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier).Value;
+
+                objDeleteUser.DeleteUserSuper(Id, HieghUser);
+            }
+
             return View();
         }
     }

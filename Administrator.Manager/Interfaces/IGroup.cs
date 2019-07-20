@@ -10,6 +10,8 @@ using System.Threading.Tasks;
 
 namespace Administrator.Manager.Interfaces
 {
+    #region Servicios WCF
+
     [ServiceContract]
     public interface ICreateGroup
     {
@@ -34,6 +36,10 @@ namespace Administrator.Manager.Interfaces
         string DeleteGroup(int Id, int HighUser);
     }
 
+    #endregion
+
+    #region Generales
+
     public interface IReadGroup
     {
         ViewModelGroup ReadGroup(int Id);
@@ -48,4 +54,6 @@ namespace Administrator.Manager.Interfaces
     {
         List<Tbl_Groups> ReadGroupUser();
     }
+
+    #endregion
 }

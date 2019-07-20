@@ -37,7 +37,8 @@ namespace Administrator
             routes.MapRoute(
                 name: "catalogos",
                 url: "catalogos",
-                defaults: new { controller = "Catalogs", action = "Index" }
+                defaults: new { controller = "Catalogs", action = "Index" },
+                namespaces: new[] { "Administrator.Controllers" }
             );
 
             routes.MapRoute(
@@ -49,13 +50,15 @@ namespace Administrator
             routes.MapRoute(
                 name: "grupos",
                 url: "catalogos/grupos",
-                defaults: new { controller = "Catalogs", action = "ViwerGroups" }
+                defaults: new { controller = "Catalogs", action = "ViwerGroups" },
+                namespaces: new[] { "Administrator.Controllers" }
             );
             
             routes.MapRoute(
                 name: "usuarios",
                 url: "catalogos/usuarios",
-                defaults: new { controller = "Catalogs", action = "ViwerUsers" }
+                defaults: new { controller = "Catalogs", action = "ViwerUsers" },
+                namespaces: new[] { "Administrator.Controllers" }
             );
 
             #endregion
@@ -93,13 +96,15 @@ namespace Administrator
             routes.MapRoute(
                 name: "groupform",
                 url: "grupos/form/{Id}/{Tipo}",
-                defaults: new { controller = "Catalogs", action = "PartialViewGroupF", Id = UrlParameter.Optional, Tipo = UrlParameter.Optional }
+                defaults: new { controller = "Catalogs", action = "PartialViewGroupF", Id = UrlParameter.Optional, Tipo = UrlParameter.Optional },
+                namespaces: new[] { "Administrator.Controllers" }
             );
 
             routes.MapRoute(
                 name: "userform",
                 url: "usuarios/form/{Id}/{Tipo}",
-                defaults: new { controller = "Catalogs", action = "PartialViewUserF", Id = UrlParameter.Optional, Tipo = UrlParameter.Optional }
+                defaults: new { controller = "Catalogs", action = "PartialViewUserF", Id = UrlParameter.Optional, Tipo = UrlParameter.Optional },
+                namespaces: new[] { "Administrator.Controllers" }
             );
 
             #endregion

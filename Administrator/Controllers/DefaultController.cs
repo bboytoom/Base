@@ -94,7 +94,8 @@ namespace Administrator.Controllers
             List<Claim> claims = new List<Claim>
             {
                 new Claim(ClaimTypes.NameIdentifier, objetcModel.Id.ToString()),              
-                new Claim("fullname", $"{objetcModel.Name_user} {objetcModel.LnameP_user}")
+                new Claim("Fullname", $"{objetcModel.Name_user} {objetcModel.LnameP_user}"),
+                new Claim("MainUser", objetcModel.MainU_user.ToString())
             };
 
             if (objetcModel.Type_user != 0)

@@ -89,6 +89,44 @@ namespace Administrator.Manager.Implementations
         }
     }
 
+    public class CreateSuperImp : IUserSuper
+    {
+        private DataModels ctx;
+        public CreateSuperImp()
+        {
+            ctx = new DataModels();
+        }
+
+        public void UserSuper(ViewModelUser Data, string HieghUser, string MainUser)
+        {
+            try
+            {
+                var insert_user = new Tbl_Users()
+                {
+                    Id_group = Data.Idgroup,
+                    Type_user = Data.Typeuser,
+                    MainU_user = Convert.ToInt32(MainUser),
+                    Email_user = Data.Email,
+                    Password_user = Data.Password,
+                    Name_user = Data.Name,
+                    LnameP_user = Data.Lnamep,
+                    LnameM_user = Data.Lnamem,
+                    Active_user = true,
+                    Photo_user = "default.png",
+                    CreateU_user = Convert.ToInt32(HieghUser),
+                    CreateD_user = DateTime.Now
+                };
+
+                ctx.Tbl_Users.Add(insert_user);
+                ctx.SaveChanges();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+    }
+
     #endregion
 
     #region Actualizar usuario
@@ -179,6 +217,49 @@ namespace Administrator.Manager.Implementations
         }
     }
 
+    public class UpdateSuperImp : IUserSuper
+    {
+        private DataModels ctx;
+        public UpdateSuperImp()
+        {
+            ctx = new DataModels();
+        }
+
+        public void UserSuper(ViewModelUser Data, string HieghUser, string MainUser)
+        {
+            try
+            {
+                Tbl_Users find_user = ctx.Tbl_Users.Find(Data.Id);
+
+                var update_user = new Tbl_Users()
+                {
+                    Id = Data.Id,
+                    Id_group = Data.Idgroup,
+                    Type_user = Data.Typeuser,
+                    MainU_user = find_user.MainU_user,
+                    Email_user = Data.Email,
+                    Password_user = find_user.Password_user,
+                    Name_user = Data.Name,
+                    LnameP_user = Data.Lnamep,
+                    LnameM_user = Data.Lnamem,
+                    Photo_user = find_user.Photo_user,
+                    Active_user = Data.Status,
+                    UpdateU_user = Convert.ToInt32(HieghUser),
+                    UpdateD_user = DateTime.Now,
+                    CreateU_user = find_user.CreateU_user,
+                    CreateD_user = find_user.CreateD_user
+                };
+
+                ctx.Entry(find_user).CurrentValues.SetValues(update_user);
+                ctx.SaveChanges();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+    }
+
     #endregion
 
     #region Eliminar usuario
@@ -230,6 +311,48 @@ namespace Administrator.Manager.Implementations
                 ctx.SaveChanges();
 
                 return JsonConvert.SerializeObject(new { Status = 200, Respuesta = true });
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+    }
+
+    public class DeleteUserSuperImp : IDeleteUserSuper
+    {
+        private DataModels ctx;
+        public DeleteUserSuperImp()
+        {
+            ctx = new DataModels();
+        }
+
+        public void DeleteUserSuper(int Id, string HieghUser)
+        {
+            Tbl_Users find_user = ctx.Tbl_Users.Find(Id);
+
+            try
+            {
+                var delete_user = new Tbl_Users()
+                {
+                    Id = Id,
+                    Id_group = find_user.Id_group,
+                    MainU_user = find_user.MainU_user,
+                    Type_user = find_user.Type_user,
+                    Photo_user = find_user.Photo_user,
+                    Email_user = find_user.Email_user,
+                    Password_user = find_user.Password_user,
+                    Name_user = find_user.Name_user,
+                    LnameP_user = find_user.LnameP_user,
+                    LnameM_user = find_user.LnameM_user,
+                    Active_user = false,
+                    DeleteU_user = Convert.ToInt32(HieghUser),
+                    DeleteD_user = DateTime.Now,
+                    Delete_stautus_user = true
+                };
+
+                ctx.Entry(find_user).CurrentValues.SetValues(delete_user);
+                ctx.SaveChanges();
             }
             catch (Exception)
             {

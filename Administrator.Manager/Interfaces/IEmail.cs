@@ -6,6 +6,8 @@ using System.ServiceModel.Web;
 
 namespace Administrator.Manager.Interfaces
 {
+    #region Servicios WCF
+
     [ServiceContract]
     public interface ICreateEmail
     {
@@ -30,6 +32,10 @@ namespace Administrator.Manager.Interfaces
         string DeleteEmail(ViewModelEmail Data);
     }
 
+    #endregion
+
+    #region Generales
+
     public interface IReadEmail
     {
         List<ViewModelEmail> ReadEmail(int Id);
@@ -39,4 +45,6 @@ namespace Administrator.Manager.Interfaces
     {
         List<Tbl_Emails> ReadAllEmail();
     }
+
+    #endregion
 }

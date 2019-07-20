@@ -8,6 +8,8 @@ using System.ServiceModel.Web;
 
 namespace Administrator.Manager.Interfaces
 {
+    #region Servicios WCF
+
     [ServiceContract]
     public interface ICreateUser
     {
@@ -40,6 +42,10 @@ namespace Administrator.Manager.Interfaces
         void UploadImg(ViewModelUploadImg File);
     }
 
+    #endregion
+
+    #region Generales
+
     public interface IReadUser
     {
         ViewModelUser ReadUser(int Id);
@@ -49,4 +55,16 @@ namespace Administrator.Manager.Interfaces
     {
         List<Tbl_Users> ReadAllUser(string sortorder, string searchstring);
     }
+
+    public interface IUserSuper
+    {
+        void UserSuper(ViewModelUser Data, string HieghUser, string MainUser);
+    }
+
+    public interface IDeleteUserSuper
+    {
+        void DeleteUserSuper(int Id, string HieghUser);
+    }
+
+    #endregion
 }

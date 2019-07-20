@@ -96,14 +96,14 @@
                                                 </button>
                                             </td>
                                             <td>
-                                                <button type="button" class="btn btn-outline-warning btn-sm">
+                                                <a href="@Url.Action("UpdateUsers","Catalogs", new { Id = @Html.DisplayFor(modelItem => item.Id) })" type="button" class="btn btn-outline-warning btn-sm">
                                                     Editar <i class="fas fa-edit"></i>
-                                                </button>
+                                                </a>
                                             </td>
                                             <td>
-                                                <button type="button" class="btn btn-outline-danger btn-sm">
+                                                <a href="@Url.Action("DeleteUsers","Catalogs", new { Id = @Html.DisplayFor(modelItem => item.Id) })" type="button" class="btn btn-outline-danger btn-sm">
                                                     Eliminar <i class="fas fa-trash-alt"></i>
-                                                </button>
+                                                </a>
                                             </td>
                                         </tr>
                                     }

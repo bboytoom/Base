@@ -17,25 +17,43 @@ namespace Administrator.Areas.Super
             context.MapRoute(
                 "panel_super",
                 "super/panel",
-                new { Controller = "Panel", action = "Index" }
+                new { Controller = "Panel", action = "Index" },
+                namespaces: new[] { "Administrator.Areas.Super.Controllers" }
             );
 
             context.MapRoute(
                 "catalogs_super",
                 "super/catalogo",
-                new { Controller = "Catalogs", action = "Index" }
+                new { Controller = "Catalogs", action = "Index" },
+                namespaces: new[] { "Administrator.Areas.Super.Controllers" }
             );
 
             context.MapRoute(
                 "usuarios_super",
                 "super/usuarios",
-                new { Controller = "Catalogs", action = "ViwerUsers" }
+                new { Controller = "Catalogs", action = "ViwerUsers" },
+                namespaces: new[] { "Administrator.Areas.Super.Controllers" }
             );
 
             context.MapRoute(
                 "crearusuarios_super",
                 "super/usuarios/crear",
-                new { Controller = "Catalogs", action = "CreateUsers" }
+                new { Controller = "Catalogs", action = "CreateUsers" },
+                namespaces: new[] { "Administrator.Areas.Super.Controllers" }
+            );
+
+            context.MapRoute(
+                "editusuarios_super",
+                "super/usuarios/edit/{Id}",
+                new { Controller = "Catalogs", action = "UpdateUsers", Id = UrlParameter.Optional },
+                namespaces: new[] { "Administrator.Areas.Super.Controllers" }
+            );
+
+            context.MapRoute(
+                "deleteusuarios_super",
+                "super/usuarios/delete/{Id}",
+                new { Controller = "Catalogs", action = "DeleteUsers", Id = UrlParameter.Optional },
+                namespaces: new[] { "Administrator.Areas.Super.Controllers" }
             );
         }
     }

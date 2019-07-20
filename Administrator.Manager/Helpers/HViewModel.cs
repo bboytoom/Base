@@ -83,6 +83,7 @@ namespace Administrator.Manager.Helpers
         public string Nameimg { get; set; }
         public bool Status { get; set; }
         public int HighUser { get; set; }
+        public int MainUser { get; set; }
     }
 
     public class ViewModelUploadImg
