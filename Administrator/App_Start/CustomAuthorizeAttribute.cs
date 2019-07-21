@@ -1,25 +1,36 @@
-﻿using System;
+﻿using Administrator.Manager.Implementations;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
+using System.Threading;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 
 namespace Administrator.App_Start
 {
-    [AttributeUsage(AttributeTargets.Class)]
+    [AttributeUsage(AttributeTargets.Method)]
     public class CustomAuthorize : AuthorizeAttribute
     {
-        protected override void HandleUnauthorizedRequest(AuthorizationContext filterContext)
+        public string permission { get; set; }
+      
+        public override void OnAuthorization(AuthorizationContext filterContext)
         {
-            filterContext.Result = new RedirectToRouteResult(
-                new RouteValueDictionary(new
+            base.OnAuthorization(filterContext);
+
+            ClaimsPrincipal Principal = Thread.CurrentPrincipal as ClaimsPrincipal;
+            var Claims = Principal.Claims.ToList();
+            string id_usuario = Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier).Value;
+
+            if (!PermissionImp.PermissionUser(permission, Convert.ToInt32(id_usuario)))
+            {
+                filterContext.Result = new RedirectToRouteResult(new RouteValueDictionary(new
                 {
-                    controller = "Default",
-                    action = "Index",
-                    returnUrl = filterContext.HttpContext.Request.Url.GetComponents(UriComponents.PathAndQuery, UriFormat.SafeUnescaped)
-                })
-            );
+                    controller = "Catalogs",
+                    action = "Index"
+                }));
+            }
         }
     }
 }

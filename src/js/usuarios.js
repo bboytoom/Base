@@ -1,16 +1,16 @@
 'use strict';
 
 class Usuarios extends Strategy {
-    constructor(ID, USUARIO) {
-        super(ID, USUARIO);
+    constructor(ID, USUARIO, MAIN) {
+        super(ID, USUARIO, MAIN);
     }
 
     crear() {
-        LoadModalUser('crear', 0, this._USUARIO);
+        LoadModalUser('crear', 0, this._USUARIO, this._MAIN);
     }
 
     actualizar() {  
-        LoadModalUser('actualizar', this._ID, this._USUARIO);
+        LoadModalUser('actualizar', this._ID, this._USUARIO, this._MAIN);
     }
 
     eliminar() {
@@ -55,9 +55,9 @@ class Usuarios extends Strategy {
     }
 }
 
-function LoadModalUser(TIPO, ID, USUARIO) {
+function LoadModalUser(TIPO, ID, USUARIO, MAIN) {
     $.ajax({
-        url: "/usuarios/form/?Id=" + ID + "&Tipo=" + TIPO,
+        url: "/usuarios/form/?Id=" + ID + "&Tipo=" + TIPO + "&Main=" + MAIN,
         dataType: 'html',
         success: function (data) {
             Swal.fire({
@@ -69,7 +69,7 @@ function LoadModalUser(TIPO, ID, USUARIO) {
                 width: '65rem',
                 html: data,
                 preConfirm: () => {
-                    petitionsUser(ID, USUARIO);                    
+                    petitionsUser(ID, USUARIO, MAIN);                    
                 }
             })
                 .then((result) => {
@@ -79,11 +79,17 @@ function LoadModalUser(TIPO, ID, USUARIO) {
                             confirmButtonText: 'Cerrar'
                         });
                 });
+
+            if (TIPO === "actualizar") {
+                document.getElementById('password-content').style.display = "none";
+            } else {
+                document.getElementById('password-content').style.display = "block";
+            }
         }
     });
 }
 
-function petitionsUser(ID, USUARIO) {
+function petitionsUser(ID, USUARIO, MAIN) {
     var URL = '';
     var photo = document.getElementById("user_imagen").files[0];
     
@@ -97,7 +103,8 @@ function petitionsUser(ID, USUARIO) {
         'Lnamem': document.getElementById('user_amaterno').value,
         'Status': document.getElementById('user_estado').value,
         'Password': document.getElementById('user_password').value,
-        'HighUser': USUARIO
+        'HighUser': USUARIO,
+        'MainUser': MAIN
     };
     
     if (ID === 0)

@@ -1,16 +1,16 @@
 'use strict';
 
 class Grupos extends Strategy {
-    constructor(ID, USUARIO) {
-        super(ID, USUARIO);
+    constructor(ID, USUARIO, MAIN) {
+        super(ID, USUARIO, MAIN);
     }
 
     crear() {
-        LoadModalGroup('crear', 0, this._USUARIO);
+        LoadModalGroup('crear', 0, this._USUARIO, this._MAIN);
     }
 
     actualizar() {
-        LoadModalGroup('actualizar', this._ID, this._USUARIO);
+        LoadModalGroup('actualizar', this._ID, this._USUARIO, this._MAIN);
     }
 
     eliminar() {
@@ -55,7 +55,7 @@ class Grupos extends Strategy {
     }
 }
 
-function LoadModalGroup(TIPO, ID, USUARIO) {
+function LoadModalGroup(TIPO, ID, USUARIO, MAIN) {
     $.ajax({
         url: "/grupos/form/?Id=" + ID + "&Tipo=" + TIPO,
         dataType: 'html',
@@ -73,7 +73,7 @@ function LoadModalGroup(TIPO, ID, USUARIO) {
                     var label_name = document.getElementById('lable_name');
 
                     if (valid_Name(Input_name)) {
-                        petitionsGroup(Input_name, ID, USUARIO);
+                        petitionsGroup(Input_name, ID, USUARIO, MAIN);
                     } else {
                         label_name.style.display = 'block';
 
@@ -96,14 +96,15 @@ function LoadModalGroup(TIPO, ID, USUARIO) {
     });
 }
 
-function petitionsGroup(INPUT, ID, USUARIO) {
+function petitionsGroup(INPUT, ID, USUARIO, MAIN) {
     var serializer_form_check = document.getElementsByClassName('ckeck__group');
     var URL = '';
     var check_array = {
         'HighUser': USUARIO,
         'Name': INPUT,
         'Description': document.getElementById('group_description').value,
-        'Id': ID
+        'Id': ID,
+        'Main': MAIN
     };
 
     for (var i = 0; i < serializer_form_check.length; i++)

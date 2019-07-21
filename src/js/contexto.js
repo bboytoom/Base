@@ -17,13 +17,13 @@ function valid_Name(Input_name) {
 }
 
 class Contexto {
-    constructor(TIPO, ID, USUARIO) {
+    constructor(TIPO, ID, USUARIO, MAIN) {
         if (TIPO === 'Grupos') {
-            this.estrategia = new Grupos(ID, USUARIO);
+            this.estrategia = new Grupos(ID, USUARIO, MAIN);
         }
 
         if (TIPO === 'Usuarios') {
-            this.estrategia = new Usuarios(ID, USUARIO);
+            this.estrategia = new Usuarios(ID, USUARIO, MAIN);
         }
     }
 

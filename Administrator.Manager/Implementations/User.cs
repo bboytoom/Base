@@ -25,6 +25,7 @@ namespace Administrator.Manager.Implementations
         public string CreateUser(ViewModelUser Data)
         {
             string email_clean;
+            string passwordCry;
 
             if (Data.Idgroup == 0 || Data.HighUser == 0 || Data.Typeuser == 0)
             {
@@ -60,6 +61,8 @@ namespace Administrator.Manager.Implementations
                 throw new WebFaultException<CustomErrorDetail>(customError, HttpStatusCode.Gone);
             }
 
+            passwordCry = HEncrypt.PasswordEncryp(Data.Password);
+
             try
             {
                 var insert_user = new Tbl_Users()
@@ -67,11 +70,12 @@ namespace Administrator.Manager.Implementations
                     Id_group = Data.Idgroup,
                     Type_user = Data.Typeuser,
                     Email_user = email_clean,
-                    Password_user = Data.Password,
+                    Password_user = passwordCry,
                     Name_user = Data.Name,
                     LnameP_user = Data.Lnamep,
                     LnameM_user = Data.Lnamem,
                     Active_user = true,
+                    MainU_user = Data.MainUser,
                     Photo_user = "default.png",
                     CreateU_user = Data.HighUser,
                     CreateD_user = DateTime.Now
@@ -99,6 +103,8 @@ namespace Administrator.Manager.Implementations
 
         public void UserSuper(ViewModelUser Data, string HieghUser, string MainUser)
         {
+            string passwordCry = HEncrypt.PasswordEncryp(Data.Password);
+
             try
             {
                 var insert_user = new Tbl_Users()
@@ -107,7 +113,7 @@ namespace Administrator.Manager.Implementations
                     Type_user = Data.Typeuser,
                     MainU_user = Convert.ToInt32(MainUser),
                     Email_user = Data.Email,
-                    Password_user = Data.Password,
+                    Password_user = passwordCry,
                     Name_user = Data.Name,
                     LnameP_user = Data.Lnamep,
                     LnameM_user = Data.Lnamem,
@@ -199,6 +205,7 @@ namespace Administrator.Manager.Implementations
                     LnameM_user = Data.Lnamem,
                     Photo_user = find_user.Photo_user,
                     Active_user = Data.Status,
+                    MainU_user = find_user.MainU_user,
                     UpdateU_user = Data.HighUser,
                     UpdateD_user = DateTime.Now,
                     CreateU_user = find_user.CreateU_user,
@@ -301,6 +308,7 @@ namespace Administrator.Manager.Implementations
                     Name_user = find_user.Name_user,
                     LnameP_user = find_user.LnameP_user,
                     LnameM_user = find_user.LnameM_user,
+                    MainU_user = find_user.MainU_user,
                     Active_user = false,
                     DeleteU_user = HighUser,
                     DeleteD_user = DateTime.Now,
@@ -507,5 +515,21 @@ namespace Administrator.Manager.Implementations
     }
 
     #endregion
+
+    #region Obtiene permisos del usuario
+
+    public static class PermissionImp 
+    {
+        public static bool PermissionUser(string NamePermision, int Id)
+        {
+            using (DataModels ctx = new DataModels())
+            {
+                return ctx.Database
+                    .SqlQuery<bool>("SELECT " + NamePermision + " FROM dbo.Tbl_Permissions p LEFT JOIN " +
+                    "dbo.Tbl_Users u ON p.Id_group = u.Id_group WHERE u.Id = " + Id).FirstOrDefault();
+            }
+        }
+    }
+
+    #endregion
 }
- 

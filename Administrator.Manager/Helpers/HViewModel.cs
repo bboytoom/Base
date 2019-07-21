@@ -31,6 +31,7 @@ namespace Administrator.Manager.Helpers
         public bool Deleteemail { get; set; }
         public bool Status { get; set; }
         public int HighUser { get; set; }
+        public int Main { get; set; }
     }
 
     public class ViewModelEmail
@@ -48,9 +49,11 @@ namespace Administrator.Manager.Helpers
     {
         public int Id { get; set; }
 
+        [Display(Name = "Grupo:")]
         [Required(ErrorMessage = "* El campo de grupo es obligatorio")]
         public int Idgroup { get; set; }
 
+        [Display(Name = "Tipo de usuario:")]
         [Required(ErrorMessage = "* El campo de tipo de usuario es obligatorio")]
         public int Typeuser { get; set; }
 

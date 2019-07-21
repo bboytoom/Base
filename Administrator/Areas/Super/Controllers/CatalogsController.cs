@@ -1,4 +1,5 @@
-﻿using Administrator.Manager.Helpers;
+﻿using Administrator.App_Start;
+using Administrator.Manager.Helpers;
 using Administrator.Manager.Implementations;
 using PagedList;
 using System;
@@ -35,6 +36,7 @@ namespace Administrator.Areas.Super.Controllers
             return View();
         }
 
+        [CustomAuthorize(permission = "Read_user_permission")]
         public ActionResult ViwerUsers(string sortOrder, string searchString, string currentFilter, int? page)
         {
             ClaimsPrincipal Principal = Thread.CurrentPrincipal as ClaimsPrincipal;
@@ -65,6 +67,7 @@ namespace Administrator.Areas.Super.Controllers
         }
 
         [HttpGet]
+        [CustomAuthorize(permission = "Create_user_permission")]
         public ActionResult CreateUsers()
         {
             ClaimsPrincipal Principal = Thread.CurrentPrincipal as ClaimsPrincipal;
@@ -76,6 +79,7 @@ namespace Administrator.Areas.Super.Controllers
 
                 ViewBag.groupUser = objReadGroupUser.ReadGroupUser(Convert.ToInt32(id_usuario));
                 ViewBag.userType = HCatalogs.GetTypeUserSuper();
+                ViewBag.passWor = "si";
 
                 return View("CreateUsers");
             }
@@ -84,6 +88,7 @@ namespace Administrator.Areas.Super.Controllers
         }
 
         [HttpGet]
+        [CustomAuthorize(permission = "Update_user_permission")]
         public ActionResult UpdateUsers(int Id)
         {
             ClaimsPrincipal Principal = Thread.CurrentPrincipal as ClaimsPrincipal;
@@ -95,10 +100,9 @@ namespace Administrator.Areas.Super.Controllers
 
                 ViewBag.groupUser = objReadGroupUser.ReadGroupUser(Convert.ToInt32(id_usuario));
                 ViewBag.userType = HCatalogs.GetTypeUserSuper();
+                ViewBag.passWor = "no";
 
-                var usuario = objReadOnlyUser.ReadUser(Id);
-
-                return View("CreateUsers", usuario);
+                return View("CreateUsers", objReadOnlyUser.ReadUser(Id));
             }
 
             return View("Index");
@@ -130,6 +134,7 @@ namespace Administrator.Areas.Super.Controllers
         }
 
         [HttpGet]
+        [CustomAuthorize(permission = "Delete_user_permission")]
         public ActionResult DeleteUsers(int Id)
         {
             ClaimsPrincipal Principal = Thread.CurrentPrincipal as ClaimsPrincipal;

@@ -102,8 +102,8 @@ namespace Administrator
 
             routes.MapRoute(
                 name: "userform",
-                url: "usuarios/form/{Id}/{Tipo}",
-                defaults: new { controller = "Catalogs", action = "PartialViewUserF", Id = UrlParameter.Optional, Tipo = UrlParameter.Optional },
+                url: "usuarios/form/{Id}/{Tipo}/{Main}",
+                defaults: new { controller = "Catalogs", action = "PartialViewUserF", Id = UrlParameter.Optional, Tipo = UrlParameter.Optional, Main = UrlParameter.Optional },
                 namespaces: new[] { "Administrator.Controllers" }
             );
 

@@ -1,7 +1,14 @@
 ﻿@model PagedList.IPagedList<Administrator.Manager.Data.Tbl_Groups>
 @using PagedList.Mvc;
+@using Administrator.Manager.Implementations;
+@using System.Security.Claims;
+@using System.Threading;
 
 @{
+    ClaimsPrincipal Principal = Thread.CurrentPrincipal as ClaimsPrincipal;
+    var Claims = Principal.Claims.ToList();
+    string id_usuario = Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier).Value;
+
     ViewBag.Title = "Grupos";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -33,9 +40,12 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header text-right">
-                            <button id="add_btn" name="@ViewBag.Title" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" type="button">
-                                Agregar nuevo grupo
-                            </button>
+                            @if (PermissionImp.PermissionUser("Create_group_permission", Convert.ToInt32(id_usuario)))
+                            {
+                                <button id="add_btn" name="@ViewBag.Title" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" type="button">
+                                    Agregar nuevo usuario
+                                </button>
+                            }
                         </div>
                         <div class="table-responsive">
                             <input type="hidden" id="infohidde" name="infohidde" value="@ViewBag.IdUsuario">
@@ -70,16 +80,32 @@
                                             <td>
                                                 @Html.DisplayFor(modelItem => item.Active_group)
                                             </td>
-                                            <td>
-                                                <button type="button" class="btn btn-outline-warning btn-sm" onclick="Edit(@Html.DisplayFor(modelItem => item.Id), '@ViewBag.Title')">
-                                                    Editar <i class="fas fa-edit"></i>
-                                                </button>
-                                            </td>
-                                            <td>
-                                                <button type="button" class="btn btn-outline-danger btn-sm" onclick="Delete(@Html.DisplayFor(modelItem => item.Id), '@ViewBag.Title')">
-                                                    Eliminar <i class="fas fa-trash-alt"></i>
-                                                </button>
-                                            </td>
+
+                                            @if (PermissionImp.PermissionUser("Update_group_permission", Convert.ToInt32(id_usuario)))
+                                            {
+                                                <td>
+                                                    <button type="button" class="btn btn-outline-warning btn-sm" onclick="Edit(@Html.DisplayFor(modelItem => item.Id), '@ViewBag.Title')">
+                                                        Editar <i class="fas fa-edit"></i>
+                                                    </button>
+                                                </td>
+                                            }
+                                            else
+                                            {
+                                                <td></td>
+                                            }
+
+                                            @if (PermissionImp.PermissionUser("Delete_group_permission", Convert.ToInt32(id_usuario)))
+                                            {
+                                                <td>
+                                                    <button type="button" class="btn btn-outline-danger btn-sm" onclick="Delete(@Html.DisplayFor(modelItem => item.Id), '@ViewBag.Title')">
+                                                        Eliminar <i class="fas fa-trash-alt"></i>
+                                                    </button>
+                                                </td>
+                                            }
+                                            else
+                                            {
+                                                <td></td>
+                                            }
                                         </tr>
                                     }
                                 </tbody>

@@ -9,7 +9,6 @@ namespace Administrator.Manager.Helpers
         {
             List<SelectListItem> typeuser = new List<SelectListItem>();
 
-            typeuser.Add(new SelectListItem() { Text = "Root", Value = "1" });
             typeuser.Add(new SelectListItem() { Text = "Staff", Value = "2" });
             typeuser.Add(new SelectListItem() { Text = "Administrador", Value = "3" });
 

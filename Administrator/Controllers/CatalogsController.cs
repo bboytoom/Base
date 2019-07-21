@@ -7,7 +7,6 @@ using PagedList;
 using System.Security.Claims;
 using System.Threading;
 using Administrator.Manager.Helpers;
-using System.Collections.Generic;
 
 namespace Administrator.Controllers
 {
@@ -36,6 +35,7 @@ namespace Administrator.Controllers
 
         #region Inician los controladores del grupo
 
+        [CustomAuthorize(permission = "Read_group_permission")]
         public ActionResult ViwerGroups(string sortOrder, string searchString, string currentFilter, int? page)
         {
             ClaimsPrincipal Principal = Thread.CurrentPrincipal as ClaimsPrincipal;
@@ -92,6 +92,7 @@ namespace Administrator.Controllers
 
         #region Inician los controladores del usuario
 
+        [CustomAuthorize(permission = "Read_user_permission")]
         public ActionResult ViwerUsers(string sortOrder, string searchString, string currentFilter, int? page)
         {
             ClaimsPrincipal Principal = Thread.CurrentPrincipal as ClaimsPrincipal;
@@ -133,9 +134,9 @@ namespace Administrator.Controllers
         }
 
         [HttpGet]
-        public ActionResult PartialViewUserF(int Id, string Tipo)
+        public ActionResult PartialViewUserF(int Id, string Tipo, int Main)
         {
-            ViewBag.groupUser = objReadGroupUser.ReadGroupUser(Id);
+            ViewBag.groupUser = objReadGroupUser.ReadGroupUser(Main);
             ViewBag.userType = HCatalogs.GetTypeUser();
 
             if (Id != 0 && Tipo == "actualizar")

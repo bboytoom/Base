@@ -50,6 +50,7 @@ namespace Administrator.Manager.Implementations
                     Description_group = WebUtility.HtmlEncode(Data.Description),
                     Active_group = true,
                     CreateU_group = Data.HighUser,
+                    MainU_group = Data.Main,
                     CreateD_group = insertTime
                 };
 
@@ -142,6 +143,7 @@ namespace Administrator.Manager.Implementations
                     CreateU_group = search_group.CreateU_group,
                     CreateD_group = search_group.CreateD_group,
                     UpdateU_group = Data.HighUser,
+                    MainU_group = Data.Main,
                     UpdateD_group = DateTime.Now
                 };
 
@@ -219,6 +221,7 @@ namespace Administrator.Manager.Implementations
                     Name_group = search_group.Name_group,
                     Description_group = search_group.Description_group,
                     Active_group = false,
+                    MainU_group = search_group.MainU_group,
                     DeleteU_group = HighUser,
                     DeleteD_group = DateTime.Now,
                     Delete_stautus_group = true
@@ -298,7 +301,7 @@ namespace Administrator.Manager.Implementations
         {
             try
             {
-                return ctx.Tbl_Groups.Where(w => w.MainU_group == Id).ToList();
+                return ctx.Tbl_Groups.Where(w => w.MainU_group == Id && w.Id != 1).ToList();
             }
             catch (Exception)
             {

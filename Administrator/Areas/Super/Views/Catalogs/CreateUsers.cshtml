@@ -100,13 +100,19 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label" })
-                                                @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @id = "user_password", @class = "form-control", @placeholder = "Contraseña", @maxlength = "80" } })
-                                                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
-                                            </div>
-                                        </div>
+                                        @{
+                                            if(ViewBag.passWor == "si")
+                                            {
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label" })
+                                                        @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @id = "user_password", @class = "form-control", @placeholder = "Contraseña", @maxlength = "80" } })
+                                                        @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                                                    </div>
+                                                </div>
+                                            }
+                                        }
+
                                     </div>
                                 </div>
                             }
