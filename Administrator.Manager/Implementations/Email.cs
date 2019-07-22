@@ -14,10 +14,10 @@ namespace Administrator.Manager.Implementations
 
     public class CreateEmailImp : ICreateEmail
     {
-        private DataModels ctx;
+        private Configuration connect;
         private CreateEmailImp()
         {
-            ctx = new DataModels();
+            connect = Configuration.Ctx();
         }
 
         public string CreateEmail(ViewModelEmail Data)
@@ -44,7 +44,7 @@ namespace Administrator.Manager.Implementations
                 throw new WebFaultException<CustomErrorDetail>(customError, HttpStatusCode.UnsupportedMediaType);
             }
 
-            var search_email = ctx.Tbl_Emails.Where(w => w.Email_email == email_clean).FirstOrDefault();
+            var search_email = connect.getConexion.Tbl_Emails.Where(w => w.Email_email == email_clean).FirstOrDefault();
 
             if (search_email != null)
             {
@@ -65,8 +65,8 @@ namespace Administrator.Manager.Implementations
                     CreateD_email = DateTime.Now
                 };
 
-                ctx.Tbl_Emails.Add(create_email);
-                ctx.SaveChanges();
+                connect.getConexion.Tbl_Emails.Add(create_email);
+                connect.getConexion.SaveChanges();
 
                 return JsonConvert.SerializeObject(new { Status = 200, Respuesta = true });
             }
@@ -83,10 +83,10 @@ namespace Administrator.Manager.Implementations
 
     public class UpdateEmailImp : IUpdateEmail
     {
-        private DataModels ctx;
+        private Configuration connect;
         private UpdateEmailImp()
         {
-            ctx = new DataModels();
+            connect = Configuration.Ctx();
         }
 
         public string UpdateEmail(ViewModelEmail Data)
@@ -113,7 +113,7 @@ namespace Administrator.Manager.Implementations
                 throw new WebFaultException<CustomErrorDetail>(customError, HttpStatusCode.UnsupportedMediaType);
             }
 
-            var search_email_repeat = ctx.Tbl_Emails.Where(w => w.Id != Data.Id && w.Email_email == Data.Email).FirstOrDefault();
+            var search_email_repeat = connect.getConexion.Tbl_Emails.Where(w => w.Id != Data.Id && w.Email_email == Data.Email).FirstOrDefault();
 
             if (search_email_repeat != null)
             {
@@ -123,7 +123,7 @@ namespace Administrator.Manager.Implementations
 
             try
             {
-                Tbl_Emails find_email = ctx.Tbl_Emails.Find(Data.Id);
+                Tbl_Emails find_email = connect.getConexion.Tbl_Emails.Find(Data.Id);
 
                 if (find_email == null)
                 {
@@ -143,8 +143,8 @@ namespace Administrator.Manager.Implementations
                     UpdateD_email = DateTime.Now
                 };
 
-                ctx.Entry(find_email).CurrentValues.SetValues(update_email);
-                ctx.SaveChanges();
+                connect.getConexion.Entry(find_email).CurrentValues.SetValues(update_email);
+                connect.getConexion.SaveChanges();
 
                 return JsonConvert.SerializeObject(new { Status = 200, Respuesta = true });
             }
@@ -161,10 +161,10 @@ namespace Administrator.Manager.Implementations
 
     public class DeleteEmailImp : IDeleteEmail
     {
-        private DataModels ctx;
+        private Configuration connect;
         private DeleteEmailImp()
         {
-            ctx = new DataModels();
+            connect = Configuration.Ctx();
         }
 
         public string DeleteEmail(ViewModelEmail Data)
@@ -177,7 +177,7 @@ namespace Administrator.Manager.Implementations
 
             try
             {
-                Tbl_Emails find_email = ctx.Tbl_Emails.Find(Data.Id);
+                Tbl_Emails find_email = connect.getConexion.Tbl_Emails.Find(Data.Id);
 
                 if (find_email == null)
                 {
@@ -198,8 +198,8 @@ namespace Administrator.Manager.Implementations
                     Delete_stautus_email = true
                 };
 
-                ctx.Entry(find_email).CurrentValues.SetValues(delete_email);
-                ctx.SaveChanges();
+                connect.getConexion.Entry(find_email).CurrentValues.SetValues(delete_email);
+                connect.getConexion.SaveChanges();
 
                 return JsonConvert.SerializeObject(new { Status = 200, Respuesta = true });
             }
@@ -216,10 +216,10 @@ namespace Administrator.Manager.Implementations
 
     public class ReadEmailImp : IReadEmail
     {
-        private DataModels ctx;
-        private ReadEmailImp()
+        private Configuration connect;
+        public ReadEmailImp()
         {
-            ctx = new DataModels();
+            connect = Configuration.Ctx();
         }
 
         public List<ViewModelEmail> ReadEmail(int Id)
@@ -230,10 +230,10 @@ namespace Administrator.Manager.Implementations
 
     public class ReadAllEmailImp : IReadAllEmail
     {
-        private DataModels ctx;
-        private ReadAllEmailImp()
+        private Configuration connect;
+        public ReadAllEmailImp()
         {
-            ctx = new DataModels();
+            connect = Configuration.Ctx();
         }
 
         public List<Tbl_Emails> ReadAllEmail()

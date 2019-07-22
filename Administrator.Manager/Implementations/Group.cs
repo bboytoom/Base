@@ -14,10 +14,10 @@ namespace Administrator.Manager.Implementations
 
     public class CreateGroupImp : ICreateGroup
     {
-        private DataModels ctx;
+        private Configuration connect;
         private CreateGroupImp()
         {
-            ctx = new DataModels();
+            connect = Configuration.Ctx();
         }
 
         public string CreateGroup(ViewModelGroup Data)
@@ -33,7 +33,7 @@ namespace Administrator.Manager.Implementations
 
             name_clean = WebUtility.HtmlEncode(Data.Name.ToLower());
 
-            var search_group = ctx.Tbl_Groups.Where(w => w.Name_group == name_clean).FirstOrDefault();
+            var search_group = connect.getConexion.Tbl_Groups.Where(w => w.Name_group == name_clean).FirstOrDefault();
 
             if (search_group != null)
             {
@@ -54,10 +54,10 @@ namespace Administrator.Manager.Implementations
                     CreateD_group = insertTime
                 };
 
-                ctx.Tbl_Groups.Add(create_group);
-                ctx.SaveChanges();
+                connect.getConexion.Tbl_Groups.Add(create_group);
+                connect.getConexion.SaveChanges();
 
-                var search_id = ctx.Tbl_Groups.Where(w => w.Name_group == name_clean).FirstOrDefault();
+                var search_id = connect.getConexion.Tbl_Groups.Where(w => w.Name_group == name_clean).FirstOrDefault();
 
                 var create_permission = new Tbl_Permissions()
                 {
@@ -80,8 +80,8 @@ namespace Administrator.Manager.Implementations
                     Delete_email_permission = Data.Deleteemail
                 };
 
-                ctx.Tbl_Permissions.Add(create_permission);
-                ctx.SaveChanges();
+                connect.getConexion.Tbl_Permissions.Add(create_permission);
+                connect.getConexion.SaveChanges();
 
                 return JsonConvert.SerializeObject(new { Status = 200, Respuesta = true });
             }
@@ -98,10 +98,10 @@ namespace Administrator.Manager.Implementations
 
     public class UpdateGroupImp : IUpdateGroup
     {
-        private DataModels ctx;
+        private Configuration connect;
         private UpdateGroupImp()
         {
-            ctx = new DataModels();
+            connect = Configuration.Ctx();
         }
 
         public string UpdateGroup(ViewModelGroup Data)
@@ -114,7 +114,7 @@ namespace Administrator.Manager.Implementations
                 throw new WebFaultException<CustomErrorDetail>(customError, HttpStatusCode.BadRequest);
             }
 
-            var search_group = ctx.Tbl_Groups.Where(w => w.Id == Data.Id).FirstOrDefault();
+            var search_group = connect.getConexion.Tbl_Groups.Where(w => w.Id == Data.Id).FirstOrDefault();
 
             if (search_group == null)
             {
@@ -124,7 +124,7 @@ namespace Administrator.Manager.Implementations
 
             name_clean = WebUtility.HtmlEncode(Data.Name.ToLower());
 
-            var search_group_repeat = ctx.Tbl_Groups.Where(w => w.Id != Data.Id && w.Name_group == name_clean).FirstOrDefault();
+            var search_group_repeat = connect.getConexion.Tbl_Groups.Where(w => w.Id != Data.Id && w.Name_group == name_clean).FirstOrDefault();
 
             if (search_group_repeat != null)
             {
@@ -147,10 +147,10 @@ namespace Administrator.Manager.Implementations
                     UpdateD_group = DateTime.Now
                 };
 
-                ctx.Entry(search_group).CurrentValues.SetValues(update_group);
-                ctx.SaveChanges();
+                connect.getConexion.Entry(search_group).CurrentValues.SetValues(update_group);
+                connect.getConexion.SaveChanges();
 
-                Tbl_Permissions find_permission = ctx.Tbl_Permissions.Find(Data.Id);
+                Tbl_Permissions find_permission = connect.getConexion.Tbl_Permissions.Find(Data.Id);
 
                 var update_permission = new Tbl_Permissions()
                 {
@@ -173,8 +173,8 @@ namespace Administrator.Manager.Implementations
                     Delete_email_permission = Data.Deleteemail
                 };
 
-                ctx.Entry(find_permission).CurrentValues.SetValues(update_permission);
-                ctx.SaveChanges();
+                connect.getConexion.Entry(find_permission).CurrentValues.SetValues(update_permission);
+                connect.getConexion.SaveChanges();
 
                 return JsonConvert.SerializeObject(new { Status = 200, Respuesta = true });
             }
@@ -191,10 +191,10 @@ namespace Administrator.Manager.Implementations
 
     public class DeleteGroupImp : IDeleteGroup
     {
-        private DataModels ctx;
+        private Configuration connect;
         private DeleteGroupImp()
         {
-            ctx = new DataModels();
+            connect = Configuration.Ctx();
         }
 
         public string DeleteGroup(int Id, int HighUser)
@@ -205,7 +205,7 @@ namespace Administrator.Manager.Implementations
                 throw new WebFaultException<CustomErrorDetail>(customError, HttpStatusCode.BadRequest);
             }
 
-            var search_group = ctx.Tbl_Groups.Where(w => w.Id == Id).FirstOrDefault();
+            var search_group = connect.getConexion.Tbl_Groups.Where(w => w.Id == Id).FirstOrDefault();
 
             if (search_group == null)
             {
@@ -227,8 +227,8 @@ namespace Administrator.Manager.Implementations
                     Delete_stautus_group = true
                 };
 
-                ctx.Entry(search_group).CurrentValues.SetValues(delete_group);
-                ctx.SaveChanges();
+                connect.getConexion.Entry(search_group).CurrentValues.SetValues(delete_group);
+                connect.getConexion.SaveChanges();
 
                 return JsonConvert.SerializeObject(new { Status = 200, Respuesta = true });
             }
@@ -245,17 +245,17 @@ namespace Administrator.Manager.Implementations
 
     public class ReadGroupImp : IReadGroup
     {
-        private DataModels ctx;
+        private Configuration connect;
         public ReadGroupImp()
         {
-            ctx = new DataModels();
+            connect = Configuration.Ctx();
         }
 
         public ViewModelGroup ReadGroup(int Id)
         {
             try
             {
-                ViewModelGroup salida = ctx.Tbl_Groups.Join(ctx.Tbl_Permissions,
+                ViewModelGroup salida = connect.getConexion.Tbl_Groups.Join(connect.getConexion.Tbl_Permissions,
                 pk => pk.Id, fk => fk.Id_group, (pk, fk) => new ViewModelGroup
                 {
                     Id = pk.Id,
@@ -291,17 +291,17 @@ namespace Administrator.Manager.Implementations
 
     public class ReadGroupUserImp : IReadGroupUser
     {
-        private DataModels ctx;
+        private Configuration connect;
         public ReadGroupUserImp()
         {
-            ctx = new DataModels();
+            connect = Configuration.Ctx();
         }
 
         public List<Tbl_Groups> ReadGroupUser(int Id)
         {
             try
             {
-                return ctx.Tbl_Groups.Where(w => w.MainU_group == Id && w.Id != 1).ToList();
+                return connect.getConexion.Tbl_Groups.Where(w => w.MainU_group == Id && w.Id != 1).ToList();
             }
             catch (Exception)
             {
@@ -312,15 +312,15 @@ namespace Administrator.Manager.Implementations
 
     public class ReadAllGroupImp : IReadAllGroup
     {
-        private DataModels ctx;
+        private Configuration connect;
         public ReadAllGroupImp()
         {
-            ctx = new DataModels();
+            connect = Configuration.Ctx();
         }
 
         public List<Tbl_Groups> ReadAllGroup(string sortorder, string searchstring, int id_main)
         {
-            var show_group = from s in ctx.Tbl_Groups where s.MainU_group == id_main select s;
+            var show_group = from s in connect.getConexion.Tbl_Groups where s.MainU_group == id_main select s;
 
             if (!String.IsNullOrEmpty(searchstring))
             {

@@ -13,10 +13,10 @@ namespace Administrator.Manager.Implementations
 
     public class CheckEmailImp : ICheckEmail
     {
-        private DataModels ctx;
+        private Configuration connect;
         private CheckEmailImp()
         {
-            ctx = new DataModels();
+            connect = Configuration.Ctx();
         }
 
         public string CheckEmail(string Email)
@@ -33,13 +33,13 @@ namespace Administrator.Manager.Implementations
 
             try
             {
-                var query_failed = ctx.Tbl_Users
+                var query_failed = connect.getConexion.Tbl_Users
                     .Where(w => w.Email_user == email_clean && w.Active_user == false)
                     .FirstOrDefault();
 
                 if (query_failed == null)
                 {
-                    var query = ctx.Tbl_Users
+                    var query = connect.getConexion.Tbl_Users
                     .Where(w => w.Email_user == email_clean).FirstOrDefault();
 
                     if (query == null)
@@ -61,23 +61,24 @@ namespace Administrator.Manager.Implementations
     #endregion
 
     #region verifica credenciales
+
     public class LoginImp : ILogin
     {
-        private DataModels ctx;
+        private Configuration connect;
         public LoginImp()
         {
-            ctx = new DataModels();
+            connect = Configuration.Ctx();
         }
 
         public Tbl_Users Login(ViewModelsLogin data)
         {
             string password_clean;
-
             password_clean = HEncrypt.PasswordEncryp(data.Password);
 
-            return ctx.Tbl_Users.Where(w => w.Email_user == data.Email && w.Password_user == password_clean).FirstOrDefault();
+            return connect.getConexion.Tbl_Users.Where(w => w.Email_user == data.Email && w.Password_user == password_clean).FirstOrDefault();
         }
     }
+
     #endregion
 
     #region Inicia las clases estaticas
@@ -86,17 +87,16 @@ namespace Administrator.Manager.Implementations
     {
         public static bool StatusUser(string Email)
         {
-            using (DataModels ctx = new DataModels())
+            Configuration connect = Configuration.Ctx();
+
+            try
             {
-                try
-                {
-                    Tbl_Users find_user = ctx.Tbl_Users.Where(w => w.Email_user == Email).FirstOrDefault();
-                    return find_user.Active_user;
-                }
-                catch (Exception)
-                {
-                    throw;
-                }
+                Tbl_Users find_user = connect.getConexion.Tbl_Users.Where(w => w.Email_user == Email).FirstOrDefault();
+                return find_user.Active_user;
+            }
+            catch (Exception)
+            {
+                throw;
             }
         }
     }
@@ -105,57 +105,82 @@ namespace Administrator.Manager.Implementations
     {
         public static bool InsertAttemps(string Email)
         {
-            using (DataModels ctx = new DataModels())
+            Configuration connect = Configuration.Ctx();
+
+            try
             {
-                try
+                Tbl_Users find_user = connect.getConexion.Tbl_Users.Where(w => w.Email_user == Email).FirstOrDefault();
+
+                var insert_attemp = new Tbl_Users()
                 {
-                    Tbl_Users find_user = ctx.Tbl_Users.Where(w => w.Email_user == Email).FirstOrDefault();
+                    Id = find_user.Id,
+                    Id_group = find_user.Id_group,
+                    Type_user = find_user.Type_user,
+                    Photo_user = find_user.Photo_user,
+                    Email_user = find_user.Email_user,
+                    Password_user = find_user.Password_user,
+                    Name_user = find_user.Name_user,
+                    LnameP_user = find_user.LnameP_user,
+                    LnameM_user = find_user.LnameM_user,
+                    MainU_user = find_user.MainU_user,
+                    CreateD_user = find_user.CreateD_user,
+                    CreateU_user = find_user.CreateU_user,
+                    UpdateD_user = find_user.UpdateD_user,
+                    UpdateU_user = find_user.UpdateU_user,
+                    Active_user = find_user.Active_user,
+                    Cycle_user = find_user.Cycle_user,
+                    Attemp_user = (find_user.Attemp_user + 1)
+                };
 
-                    var insert_attemp = new Tbl_Users()
-                    {
-                        Id = find_user.Id,
-                        Id_group = find_user.Id_group,
-                        Type_user = find_user.Type_user,
-                        Photo_user = find_user.Photo_user,
-                        Email_user = find_user.Email_user,
-                        Password_user = find_user.Password_user,
-                        Name_user = find_user.Name_user,
-                        LnameP_user = find_user.LnameP_user,
-                        LnameM_user = find_user.LnameM_user,
-                        MainU_user = find_user.MainU_user,
-                        CreateD_user = find_user.CreateD_user,
-                        CreateU_user = find_user.CreateU_user,
-                        UpdateD_user = find_user.UpdateD_user,
-                        UpdateU_user = find_user.UpdateU_user,
-                        Active_user = find_user.Active_user,
-                        Cycle_user = find_user.Cycle_user,
-                        Attemp_user = (find_user.Attemp_user + 1)
-                    };
+                connect.getConexion.Entry(find_user).CurrentValues.SetValues(insert_attemp);
+                connect.getConexion.SaveChanges();
 
-                    ctx.Entry(find_user).CurrentValues.SetValues(insert_attemp);
-                    ctx.SaveChanges();
+                if (find_user.Attemp_user == 4)
+                    return true;
 
-                    if (find_user.Attemp_user == 4)
-                        return true;
-
-                    return false;
-                }
-                catch (Exception)
-                {
-                    throw;
-                }
+                return false;
+            }
+            catch (Exception)
+            {
+                throw;
             }
         }
 
         public static void InsertCycle(string Email)
         {
-            using (DataModels ctx = new DataModels())
-            {
-                try
-                {
-                    Tbl_Users find_user = ctx.Tbl_Users.Where(w => w.Email_user == Email).FirstOrDefault();
+            Configuration connect = Configuration.Ctx();
 
-                    var cycle_attemp = new Tbl_Users()
+            try
+            {
+                Tbl_Users find_user = connect.getConexion.Tbl_Users.Where(w => w.Email_user == Email).FirstOrDefault();
+
+                var cycle_attemp = new Tbl_Users()
+                {
+                    Id = find_user.Id,
+                    Id_group = find_user.Id_group,
+                    Type_user = find_user.Type_user,
+                    Photo_user = find_user.Photo_user,
+                    Email_user = find_user.Email_user,
+                    Password_user = find_user.Password_user,
+                    Name_user = find_user.Name_user,
+                    LnameP_user = find_user.LnameP_user,
+                    LnameM_user = find_user.LnameM_user,
+                    MainU_user = find_user.MainU_user,
+                    CreateD_user = find_user.CreateD_user,
+                    CreateU_user = find_user.CreateU_user,
+                    UpdateD_user = find_user.UpdateD_user,
+                    UpdateU_user = find_user.UpdateU_user,
+                    Active_user = find_user.Active_user,
+                    Attemp_user = 0,
+                    Cycle_user = (find_user.Cycle_user + 1)
+                };
+
+                connect.getConexion.Entry(find_user).CurrentValues.SetValues(cycle_attemp);
+                connect.getConexion.SaveChanges();
+
+                if (find_user.Cycle_user == 3)
+                {
+                    var lockuot_user = new Tbl_Users()
                     {
                         Id = find_user.Id,
                         Id_group = find_user.Id_group,
@@ -171,84 +196,56 @@ namespace Administrator.Manager.Implementations
                         CreateU_user = find_user.CreateU_user,
                         UpdateD_user = find_user.UpdateD_user,
                         UpdateU_user = find_user.UpdateU_user,
-                        Active_user = find_user.Active_user,
+                        Active_user = false,
                         Attemp_user = 0,
-                        Cycle_user = (find_user.Cycle_user + 1)
+                        Cycle_user = 0
                     };
 
-                    ctx.Entry(find_user).CurrentValues.SetValues(cycle_attemp);
-                    ctx.SaveChanges();
-
-                    if (find_user.Cycle_user == 3)
-                    {
-                        var lockuot_user = new Tbl_Users()
-                        {
-                            Id = find_user.Id,
-                            Id_group = find_user.Id_group,
-                            Type_user = find_user.Type_user,
-                            Photo_user = find_user.Photo_user,
-                            Email_user = find_user.Email_user,
-                            Password_user = find_user.Password_user,
-                            Name_user = find_user.Name_user,
-                            LnameP_user = find_user.LnameP_user,
-                            LnameM_user = find_user.LnameM_user,
-                            MainU_user = find_user.MainU_user,
-                            CreateD_user = find_user.CreateD_user,
-                            CreateU_user = find_user.CreateU_user,
-                            UpdateD_user = find_user.UpdateD_user,
-                            UpdateU_user = find_user.UpdateU_user,
-                            Active_user = false,
-                            Attemp_user = 0,
-                            Cycle_user = 0
-                        };
-
-                        ctx.Entry(find_user).CurrentValues.SetValues(lockuot_user);
-                        ctx.SaveChanges();
-                    }
+                    connect.getConexion.Entry(find_user).CurrentValues.SetValues(lockuot_user);
+                    connect.getConexion.SaveChanges();
                 }
-                catch (Exception)
-                {
-                    throw;
-                }
+            }
+            catch (Exception)
+            {
+                throw;
             }
         }
 
         public static void ResetAttemps(string Email)
         {
-            using (DataModels ctx = new DataModels())
+            Configuration connect = Configuration.Ctx();
+
+            try
             {
-                try
-                {
-                    Tbl_Users find_user = ctx.Tbl_Users.Where(w => w.Email_user == Email).FirstOrDefault();
+                Tbl_Users find_user = connect.getConexion.Tbl_Users.Where(w => w.Email_user == Email).FirstOrDefault();
 
-                    var reset_attemp = new Tbl_Users()
-                    {
-                        Id = find_user.Id,
-                        Id_group = find_user.Id_group,
-                        Type_user = find_user.Type_user,
-                        Photo_user = find_user.Photo_user,
-                        Email_user = find_user.Email_user,
-                        Password_user = find_user.Password_user,
-                        Name_user = find_user.Name_user,
-                        LnameP_user = find_user.LnameP_user,
-                        LnameM_user = find_user.LnameM_user,
-                        MainU_user = find_user.MainU_user,
-                        CreateD_user = find_user.CreateD_user,
-                        CreateU_user = find_user.CreateU_user,
-                        UpdateD_user = find_user.UpdateD_user,
-                        UpdateU_user = find_user.UpdateU_user,
-                        Active_user = true,
-                        Attemp_user = 0,
-                        Cycle_user = 0
-                    };
-
-                    ctx.Entry(find_user).CurrentValues.SetValues(reset_attemp);
-                    ctx.SaveChanges();
-                }
-                catch (Exception)
+                var reset_attemp = new Tbl_Users()
                 {
-                    throw;
-                }
+                    Id = find_user.Id,
+                    Id_group = find_user.Id_group,
+                    Type_user = find_user.Type_user,
+                    Photo_user = find_user.Photo_user,
+                    Email_user = find_user.Email_user,
+                    Password_user = find_user.Password_user,
+                    Name_user = find_user.Name_user,
+                    LnameP_user = find_user.LnameP_user,
+                    LnameM_user = find_user.LnameM_user,
+                    MainU_user = find_user.MainU_user,
+                    CreateD_user = find_user.CreateD_user,
+                    CreateU_user = find_user.CreateU_user,
+                    UpdateD_user = find_user.UpdateD_user,
+                    UpdateU_user = find_user.UpdateU_user,
+                    Active_user = true,
+                    Attemp_user = 0,
+                    Cycle_user = 0
+                };
+
+                connect.getConexion.Entry(find_user).CurrentValues.SetValues(reset_attemp);
+                connect.getConexion.SaveChanges();
+            }
+            catch (Exception)
+            {
+                throw;
             }
         }
     }

@@ -79,6 +79,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Data\Configuration.cs" />
     <Compile Include="Data\DataModels.cs" />
     <Compile Include="Data\Tbl_Emails.cs" />
     <Compile Include="Data\Tbl_Groups.cs" />

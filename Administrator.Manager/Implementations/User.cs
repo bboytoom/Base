@@ -16,10 +16,10 @@ namespace Administrator.Manager.Implementations
 
     public class CreateUserImp : ICreateUser
     {
-        private DataModels ctx;
+        private Configuration connect;
         private CreateUserImp()
         {
-            ctx = new DataModels();
+            connect = Configuration.Ctx();
         }
 
         public string CreateUser(ViewModelUser Data)
@@ -53,7 +53,7 @@ namespace Administrator.Manager.Implementations
                 throw new WebFaultException<CustomErrorDetail>(customError, HttpStatusCode.UnsupportedMediaType);
             }
 
-            var search_email = ctx.Tbl_Users.Where(w => w.Email_user == email_clean).FirstOrDefault();
+            var search_email = connect.getConexion.Tbl_Users.Where(w => w.Email_user == email_clean).FirstOrDefault();
 
             if (search_email != null)
             {
@@ -81,8 +81,8 @@ namespace Administrator.Manager.Implementations
                     CreateD_user = DateTime.Now
                 };
 
-                ctx.Tbl_Users.Add(insert_user);
-                ctx.SaveChanges();
+                connect.getConexion.Tbl_Users.Add(insert_user);
+                connect.getConexion.SaveChanges();
                 
                 return JsonConvert.SerializeObject(new { Status = 200, Respuesta = true });
             }
@@ -95,10 +95,10 @@ namespace Administrator.Manager.Implementations
 
     public class CreateSuperImp : IUserSuper
     {
-        private DataModels ctx;
+        private Configuration connect;
         public CreateSuperImp()
         {
-            ctx = new DataModels();
+            connect = Configuration.Ctx();
         }
 
         public void UserSuper(ViewModelUser Data, string HieghUser, string MainUser)
@@ -123,8 +123,8 @@ namespace Administrator.Manager.Implementations
                     CreateD_user = DateTime.Now
                 };
 
-                ctx.Tbl_Users.Add(insert_user);
-                ctx.SaveChanges();
+                connect.getConexion.Tbl_Users.Add(insert_user);
+                connect.getConexion.SaveChanges();
             }
             catch (Exception)
             {
@@ -139,10 +139,10 @@ namespace Administrator.Manager.Implementations
 
     public class UpdateUserImp : IUpdateUser
     {
-        private DataModels ctx;
+        private Configuration connect;
         private UpdateUserImp()
         {
-            ctx = new DataModels();
+            connect = Configuration.Ctx();
         }
 
         public string UpdateUser(ViewModelUser Data)
@@ -175,7 +175,7 @@ namespace Administrator.Manager.Implementations
                 throw new WebFaultException<CustomErrorDetail>(customError, HttpStatusCode.UnsupportedMediaType);
             }
 
-            var search_email_repeat = ctx.Tbl_Users.Where(w => w.Id != Data.Id && w.Email_user == email_clean).FirstOrDefault();
+            var search_email_repeat = connect.getConexion.Tbl_Users.Where(w => w.Id != Data.Id && w.Email_user == email_clean).FirstOrDefault();
 
             if (search_email_repeat != null)
             {
@@ -185,7 +185,7 @@ namespace Administrator.Manager.Implementations
 
             try
             {
-                Tbl_Users find_user = ctx.Tbl_Users.Find(Data.Id);
+                Tbl_Users find_user = connect.getConexion.Tbl_Users.Find(Data.Id);
 
                 if (find_user == null)
                 {
@@ -212,8 +212,8 @@ namespace Administrator.Manager.Implementations
                     CreateD_user = find_user.CreateD_user
                 };
 
-                ctx.Entry(find_user).CurrentValues.SetValues(update_user);
-                ctx.SaveChanges();
+                connect.getConexion.Entry(find_user).CurrentValues.SetValues(update_user);
+                connect.getConexion.SaveChanges();
                 
                 return JsonConvert.SerializeObject(new { Status = 200, Respuesta = true });
             }
@@ -226,17 +226,17 @@ namespace Administrator.Manager.Implementations
 
     public class UpdateSuperImp : IUserSuper
     {
-        private DataModels ctx;
+        private Configuration connect;
         public UpdateSuperImp()
         {
-            ctx = new DataModels();
+            connect = Configuration.Ctx();
         }
 
         public void UserSuper(ViewModelUser Data, string HieghUser, string MainUser)
         {
             try
             {
-                Tbl_Users find_user = ctx.Tbl_Users.Find(Data.Id);
+                Tbl_Users find_user = connect.getConexion.Tbl_Users.Find(Data.Id);
 
                 var update_user = new Tbl_Users()
                 {
@@ -257,8 +257,8 @@ namespace Administrator.Manager.Implementations
                     CreateD_user = find_user.CreateD_user
                 };
 
-                ctx.Entry(find_user).CurrentValues.SetValues(update_user);
-                ctx.SaveChanges();
+                connect.getConexion.Entry(find_user).CurrentValues.SetValues(update_user);
+                connect.getConexion.SaveChanges();
             }
             catch (Exception)
             {
@@ -273,10 +273,10 @@ namespace Administrator.Manager.Implementations
 
     public class DeleteUserImp : IDeleteUser
     {
-        private DataModels ctx;
+        private Configuration connect;
         private DeleteUserImp()
         {
-            ctx = new DataModels();
+            connect = Configuration.Ctx();
         }
 
         public string DeleteUser(int Id, int HighUser)
@@ -287,7 +287,7 @@ namespace Administrator.Manager.Implementations
                 throw new WebFaultException<CustomErrorDetail>(customError, HttpStatusCode.BadRequest);
             }
 
-            Tbl_Users find_user = ctx.Tbl_Users.Find(Id);
+            Tbl_Users find_user = connect.getConexion.Tbl_Users.Find(Id);
 
             if (find_user == null)
             {
@@ -315,8 +315,8 @@ namespace Administrator.Manager.Implementations
                     Delete_stautus_user = true
                 };
 
-                ctx.Entry(find_user).CurrentValues.SetValues(delete_user);
-                ctx.SaveChanges();
+                connect.getConexion.Entry(find_user).CurrentValues.SetValues(delete_user);
+                connect.getConexion.SaveChanges();
 
                 return JsonConvert.SerializeObject(new { Status = 200, Respuesta = true });
             }
@@ -329,15 +329,15 @@ namespace Administrator.Manager.Implementations
 
     public class DeleteUserSuperImp : IDeleteUserSuper
     {
-        private DataModels ctx;
+        private Configuration connect;
         public DeleteUserSuperImp()
         {
-            ctx = new DataModels();
+            connect = Configuration.Ctx();
         }
 
         public void DeleteUserSuper(int Id, string HieghUser)
         {
-            Tbl_Users find_user = ctx.Tbl_Users.Find(Id);
+            Tbl_Users find_user = connect.getConexion.Tbl_Users.Find(Id);
 
             try
             {
@@ -359,8 +359,8 @@ namespace Administrator.Manager.Implementations
                     Delete_stautus_user = true
                 };
 
-                ctx.Entry(find_user).CurrentValues.SetValues(delete_user);
-                ctx.SaveChanges();
+                connect.getConexion.Entry(find_user).CurrentValues.SetValues(delete_user);
+                connect.getConexion.SaveChanges();
             }
             catch (Exception)
             {
@@ -375,17 +375,17 @@ namespace Administrator.Manager.Implementations
 
     public class ReadUserImp : IReadUser
     {
-        private DataModels ctx;
+        private Configuration connect;
         public ReadUserImp()
         {
-            ctx = new DataModels();
+            connect = Configuration.Ctx();
         }
 
         public ViewModelUser ReadUser(int Id)
         {
             try
             {
-                ViewModelUser salida = ctx.Tbl_Users.Where(w => w.Id == Id)
+                ViewModelUser salida = connect.getConexion.Tbl_Users.Where(w => w.Id == Id)
                     .Select(s => new ViewModelUser
                     {
                         Id = s.Id,
@@ -410,15 +410,15 @@ namespace Administrator.Manager.Implementations
 
     public class ReadAllUserImp : IReadAllUser
     {
-        private DataModels ctx;
+        private Configuration connect;
         public ReadAllUserImp()
         {
-            ctx = new DataModels();
+            connect = Configuration.Ctx();
         }
 
         public List<Tbl_Users> ReadAllUser(string sortorder, string searchstring, int id_main)
         {
-            var show_user = from s in ctx.Tbl_Users where s.MainU_user == id_main select s;
+            var show_user = from s in connect.getConexion.Tbl_Users where s.MainU_user == id_main select s;
 
             if (!String.IsNullOrEmpty(searchstring))
             {
@@ -441,15 +441,15 @@ namespace Administrator.Manager.Implementations
 
     public class ReadAllSuperImp: IReadAllUser
     {
-        private DataModels ctx;
+        private Configuration connect;
         public ReadAllSuperImp()
         {
-            ctx = new DataModels();
+            connect = Configuration.Ctx();
         }
 
         public List<Tbl_Users> ReadAllUser(string sortorder, string searchstring, int id_main)
         {
-            var show_user = from s in ctx.Tbl_Users where s.MainU_user == id_main select s;
+            var show_user = from s in connect.getConexion.Tbl_Users where s.MainU_user == id_main select s;
 
             if (!String.IsNullOrEmpty(searchstring))
             {
@@ -476,17 +476,17 @@ namespace Administrator.Manager.Implementations
 
     public class UploadImgImp : IUploadImg
     {
-        private DataModels ctx;
+        private Configuration connect;
         private UploadImgImp()
         {
-            ctx = new DataModels();
+            connect = Configuration.Ctx();
         }
 
         public void UploadImg(ViewModelUploadImg File)
         {
             if (File.Image != null || File.Image != "")
             {
-                Tbl_Users find_user = ctx.Tbl_Users.Find(File.Id);
+                Tbl_Users find_user = connect.getConexion.Tbl_Users.Find(File.Id);
 
                 var update_user = new Tbl_Users()
                 {
@@ -506,8 +506,8 @@ namespace Administrator.Manager.Implementations
                     CreateU_user = find_user.CreateU_user
                 };
 
-                ctx.Entry(find_user).CurrentValues.SetValues(update_user);
-                ctx.SaveChanges();
+                connect.getConexion.Entry(find_user).CurrentValues.SetValues(update_user);
+                connect.getConexion.SaveChanges();
 
                 HImages.ImagesSys(File.Image, File.Name, "/Administrator/Images");
             }
@@ -522,12 +522,11 @@ namespace Administrator.Manager.Implementations
     {
         public static bool PermissionUser(string NamePermision, int Id)
         {
-            using (DataModels ctx = new DataModels())
-            {
-                return ctx.Database
-                    .SqlQuery<bool>("SELECT " + NamePermision + " FROM dbo.Tbl_Permissions p LEFT JOIN " +
-                    "dbo.Tbl_Users u ON p.Id_group = u.Id_group WHERE u.Id = " + Id).FirstOrDefault();
-            }
+            Configuration connect = Configuration.Ctx();
+
+            return connect.getConexion.Database
+                .SqlQuery<bool>("SELECT " + NamePermision + " FROM dbo.Tbl_Permissions p LEFT JOIN " +
+                "dbo.Tbl_Users u ON p.Id_group = u.Id_group WHERE u.Id = " + Id).FirstOrDefault();
         }
     }
 
