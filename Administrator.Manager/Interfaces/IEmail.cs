@@ -33,18 +33,4 @@ namespace Administrator.Manager.Interfaces
     }
 
     #endregion
-
-    #region Generales
-
-    public interface IReadEmail
-    {
-        List<ViewModelEmail> ReadEmail(int Id);
-    }
-
-    public interface IReadAllEmail
-    {
-        List<Tbl_Emails> ReadAllEmail();
-    }
-
-    #endregion
 }

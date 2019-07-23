@@ -17,7 +17,6 @@ namespace Administrator.Controllers
         private ReadGroupImp objReadOnlyGroup;
         private ReadAllUserImp objReadUser;
         private ReadUserImp objReadOnlyUser;
-        private ReadGroupUserImp objReadGroupUser;
 
         public CatalogsController()
         {
@@ -25,7 +24,6 @@ namespace Administrator.Controllers
             objReadOnlyGroup = new ReadGroupImp();
             objReadUser = new ReadAllUserImp();
             objReadOnlyUser = new ReadUserImp();
-            objReadGroupUser = new ReadGroupUserImp();
         }
 
         public ActionResult Index()
@@ -136,7 +134,7 @@ namespace Administrator.Controllers
         [HttpGet]
         public ActionResult PartialViewUserF(int Id, string Tipo, int Main)
         {
-            ViewBag.groupUser = objReadGroupUser.ReadGroupUser(Main);
+            ViewBag.groupUser = ReadGroupUserImp.ReadGroupUser(Main);
             ViewBag.userType = HCatalogs.GetTypeUser();
 
             if (Id != 0 && Tipo == "actualizar")

@@ -214,7 +214,7 @@ namespace Administrator.Manager.Implementations
 
     #region Mostrar email
 
-    public class ReadEmailImp : IReadEmail
+    public class ReadEmailImp
     {
         private Configuration connect;
         public ReadEmailImp()
@@ -228,7 +228,7 @@ namespace Administrator.Manager.Implementations
         }
     }
 
-    public class ReadAllEmailImp : IReadAllEmail
+    public class ReadAllEmailImp
     {
         private Configuration connect;
         public ReadAllEmailImp()

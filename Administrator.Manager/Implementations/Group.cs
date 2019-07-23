@@ -243,7 +243,7 @@ namespace Administrator.Manager.Implementations
 
     #region Mostrar grupo
 
-    public class ReadGroupImp : IReadGroup
+    public class ReadGroupImp
     {
         private Configuration connect;
         public ReadGroupImp()
@@ -289,28 +289,7 @@ namespace Administrator.Manager.Implementations
         }
     }
 
-    public class ReadGroupUserImp : IReadGroupUser
-    {
-        private Configuration connect;
-        public ReadGroupUserImp()
-        {
-            connect = Configuration.Ctx();
-        }
-
-        public List<Tbl_Groups> ReadGroupUser(int Id)
-        {
-            try
-            {
-                return connect.getConexion.Tbl_Groups.Where(w => w.MainU_group == Id && w.Id != 1).ToList();
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-        }
-    }
-
-    public class ReadAllGroupImp : IReadAllGroup
+    public class ReadAllGroupImp
     {
         private Configuration connect;
         public ReadAllGroupImp()
@@ -338,6 +317,15 @@ namespace Administrator.Manager.Implementations
             }
 
             return show_group.ToList();
+        }
+    }
+
+    public static class ReadGroupUserImp 
+    {
+        public static List<Tbl_Groups> ReadGroupUser(int Id)
+        {
+            Configuration connect = Configuration.Ctx();
+            return connect.getConexion.Tbl_Groups.Where(w => w.MainU_group == Id && w.Id != 1).ToList();
         }
     }
 

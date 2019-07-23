@@ -43,28 +43,4 @@ namespace Administrator.Manager.Interfaces
     }
 
     #endregion
-
-    #region Generales
-
-    public interface IReadUser
-    {
-        ViewModelUser ReadUser(int Id);
-    }
-
-    public interface IReadAllUser
-    {
-        List<Tbl_Users> ReadAllUser(string sortorder, string searchstring, int id_main);
-    }
-
-    public interface IUserSuper
-    {
-        void UserSuper(ViewModelUser Data, string HieghUser, string MainUser);
-    }
-
-    public interface IDeleteUserSuper
-    {
-        void DeleteUserSuper(int Id, string HieghUser);
-    }
-
-    #endregion
 }

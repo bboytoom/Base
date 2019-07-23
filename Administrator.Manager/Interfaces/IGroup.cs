@@ -37,23 +37,4 @@ namespace Administrator.Manager.Interfaces
     }
 
     #endregion
-
-    #region Generales
-
-    public interface IReadGroup
-    {
-        ViewModelGroup ReadGroup(int Id);
-    }
-
-    public interface IReadAllGroup
-    {
-        List<Tbl_Groups> ReadAllGroup(string sortOrder, string searchstring, int id_main);
-    }
-
-    public interface IReadGroupUser
-    {
-        List<Tbl_Groups> ReadGroupUser(int Id);
-    }
-
-    #endregion
 }

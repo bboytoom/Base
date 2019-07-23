@@ -15,16 +15,15 @@ namespace Administrator.Areas.Super.Controllers
     [Authorize(Roles = "Root,Staff")]
     public class CatalogsController : Controller
     {
-        private ReadAllSuperImp objAllUSuper;
-        private ReadGroupUserImp objReadGroupUser;
+        private ReadAllUserImp objAllUser;
         private ReadUserImp objReadOnlyUser;
         private UpdateSuperImp objUpdateUser;
         private CreateSuperImp objCreateUser;
         private DeleteUserSuperImp objDeleteUser;
+
         public CatalogsController()
         {
-            objAllUSuper = new ReadAllSuperImp();
-            objReadGroupUser = new ReadGroupUserImp();
+            objAllUser = new ReadAllUserImp();
             objReadOnlyUser = new ReadUserImp();
             objUpdateUser = new UpdateSuperImp();
             objCreateUser = new CreateSuperImp();
@@ -56,7 +55,7 @@ namespace Administrator.Areas.Super.Controllers
 
                 ViewBag.CurrentFilter = searchString;
 
-                var salida = objAllUSuper.ReadAllUser(sortOrder, searchString, Convert.ToInt32(id_usuario));
+                var salida = objAllUser.ReadAllUser(sortOrder, searchString, Convert.ToInt32(id_usuario));
                 int pageSize = 10;
                 int pageNumber = (page ?? 1);
 
@@ -77,7 +76,7 @@ namespace Administrator.Areas.Super.Controllers
                 var Claims = Principal.Claims.ToList();
                 string id_usuario = Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier).Value;
 
-                ViewBag.groupUser = objReadGroupUser.ReadGroupUser(Convert.ToInt32(id_usuario));
+                ViewBag.groupUser = ReadGroupUserImp.ReadGroupUser(Convert.ToInt32(id_usuario));
                 ViewBag.userType = HCatalogs.GetTypeUserSuper();
                 ViewBag.passWor = "si";
 
@@ -98,7 +97,7 @@ namespace Administrator.Areas.Super.Controllers
                 var Claims = Principal.Claims.ToList();
                 string id_usuario = Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier).Value;
 
-                ViewBag.groupUser = objReadGroupUser.ReadGroupUser(Convert.ToInt32(id_usuario));
+                ViewBag.groupUser = ReadGroupUserImp.ReadGroupUser(Convert.ToInt32(id_usuario));
                 ViewBag.userType = HCatalogs.GetTypeUserSuper();
                 ViewBag.passWor = "no";
 

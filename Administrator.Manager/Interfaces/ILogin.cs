@@ -16,13 +16,4 @@ namespace Administrator.Manager.Interfaces
     }
 
     #endregion
-
-    #region Generales
-
-    public interface ILogin
-    {
-        Tbl_Users Login(ViewModelsLogin data);
-    }
-
-    #endregion
 }

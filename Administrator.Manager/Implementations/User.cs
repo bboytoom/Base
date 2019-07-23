@@ -7,7 +7,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
-using System.ServiceModel.Activation;
 using System.ServiceModel.Web;
 
 namespace Administrator.Manager.Implementations
@@ -93,7 +92,7 @@ namespace Administrator.Manager.Implementations
         }
     }
 
-    public class CreateSuperImp : IUserSuper
+    public class CreateSuperImp
     {
         private Configuration connect;
         public CreateSuperImp()
@@ -224,7 +223,7 @@ namespace Administrator.Manager.Implementations
         }
     }
 
-    public class UpdateSuperImp : IUserSuper
+    public class UpdateSuperImp
     {
         private Configuration connect;
         public UpdateSuperImp()
@@ -327,7 +326,7 @@ namespace Administrator.Manager.Implementations
         }
     }
 
-    public class DeleteUserSuperImp : IDeleteUserSuper
+    public class DeleteUserSuperImp
     {
         private Configuration connect;
         public DeleteUserSuperImp()
@@ -373,7 +372,7 @@ namespace Administrator.Manager.Implementations
 
     #region Mostrar usuario
 
-    public class ReadUserImp : IReadUser
+    public class ReadUserImp
     {
         private Configuration connect;
         public ReadUserImp()
@@ -408,41 +407,10 @@ namespace Administrator.Manager.Implementations
         }
     }
 
-    public class ReadAllUserImp : IReadAllUser
+    public class ReadAllUserImp
     {
         private Configuration connect;
         public ReadAllUserImp()
-        {
-            connect = Configuration.Ctx();
-        }
-
-        public List<Tbl_Users> ReadAllUser(string sortorder, string searchstring, int id_main)
-        {
-            var show_user = from s in connect.getConexion.Tbl_Users where s.MainU_user == id_main select s;
-
-            if (!String.IsNullOrEmpty(searchstring))
-            {
-                show_user = show_user.Where(s => s.Name_user.Contains(searchstring));
-            }
-
-            switch (sortorder)
-            {
-                case "name_desc":
-                    show_user = show_user.OrderByDescending(s => s.Name_user);
-                    break;
-                default:
-                    show_user = show_user.OrderBy(s => s.Name_user);
-                    break;
-            }
-
-            return show_user.ToList();
-        }
-    }
-
-    public class ReadAllSuperImp: IReadAllUser
-    {
-        private Configuration connect;
-        public ReadAllSuperImp()
         {
             connect = Configuration.Ctx();
         }
