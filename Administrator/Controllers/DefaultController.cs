@@ -95,7 +95,9 @@ namespace Administrator.Controllers
             {
                 new Claim(ClaimTypes.NameIdentifier, objetcModel.Id.ToString()),              
                 new Claim("Fullname", $"{objetcModel.Name_user} {objetcModel.LnameP_user}"),
-                new Claim("MainUser", objetcModel.MainU_user.ToString())
+                new Claim("MainUser", objetcModel.MainU_user.ToString()),
+                new Claim("Email", objetcModel.Email_user.ToString()),
+                new Claim("PhotoUser", objetcModel.Photo_user.ToString())
             };
 
             if (objetcModel.Type_user != 0)

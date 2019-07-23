@@ -13,7 +13,6 @@ namespace Administrator
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
-
             #region Inician las rutas generales
 
             routes.MapRoute(
@@ -88,9 +87,17 @@ namespace Administrator
             #region Inician las ViewPartial
 
             routes.MapRoute(
+                name: "header",
+                url: "header",
+                defaults: new { controller = "Shared", action = "SharedHeader" },
+                namespaces: new[] { "Administrator.Controllers" }
+            );
+
+            routes.MapRoute(
                 name: "script",
                 url: "script",
-                defaults: new { controller = "Shared", action = "MScrips" }
+                defaults: new { controller = "Shared", action = "MScrips" },
+                namespaces: new[] { "Administrator.Controllers" }
             );
 
             routes.MapRoute(

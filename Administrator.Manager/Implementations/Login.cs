@@ -62,7 +62,7 @@ namespace Administrator.Manager.Implementations
 
     #region verifica credenciales
 
-    public class LoginImp : ILogin
+    public class LoginImp
     {
         private Configuration connect;
         public LoginImp()

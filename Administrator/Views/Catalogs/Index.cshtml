@@ -4,37 +4,57 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<section class="mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
-    @Html.Partial("_Header")
+    <section class="mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
+        @{
+            Html.RenderAction("SharedHeader", "Shared", new { area = "" });
+        }
 
-    <main class="mdl-layout__content">
-        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center mb-4 border-bottom">
-            <div class="col-12">
-                <h3 class="h3">Catálogos</h3>
+        <main class="mdl-layout__content">
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center mb-4 border-bottom">
+                <div class="col-12">
+                    <h3 class="h3">Catálogos</h3>
+                </div>
             </div>
-        </div>
 
-        <div class="container-fluid">
-            <div class="card-columns">
-                <div class="card">
-                    <div class="mdl-card__title"></div>
-                    <div class="mdl-card__actions mdl-card--border text-right">
-                        <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" href="@Url.Action("ViwerGroups", "Catalogs")">
-                            Grupos
-                        </a>
+            <div class="container-fluid">
+                <div class="card-columns">
+                    <div class="card">
+                        <div class="mdl-card__title"></div>
+                        <div class="mdl-card__actions mdl-card--border text-right">
+                            <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" href="@Url.Action("ViwerGroups", "Catalogs")">
+                                Grupos
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="mdl-card__title"></div>
+                        <div class="mdl-card__actions mdl-card--border text-right">
+                            <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" href="@Url.Action("ViwerUsers", "Catalogs")">
+                                Usuarios
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="mdl-card__title"></div>
+                        <div class="mdl-card__actions mdl-card--border text-right">
+                            <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" href="#">
+                                Clientes
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="mdl-card__title"></div>
+                        <div class="mdl-card__actions mdl-card--border text-right">
+                            <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" href="#">
+                                Proveedores
+                            </a>
+                        </div>
                     </div>
                 </div>
-
-                <div class="card">
-                    <div class="mdl-card__title"></div>
-                    <div class="mdl-card__actions mdl-card--border text-right">
-                        <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" href="@Url.Action("ViwerUsers", "Catalogs")">
-                            Usuarios
-                        </a>
-                    </div>
-                </div>
-            </div>     
-        </div>
-    </main>
-</section>
+            </div>
+        </main>
+    </section>
 

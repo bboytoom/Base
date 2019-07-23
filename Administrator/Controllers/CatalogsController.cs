@@ -36,42 +36,21 @@ namespace Administrator.Controllers
         [CustomAuthorize(permission = "Read_group_permission")]
         public ActionResult ViwerGroups(string sortOrder, string searchString, string currentFilter, int? page)
         {
-            ClaimsPrincipal Principal = Thread.CurrentPrincipal as ClaimsPrincipal;
+            ViewBag.CurrentSort = sortOrder;
+            ViewBag.NameSort = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
 
-            if (Principal != null && Principal.Identity.IsAuthenticated)
-            {
-                var Claims = Principal.Claims.ToList();
-                string id_usuario = Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier).Value;
-                
-                if (Claims.FirstOrDefault(x => x.Type == ClaimTypes.Role).Value == "Administrador")
-                {
-                    ViewBag.Main = id_usuario;
-                }
-                else
-                {
-                    string id_main = Claims.FirstOrDefault(x => x.Type == "MainUser").Value;
-                    ViewBag.Main = id_main;
-                }
+            if (searchString != null)
+                page = 1;
+            else
+                searchString = currentFilter;
 
-                ViewBag.IdUsuario = id_usuario;
-                ViewBag.CurrentSort = sortOrder;
-                ViewBag.NameSort = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewBag.CurrentFilter = searchString;
 
-                if (searchString != null)
-                    page = 1;
-                else
-                    searchString = currentFilter;
+            var salida = objReadGroup.ReadAllGroup(sortOrder, searchString, Convert.ToInt32(TempData["id_user"]));
+            int pageSize = 10;
+            int pageNumber = (page ?? 1);
 
-                ViewBag.CurrentFilter = searchString;
-
-                var salida = objReadGroup.ReadAllGroup(sortOrder, searchString, Convert.ToInt32(id_usuario));
-                int pageSize = 10;
-                int pageNumber = (page ?? 1);
-
-                return View(salida.ToPagedList(pageNumber, pageSize));
-            }
-
-            return View("Index");
+            return View(salida.ToPagedList(pageNumber, pageSize));
         }
 
         [HttpGet]
@@ -93,42 +72,21 @@ namespace Administrator.Controllers
         [CustomAuthorize(permission = "Read_user_permission")]
         public ActionResult ViwerUsers(string sortOrder, string searchString, string currentFilter, int? page)
         {
-            ClaimsPrincipal Principal = Thread.CurrentPrincipal as ClaimsPrincipal;
+            ViewBag.CurrentSort = sortOrder;
+            ViewBag.NameSort = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
 
-            if (Principal != null && Principal.Identity.IsAuthenticated)
-            {
-                var Claims = Principal.Claims.ToList();
-                string id_usuario = Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier).Value;
+            if (searchString != null)
+                page = 1;
+            else
+                searchString = currentFilter;
 
-                if (Claims.FirstOrDefault(x => x.Type == ClaimTypes.Role).Value == "Administrador")
-                {
-                    ViewBag.Main = id_usuario;
-                }
-                else
-                {
-                    string id_main = Claims.FirstOrDefault(x => x.Type == "MainUser").Value;
-                    ViewBag.Main = id_main;
-                }
+            ViewBag.CurrentFilter = searchString;
 
-                ViewBag.IdUsuario = id_usuario;
-                ViewBag.CurrentSort = sortOrder;
-                ViewBag.NameSort = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            var salida = objReadUser.ReadAllUser(sortOrder, searchString, Convert.ToInt32(TempData["id_user"]));
+            int pageSize = 10;
+            int pageNumber = (page ?? 1);
 
-                if (searchString != null)
-                    page = 1;
-                else
-                    searchString = currentFilter;
-
-                ViewBag.CurrentFilter = searchString;
-
-                var salida = objReadUser.ReadAllUser(sortOrder, searchString, Convert.ToInt32(id_usuario));
-                int pageSize = 10;
-                int pageNumber = (page ?? 1);
-
-                return View(salida.ToPagedList(pageNumber, pageSize));
-            }
-            
-            return View("Index");
+            return View(salida.ToPagedList(pageNumber, pageSize));
         }
 
         [HttpGet]

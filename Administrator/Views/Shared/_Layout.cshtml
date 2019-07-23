@@ -30,7 +30,7 @@
         <script src="/Scripts/build-libs.min.js"></script>
         <script src="/Scripts/jquery.unobtrusive-ajax.js"></script>
         @{
-            Html.RenderAction("MScrips", "Shared");
+            Html.RenderAction("MScrips", "Shared",  new { area = "" });
         }
     </body>
 </html>

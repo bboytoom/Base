@@ -7,8 +7,7 @@
                 </a>
 
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                    <a class="dropdown-item" href="#"><i class="fas fa-user"></i> Perfil</a>
-                 
+                    <a class="dropdown-item" href="#"><i class="fas fa-user"></i> Perfil</a>                 
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item" href="@Url.Action("LogOff", "Default", new { Area="" })"><i class="fas fa-power-off"></i> Salir</a>
                 </div>
@@ -20,10 +19,10 @@
 <div class="mdl-layout__drawer">
     <div class="card rounded-0 border-0 ">
         <div class="card-header text-center border-0">
-            <img src="https://techvortal.pl/ficons/noavatar.png" alt="foto del usuario" class="img-thumbnail rounded-circle img_layout--mdf">
+            <img src="~/Images/@TempData["photo_user"]" alt="foto del usuario" class="img-thumbnail rounded-circle img_layout--mdf">
         </div>
         <div class="card-body border-bottom text-center">
-            prueba@micorreo.es
+            @TempData["email_user"]
         </div>
     </div>
 

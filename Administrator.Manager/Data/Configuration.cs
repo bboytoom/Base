@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Administrator.Manager.Data
 {
-    public class Configuration
+    public class Configuration : IDisposable
     {
         private static Configuration _Ctx = null;
         private DataModels conexion;
@@ -35,6 +31,11 @@ namespace Administrator.Manager.Data
                 _Ctx = new Configuration();
 
             return _Ctx;
+        }
+
+        public void Dispose()
+        {
+            _Ctx.Dispose();
         }
     }
 }

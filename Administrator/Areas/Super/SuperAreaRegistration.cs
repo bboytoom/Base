@@ -14,6 +14,8 @@ namespace Administrator.Areas.Super
 
         public override void RegisterArea(AreaRegistrationContext context) 
         {
+            #region Inician las rutas generales
+
             context.MapRoute(
                 "panel_super",
                 "super/panel",
@@ -55,6 +57,19 @@ namespace Administrator.Areas.Super
                 new { Controller = "Catalogs", action = "DeleteUsers", Id = UrlParameter.Optional },
                 namespaces: new[] { "Administrator.Areas.Super.Controllers" }
             );
+
+            #endregion
+
+            #region Inician las ViewPartial
+
+            context.MapRoute(
+                "header_super",
+                "headersuper",
+                new { Controller = "Shared", action = "SharedHeader" },
+                namespaces: new[] { "Administrator.Areas.Super.Controllers" }
+            );
+
+            #endregion
         }
     }
 }

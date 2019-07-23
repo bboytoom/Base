@@ -4,7 +4,6 @@ using Administrator.Manager.Interfaces;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Net;
 using System.ServiceModel.Web;
@@ -100,7 +99,7 @@ namespace Administrator.Manager.Implementations
             connect = Configuration.Ctx();
         }
 
-        public void UserSuper(ViewModelUser Data, string HieghUser, string MainUser)
+        public void UserSuper(ViewModelUser Data, int HieghUser, int MainUser)
         {
             string passwordCry = HEncrypt.PasswordEncryp(Data.Password);
 
@@ -110,7 +109,7 @@ namespace Administrator.Manager.Implementations
                 {
                     Id_group = Data.Idgroup,
                     Type_user = Data.Typeuser,
-                    MainU_user = Convert.ToInt32(MainUser),
+                    MainU_user = MainUser,
                     Email_user = Data.Email,
                     Password_user = passwordCry,
                     Name_user = Data.Name,
@@ -118,7 +117,7 @@ namespace Administrator.Manager.Implementations
                     LnameM_user = Data.Lnamem,
                     Active_user = true,
                     Photo_user = "default.png",
-                    CreateU_user = Convert.ToInt32(HieghUser),
+                    CreateU_user = HieghUser,
                     CreateD_user = DateTime.Now
                 };
 
@@ -231,7 +230,7 @@ namespace Administrator.Manager.Implementations
             connect = Configuration.Ctx();
         }
 
-        public void UserSuper(ViewModelUser Data, string HieghUser, string MainUser)
+        public void UserSuper(ViewModelUser Data, int HieghUser, int MainUser)
         {
             try
             {
@@ -250,7 +249,7 @@ namespace Administrator.Manager.Implementations
                     LnameM_user = Data.Lnamem,
                     Photo_user = find_user.Photo_user,
                     Active_user = Data.Status,
-                    UpdateU_user = Convert.ToInt32(HieghUser),
+                    UpdateU_user = HieghUser,
                     UpdateD_user = DateTime.Now,
                     CreateU_user = find_user.CreateU_user,
                     CreateD_user = find_user.CreateD_user
@@ -334,7 +333,7 @@ namespace Administrator.Manager.Implementations
             connect = Configuration.Ctx();
         }
 
-        public void DeleteUserSuper(int Id, string HieghUser)
+        public void DeleteUserSuper(int Id, int HieghUser)
         {
             Tbl_Users find_user = connect.getConexion.Tbl_Users.Find(Id);
 
@@ -353,7 +352,7 @@ namespace Administrator.Manager.Implementations
                     LnameP_user = find_user.LnameP_user,
                     LnameM_user = find_user.LnameM_user,
                     Active_user = false,
-                    DeleteU_user = Convert.ToInt32(HieghUser),
+                    DeleteU_user = HieghUser,
                     DeleteD_user = DateTime.Now,
                     Delete_stautus_user = true
                 };

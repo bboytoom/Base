@@ -1,6 +1,4 @@
-﻿using Administrator.Manager.Data;
-using Administrator.Manager.Helpers;
-using System.ServiceModel;
+﻿using System.ServiceModel;
 using System.ServiceModel.Web;
 
 namespace Administrator.Manager.Interfaces

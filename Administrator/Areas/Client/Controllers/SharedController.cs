@@ -6,25 +6,10 @@ using System.Threading;
 using System.Web;
 using System.Web.Mvc;
 
-namespace Administrator.Controllers
+namespace Administrator.Areas.Client.Controllers
 {
     public class SharedController : Controller
     {
-        [ChildActionOnly]
-        public ActionResult MScrips()
-        {        
-            if (User.Identity.IsAuthenticated)
-            {
-                ViewBag.tipo = "interno";
-            }
-            else
-            {
-                ViewBag.tipo = "externo";
-            }
-
-            return PartialView("_Scrips");
-        }
-
         [ChildActionOnly]
         public ActionResult SharedHeader()
         {
@@ -45,7 +30,7 @@ namespace Administrator.Controllers
                 else
                 {
                     TempData["main_user"] = Claims.FirstOrDefault(x => x.Type == "MainUser").Value;
-                }     
+                }
             }
 
             return PartialView("_Header");

@@ -38,115 +38,67 @@ namespace Administrator.Areas.Super.Controllers
         [CustomAuthorize(permission = "Read_user_permission")]
         public ActionResult ViwerUsers(string sortOrder, string searchString, string currentFilter, int? page)
         {
-            ClaimsPrincipal Principal = Thread.CurrentPrincipal as ClaimsPrincipal;
+            ViewBag.CurrentSort = sortOrder;
+            ViewBag.NameSort = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
 
-            if (Principal != null && Principal.Identity.IsAuthenticated)
-            {
-                var Claims = Principal.Claims.ToList();
-                string id_usuario = Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier).Value;
+            if (searchString != null)
+                page = 1;
+            else
+                searchString = currentFilter;
 
-                ViewBag.CurrentSort = sortOrder;
-                ViewBag.NameSort = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewBag.CurrentFilter = searchString;
 
-                if (searchString != null)
-                    page = 1;
-                else
-                    searchString = currentFilter;
+            var salida = objAllUser.ReadAllUser(sortOrder, searchString, Convert.ToInt32(TempData["id_user"]));
+            int pageSize = 10;
+            int pageNumber = (page ?? 1);
 
-                ViewBag.CurrentFilter = searchString;
-
-                var salida = objAllUser.ReadAllUser(sortOrder, searchString, Convert.ToInt32(id_usuario));
-                int pageSize = 10;
-                int pageNumber = (page ?? 1);
-
-                return View(salida.ToPagedList(pageNumber, pageSize));
-            }
-
-            return View("Index");
+            return View(salida.ToPagedList(pageNumber, pageSize));
         }
 
         [HttpGet]
         [CustomAuthorize(permission = "Create_user_permission")]
         public ActionResult CreateUsers()
         {
-            ClaimsPrincipal Principal = Thread.CurrentPrincipal as ClaimsPrincipal;
+            ViewBag.groupUser = ReadGroupUserImp.ReadGroupUser(Convert.ToInt32(TempData["id_user"]));
+            ViewBag.userType = HCatalogs.GetTypeUserSuper();
+            ViewBag.passWor = "si";
 
-            if (Principal != null && Principal.Identity.IsAuthenticated)
-            {
-                var Claims = Principal.Claims.ToList();
-                string id_usuario = Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier).Value;
-
-                ViewBag.groupUser = ReadGroupUserImp.ReadGroupUser(Convert.ToInt32(id_usuario));
-                ViewBag.userType = HCatalogs.GetTypeUserSuper();
-                ViewBag.passWor = "si";
-
-                return View("CreateUsers");
-            }
-
-            return View("Index");
+            return View("CreateUsers");
         }
 
         [HttpGet]
         [CustomAuthorize(permission = "Update_user_permission")]
         public ActionResult UpdateUsers(int Id)
         {
-            ClaimsPrincipal Principal = Thread.CurrentPrincipal as ClaimsPrincipal;
+            ViewBag.groupUser = ReadGroupUserImp.ReadGroupUser(Convert.ToInt32(TempData["id_user"]));
+            ViewBag.userType = HCatalogs.GetTypeUserSuper();
+            ViewBag.passWor = "no";
 
-            if (Principal != null && Principal.Identity.IsAuthenticated)
-            {
-                var Claims = Principal.Claims.ToList();
-                string id_usuario = Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier).Value;
-
-                ViewBag.groupUser = ReadGroupUserImp.ReadGroupUser(Convert.ToInt32(id_usuario));
-                ViewBag.userType = HCatalogs.GetTypeUserSuper();
-                ViewBag.passWor = "no";
-
-                return View("CreateUsers", objReadOnlyUser.ReadUser(Id));
-            }
-
-            return View("Index");
+            return View("CreateUsers", objReadOnlyUser.ReadUser(Id));
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult CreateUsers(ViewModelUser Data)
         {
-            ClaimsPrincipal Principal = Thread.CurrentPrincipal as ClaimsPrincipal;
-
-            if (Principal != null && Principal.Identity.IsAuthenticated)
+            if (Data.Id == 0)
             {
-                var Claims = Principal.Claims.ToList();
-                string HieghUser = Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier).Value;
-                string MainUser = Claims.FirstOrDefault(x => x.Type == "MainUser").Value;
-
-                if (Data.Id == 0)
-                {
-                    objCreateUser.UserSuper(Data, HieghUser, MainUser);
-                }
-                else
-                {
-                    objUpdateUser.UserSuper(Data, HieghUser, MainUser);
-                }
+                objCreateUser.UserSuper(Data, Convert.ToInt32(TempData["id_user"]), Convert.ToInt32(TempData["main_user"]));
+            }
+            else
+            {
+                objUpdateUser.UserSuper(Data, Convert.ToInt32(TempData["id_user"]), Convert.ToInt32(TempData["main_user"]));
             }
 
-            return View();
+            return RedirectToAction("ViwerUsers", "Catalogs");
         }
 
         [HttpGet]
         [CustomAuthorize(permission = "Delete_user_permission")]
         public ActionResult DeleteUsers(int Id)
         {
-            ClaimsPrincipal Principal = Thread.CurrentPrincipal as ClaimsPrincipal;
-
-            if (Principal != null && Principal.Identity.IsAuthenticated)
-            {
-                var Claims = Principal.Claims.ToList();
-                string HieghUser = Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier).Value;
-
-                objDeleteUser.DeleteUserSuper(Id, HieghUser);
-            }
-
-            return View();
+            objDeleteUser.DeleteUserSuper(Id, Convert.ToInt32(TempData["main_user"]));
+            return RedirectToAction("ViwerUsers", "Catalogs");
         }
     }
 }

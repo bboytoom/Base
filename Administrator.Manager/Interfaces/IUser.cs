@@ -1,8 +1,4 @@
-﻿using Administrator.Manager.Data;
-using Administrator.Manager.Helpers;
-using System.Collections.Generic;
-using System.IO;
-using System.Runtime.Serialization;
+﻿using Administrator.Manager.Helpers;
 using System.ServiceModel;
 using System.ServiceModel.Web;
 

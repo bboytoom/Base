@@ -1,123 +1,119 @@
 ﻿@model PagedList.IPagedList<Administrator.Manager.Data.Tbl_Groups>
 @using PagedList.Mvc;
 @using Administrator.Manager.Implementations;
-@using System.Security.Claims;
-@using System.Threading;
 
 @{
-    ClaimsPrincipal Principal = Thread.CurrentPrincipal as ClaimsPrincipal;
-    var Claims = Principal.Claims.ToList();
-    string id_usuario = Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier).Value;
-
     ViewBag.Title = "Grupos";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<section class="mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
-    @Html.Partial("_Header")
+    <section class="mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
+        @{
+            Html.RenderAction("SharedHeader", "Shared", new { area = "" });
+        }
 
-    <main class="mdl-layout__content">
-        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center mb-4 border-bottom">
-            <div class="col-md-6">
-                <h3 class="h3">Grupos</h3>
+        <main class="mdl-layout__content">
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center mb-4 border-bottom">
+                <div class="col-md-6">
+                    <h3 class="h3">Grupos</h3>
+                </div>
+
+                <div class="col-md-6">
+                    @using (Html.BeginForm("ViwerGroups", "Catalogs", FormMethod.Post, new { autocomplete = "off" }))
+                    {
+                        <div class="input-group">
+                            @Html.TextBox("searchString", ViewBag.CurrentFilter as string, new { maxlength = 30, @class = "form-control", placeholder = "Buscar el elemento" })
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-secondary" type="submit">Buscar</button>
+                            </div>
+                        </div>
+                    }
+                </div>
             </div>
 
-            <div class="col-md-6">
-                @using (Html.BeginForm("ViwerGroups", "Catalogs", FormMethod.Post, new { autocomplete = "off" }))
-                {
-                    <div class="input-group">
-                        @Html.TextBox("searchString", ViewBag.CurrentFilter as string, new { maxlength = 30, @class = "form-control", placeholder = "Buscar el elemento" })
-                        <div class="input-group-append">
-                            <button class="btn btn-outline-secondary" type="submit">Buscar</button>
-                        </div>
-                    </div>
-                }
-            </div>
-        </div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header text-right">
+                                @if (PermissionImp.PermissionUser("Create_group_permission", Convert.ToInt32(TempData["id_user"])))
+                                {
+                                    <button id="add_btn" name="@ViewBag.Title" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" type="button">
+                                        Agregar nuevo usuario
+                                    </button>
+                                }
+                            </div>
+                            <div class="table-responsive">
+                                <input type="hidden" id="infohidde" name="infohidde" value="@TempData["id_user"]">
+                                <input type="hidden" id="mainhidde" name="mainhidde" value="@TempData["main_user"]">
 
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="card">
-                        <div class="card-header text-right">
-                            @if (PermissionImp.PermissionUser("Create_group_permission", Convert.ToInt32(id_usuario)))
-                            {
-                                <button id="add_btn" name="@ViewBag.Title" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" type="button">
-                                    Agregar nuevo usuario
-                                </button>
-                            }
-                        </div>
-                        <div class="table-responsive">
-                            <input type="hidden" id="infohidde" name="infohidde" value="@ViewBag.IdUsuario">
-                            <input type="hidden" id="mainhidde" name="mainhidde" value="@ViewBag.Main">
-
-                            <table class="table mdl-data-table table-striped table-hover">
-                                <thead>
-                                    <tr>
-                                        <th class="mdl-data-table__cell--non-numeric" scope="col">
-                                            @Html.ActionLink("Grupo", "ViwerGroups", new { sortorder = ViewBag.NameSort, currentFilter = ViewBag.CurrentFilter })
-                                        </th>
-                                        <th class="mdl-data-table__cell--non-numeric" scope="col">
-                                            Descripción
-                                        </th>
-                                        <th scope="col">
-                                            Estatus
-                                        </th>
-                                        <th></th>
-                                        <th></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach (var item in Model)
-                                    {
+                                <table class="table mdl-data-table table-striped table-hover">
+                                    <thead>
                                         <tr>
-                                            <td class="mdl-data-table__cell--non-numeric">
-                                                @Html.DisplayFor(modelItem => item.Name_group)
-                                            </td>
-                                            <td class="mdl-data-table__cell--non-numeric">
-                                                @Html.DisplayFor(modelItem => item.Description_group)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.Active_group)
-                                            </td>
-
-                                            @if (PermissionImp.PermissionUser("Update_group_permission", Convert.ToInt32(id_usuario)))
-                                            {
-                                                <td>
-                                                    <button type="button" class="btn btn-outline-warning btn-sm" onclick="Edit(@Html.DisplayFor(modelItem => item.Id), '@ViewBag.Title')">
-                                                        Editar <i class="fas fa-edit"></i>
-                                                    </button>
-                                                </td>
-                                            }
-                                            else
-                                            {
-                                                <td></td>
-                                            }
-
-                                            @if (PermissionImp.PermissionUser("Delete_group_permission", Convert.ToInt32(id_usuario)))
-                                            {
-                                                <td>
-                                                    <button type="button" class="btn btn-outline-danger btn-sm" onclick="Delete(@Html.DisplayFor(modelItem => item.Id), '@ViewBag.Title')">
-                                                        Eliminar <i class="fas fa-trash-alt"></i>
-                                                    </button>
-                                                </td>
-                                            }
-                                            else
-                                            {
-                                                <td></td>
-                                            }
+                                            <th class="mdl-data-table__cell--non-numeric" scope="col">
+                                                @Html.ActionLink("Grupo", "ViwerGroups", new { sortorder = ViewBag.NameSort, currentFilter = ViewBag.CurrentFilter })
+                                            </th>
+                                            <th class="mdl-data-table__cell--non-numeric" scope="col">
+                                                Descripción
+                                            </th>
+                                            <th scope="col">
+                                                Estatus
+                                            </th>
+                                            <th></th>
+                                            <th></th>
                                         </tr>
-                                    }
-                                </tbody>
-                            </table>
-                        </div>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in Model)
+                                        {
+                                            <tr>
+                                                <td class="mdl-data-table__cell--non-numeric">
+                                                    @Html.DisplayFor(modelItem => item.Name_group)
+                                                </td>
+                                                <td class="mdl-data-table__cell--non-numeric">
+                                                    @Html.DisplayFor(modelItem => item.Description_group)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.Active_group)
+                                                </td>
 
-                        <div class="mdl-card__actions mdl-card--border text-right">
-                            @Html.PagedListPager(Model, page => Url.Action("ViwerGroups", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }), PagedListRenderOptions.OnlyShowFivePagesAtATime)
+                                                @if (PermissionImp.PermissionUser("Update_group_permission", Convert.ToInt32(TempData["id_user"])))
+                                                {
+                                                    <td>
+                                                        <button type="button" class="btn btn-outline-warning btn-sm" onclick="Edit(@Html.DisplayFor(modelItem => item.Id), '@ViewBag.Title')">
+                                                            Editar <i class="fas fa-edit"></i>
+                                                        </button>
+                                                    </td>
+                                                }
+                                                else
+                                                {
+                                                    <td></td>
+                                                }
+
+                                                @if (PermissionImp.PermissionUser("Delete_group_permission", Convert.ToInt32(TempData["id_user"])))
+                                                {
+                                                    <td>
+                                                        <button type="button" class="btn btn-outline-danger btn-sm" onclick="Delete(@Html.DisplayFor(modelItem => item.Id), '@ViewBag.Title')">
+                                                            Eliminar <i class="fas fa-trash-alt"></i>
+                                                        </button>
+                                                    </td>
+                                                }
+                                                else
+                                                {
+                                                    <td></td>
+                                                }
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div class="mdl-card__actions mdl-card--border text-right">
+                                @Html.PagedListPager(Model, page => Url.Action("ViwerGroups", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }), PagedListRenderOptions.OnlyShowFivePagesAtATime)
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </main>
-</section>
+        </main>
+    </section>

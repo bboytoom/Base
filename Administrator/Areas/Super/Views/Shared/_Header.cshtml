@@ -19,10 +19,10 @@
 <div class="mdl-layout__drawer">
     <div class="card rounded-0 border-0 ">
         <div class="card-header text-center border-0">
-            <img src="https://techvortal.pl/ficons/noavatar.png" alt="foto del usuario" class="img-thumbnail rounded-circle img_layout--mdf">
+            <img src="~/Images/@TempData["photo_user"]" alt="foto del usuario" class="img-thumbnail rounded-circle img_layout--mdf">
         </div>
         <div class="card-body border-bottom text-center">
-            prueba@micorreo.es
+            @TempData["email_user"]
         </div>
     </div>
 
@@ -30,4 +30,5 @@
         <a class="nav-link" href="@Url.Action("Index", "Panel")">Inicio</a>
     </nav>
 </div>
+
 
