@@ -320,7 +320,7 @@ namespace Administrator.Manager.Implementations
         }
     }
 
-    public static class ReadGroupUserImp 
+    public static class ReadGroupUserImp
     {
         public static List<Tbl_Groups> ReadGroupUser(int Id)
         {

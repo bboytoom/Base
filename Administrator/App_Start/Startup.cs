@@ -1,7 +1,5 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNet.Identity;
 using Microsoft.Owin;
-using Microsoft.AspNet.Identity;
 using Owin;
 
 [assembly: OwinStartup(typeof(Administrator.App_Start.Startup))]
@@ -16,7 +14,8 @@ namespace Administrator.App_Start
 
             app.UseCookieAuthentication(new Microsoft.Owin.Security.Cookies.CookieAuthenticationOptions()
             {
-                AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie, LoginPath = new PathString("/Default/Index")
+                AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
+                LoginPath = new PathString("/Default/Index")
             });
         }
     }

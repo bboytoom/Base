@@ -1,7 +1,7 @@
 ﻿using System.Runtime.Serialization;
 
 namespace Administrator.Manager.Helpers
-{ 
+{
     [DataContract]
     public class CustomErrorDetail
     {

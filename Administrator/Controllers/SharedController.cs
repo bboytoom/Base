@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Security.Claims;
 using System.Threading;
-using System.Web;
 using System.Web.Mvc;
 
 namespace Administrator.Controllers
@@ -12,7 +9,7 @@ namespace Administrator.Controllers
     {
         [ChildActionOnly]
         public ActionResult MScrips()
-        {        
+        {
             if (User.Identity.IsAuthenticated)
             {
                 ViewBag.tipo = "interno";
@@ -45,7 +42,7 @@ namespace Administrator.Controllers
                 else
                 {
                     TempData["main_user"] = Claims.FirstOrDefault(x => x.Type == "MainUser").Value;
-                }     
+                }
             }
 
             return PartialView("_Header");

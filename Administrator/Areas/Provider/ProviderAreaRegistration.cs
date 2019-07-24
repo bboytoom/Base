@@ -2,17 +2,17 @@
 
 namespace Administrator.Areas.Provider
 {
-    public class ProviderAreaRegistration : AreaRegistration 
+    public class ProviderAreaRegistration : AreaRegistration
     {
-        public override string AreaName 
+        public override string AreaName
         {
-            get 
+            get
             {
                 return "Provider";
             }
         }
 
-        public override void RegisterArea(AreaRegistrationContext context) 
+        public override void RegisterArea(AreaRegistrationContext context)
         {
             #region Inician las rutas generales
 

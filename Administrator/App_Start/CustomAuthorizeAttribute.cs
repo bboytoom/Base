@@ -1,10 +1,8 @@
 ﻿using Administrator.Manager.Implementations;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading;
-using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 
@@ -14,7 +12,7 @@ namespace Administrator.App_Start
     public class CustomAuthorize : AuthorizeAttribute
     {
         public string permission { get; set; }
-      
+
         public override void OnAuthorization(AuthorizationContext filterContext)
         {
             base.OnAuthorization(filterContext);

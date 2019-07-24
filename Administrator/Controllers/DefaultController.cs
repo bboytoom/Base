@@ -1,21 +1,22 @@
-﻿using Administrator.Manager.Implementations;
+﻿using Administrator.Manager.Data;
 using Administrator.Manager.Helpers;
-using Administrator.Manager.Data;
+using Administrator.Manager.Implementations;
+using Microsoft.AspNet.Identity;
+using Microsoft.Owin.Security;
 using System;
 using System.Collections.Generic;
 using System.Net;
+using System.Security.Claims;
 using System.Web;
 using System.Web.Mvc;
-using System.Security.Claims;
-using Microsoft.AspNet.Identity;
-using Microsoft.Owin.Security;
 
 namespace Administrator.Controllers
 {
     public class DefaultController : Controller
     {
         private LoginImp objLogin;
-        public DefaultController() {
+        public DefaultController()
+        {
             objLogin = new LoginImp();
         }
 
@@ -35,7 +36,7 @@ namespace Administrator.Controllers
                     return RedirectToAction("LockOutLogin", "Default");
 
                 ViewBag.ReturnUrl = returnUrl;
-                return View();               
+                return View();
             }
         }
 
@@ -45,21 +46,21 @@ namespace Administrator.Controllers
         {
             JsonResult Result;
             string email_clean;
-            
+
             if (data.Email == null || data.Password == null)
                 return Json(new { Status = 404, Respuesta = "El correo y/o password se encuentran vacios" }, JsonRequestBehavior.AllowGet);
 
             if (data.Email == "" || data.Password == "")
-                return Json(new { Status = 404,Respuesta = "El correo y/o password se encuentran vacios" }, JsonRequestBehavior.AllowGet);
+                return Json(new { Status = 404, Respuesta = "El correo y/o password se encuentran vacios" }, JsonRequestBehavior.AllowGet);
 
             email_clean = WebUtility.HtmlEncode(data.Email.ToLower());
 
             if (!HCheckEmail.EmailCheck(email_clean))
                 return Json(new { Status = 415, Respuesta = "Correo electronico no valido" }, JsonRequestBehavior.AllowGet);
 
-            if(!CStatusUser.StatusUser(data.Email))
+            if (!CStatusUser.StatusUser(data.Email))
                 return Json(new { Status = 401, Respuesta = "Usuario inactivo, consulte a su administrador" }, JsonRequestBehavior.AllowGet);
-            
+
             if (objLogin.Login(data) == null)
             {
                 if (LockOutUser.InsertAttemps(email_clean))
@@ -75,7 +76,7 @@ namespace Administrator.Controllers
                     LockOutUser.InsertCycle(email_clean);
                     return Json(new { Status = 403, Respuesta = "Usuario bloqueado temporalmente" }, JsonRequestBehavior.AllowGet);
                 }
-                
+
                 ModelState.Clear();
                 return Json(new { Status = 203, Respuesta = "La contraseña no es correcta" }, JsonRequestBehavior.AllowGet);
             }
@@ -90,10 +91,10 @@ namespace Administrator.Controllers
         }
 
         private JsonResult SingInUser(Tbl_Users objetcModel, bool Rememberme)
-        {           
+        {
             List<Claim> claims = new List<Claim>
             {
-                new Claim(ClaimTypes.NameIdentifier, objetcModel.Id.ToString()),              
+                new Claim(ClaimTypes.NameIdentifier, objetcModel.Id.ToString()),
                 new Claim("Fullname", $"{objetcModel.Name_user} {objetcModel.LnameP_user}"),
                 new Claim("MainUser", objetcModel.MainU_user.ToString()),
                 new Claim("Email", objetcModel.Email_user.ToString()),
@@ -131,7 +132,7 @@ namespace Administrator.Controllers
 
             IAuthenticationManager authenticationManager = HttpContext.GetOwinContext().Authentication;
             authenticationManager.SignIn(new AuthenticationProperties() { IsPersistent = Rememberme }, Identity);
-            
+
             return ReturnJson(objetcModel.Type_user);
         }
 

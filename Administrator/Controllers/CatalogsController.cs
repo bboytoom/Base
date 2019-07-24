@@ -1,12 +1,9 @@
 ﻿using Administrator.App_Start;
-using Administrator.Manager.Implementations;
-using System;
-using System.Linq;
-using System.Web.Mvc;
-using PagedList;
-using System.Security.Claims;
-using System.Threading;
 using Administrator.Manager.Helpers;
+using Administrator.Manager.Implementations;
+using PagedList;
+using System;
+using System.Web.Mvc;
 
 namespace Administrator.Controllers
 {

@@ -2,17 +2,17 @@
 
 namespace Administrator.Areas.Client
 {
-    public class ClientAreaRegistration : AreaRegistration 
+    public class ClientAreaRegistration : AreaRegistration
     {
-        public override string AreaName 
+        public override string AreaName
         {
-            get 
+            get
             {
                 return "Client";
             }
         }
 
-        public override void RegisterArea(AreaRegistrationContext context) 
+        public override void RegisterArea(AreaRegistrationContext context)
         {
             #region Inician las rutas generales
 

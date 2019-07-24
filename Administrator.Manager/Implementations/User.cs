@@ -81,7 +81,7 @@ namespace Administrator.Manager.Implementations
 
                 connect.getConexion.Tbl_Users.Add(insert_user);
                 connect.getConexion.SaveChanges();
-                
+
                 return JsonConvert.SerializeObject(new { Status = 200, Respuesta = true });
             }
             catch (Exception)
@@ -212,7 +212,7 @@ namespace Administrator.Manager.Implementations
 
                 connect.getConexion.Entry(find_user).CurrentValues.SetValues(update_user);
                 connect.getConexion.SaveChanges();
-                
+
                 return JsonConvert.SerializeObject(new { Status = 200, Respuesta = true });
             }
             catch (Exception)
@@ -485,7 +485,7 @@ namespace Administrator.Manager.Implementations
 
     #region Obtiene permisos del usuario
 
-    public static class PermissionImp 
+    public static class PermissionImp
     {
         public static bool PermissionUser(string NamePermision, int Id)
         {

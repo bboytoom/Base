@@ -2,17 +2,17 @@
 
 namespace Administrator.Areas.Super
 {
-    public class SuperAreaRegistration : AreaRegistration 
+    public class SuperAreaRegistration : AreaRegistration
     {
-        public override string AreaName 
+        public override string AreaName
         {
-            get 
+            get
             {
                 return "Super";
             }
         }
 
-        public override void RegisterArea(AreaRegistrationContext context) 
+        public override void RegisterArea(AreaRegistrationContext context)
         {
             #region Inician las rutas generales
 

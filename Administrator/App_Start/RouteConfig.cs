@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using System.Web.Routing;
 
 namespace Administrator
@@ -52,7 +48,7 @@ namespace Administrator
                 defaults: new { controller = "Catalogs", action = "ViwerGroups" },
                 namespaces: new[] { "Administrator.Controllers" }
             );
-            
+
             routes.MapRoute(
                 name: "usuarios",
                 url: "catalogos/usuarios",

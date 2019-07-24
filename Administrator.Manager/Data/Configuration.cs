@@ -2,7 +2,7 @@
 
 namespace Administrator.Manager.Data
 {
-    public class Configuration : IDisposable
+    public class Configuration
     {
         private static Configuration _Ctx = null;
         private DataModels conexion;
@@ -35,7 +35,7 @@ namespace Administrator.Manager.Data
 
         public void Dispose()
         {
-            _Ctx.Dispose();
+            ((IDisposable)conexion).Dispose();
         }
     }
 }

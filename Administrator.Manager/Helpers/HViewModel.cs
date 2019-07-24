@@ -127,7 +127,7 @@ namespace Administrator.Manager.Helpers
         [Required(ErrorMessage = "* El campo de Correo es obligatorio")]
         [RegularExpression(@"\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*", ErrorMessage = "Dirección de Correo electrónico incorrecta.")]
         [DataType(DataType.EmailAddress)]
-        [StringLength(80,  ErrorMessage = "Longitud máxima 80", MinimumLength = 6)]
+        [StringLength(80, ErrorMessage = "Longitud máxima 80", MinimumLength = 6)]
         public string Email { get; set; }
 
         [Display(Name = "Contraseña del usuario:")]

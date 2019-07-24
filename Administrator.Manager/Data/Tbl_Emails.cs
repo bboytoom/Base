@@ -1,10 +1,8 @@
 namespace Administrator.Manager.Data
 {
     using System;
-    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
-    using System.Data.Entity.Spatial;
 
     public partial class Tbl_Emails
     {
@@ -15,7 +13,7 @@ namespace Administrator.Manager.Data
         public int Id_user { get; set; }
 
         public int MainU_email { get; set; }
-        
+
         public int Type_email { get; set; }
 
         [Required]

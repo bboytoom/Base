@@ -4,7 +4,6 @@ namespace Administrator.Manager.Data
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
-    using System.Data.Entity.Spatial;
 
     public partial class Tbl_Groups
     {
@@ -18,7 +17,7 @@ namespace Administrator.Manager.Data
         public int Id { get; set; }
 
         public int MainU_group { get; set; }
-        
+
         [Required]
         [Column(TypeName = "VARCHAR")]
         [StringLength(30)]
