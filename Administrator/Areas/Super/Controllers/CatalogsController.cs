@@ -10,7 +10,6 @@ namespace Administrator.Areas.Super.Controllers
     [Authorize(Roles = "Root,Staff")]
     public class CatalogsController : Controller
     {
-        private ReadAllUserImp objAllUser;
         private ReadUserImp objReadOnlyUser;
         private UpdateSuperImp objUpdateUser;
         private CreateSuperImp objCreateUser;
@@ -18,7 +17,6 @@ namespace Administrator.Areas.Super.Controllers
 
         public CatalogsController()
         {
-            objAllUser = new ReadAllUserImp();
             objReadOnlyUser = new ReadUserImp();
             objUpdateUser = new UpdateSuperImp();
             objCreateUser = new CreateSuperImp();
@@ -43,7 +41,7 @@ namespace Administrator.Areas.Super.Controllers
 
             ViewBag.CurrentFilter = searchString;
 
-            var salida = objAllUser.ReadAllUser(sortOrder, searchString, Convert.ToInt32(TempData["id_user"]));
+            var salida = objReadOnlyUser.ReadAllUser(sortOrder, searchString, Convert.ToInt32(TempData["id_user"]));
             int pageSize = 10;
             int pageNumber = (page ?? 1);
 

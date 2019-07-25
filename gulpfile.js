@@ -21,6 +21,7 @@ let Popper = './node_modules/popper.js/dist/umd/popper.min.js';
 let BootstrapJs = './node_modules/bootstrap/dist/js/bootstrap.min.js';
 let MaterialJs = './node_modules/material-design-lite/material.min.js';
 let SweetAlertJs = './node_modules/sweetalert2/dist/sweetalert2.min.js';
+let babelpolly = './node_modules/@babel/polyfill/dist/polyfill.min.js';
 
 /************************************************************************************/
 
@@ -79,7 +80,7 @@ gulp.task('global-image', function () {
 });
 
 gulp.task('global-js', function () {
-    return gulp.src([Jquery, Popper])
+    return gulp.src([babelpolly, Jquery, Popper])
         .pipe(concat('build.min.js'))
         .pipe(uglify())
         .pipe(gulp.dest(DestinoJs));

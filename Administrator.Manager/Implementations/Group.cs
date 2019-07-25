@@ -287,15 +287,6 @@ namespace Administrator.Manager.Implementations
                 throw;
             }
         }
-    }
-
-    public class ReadAllGroupImp
-    {
-        private Configuration connect;
-        public ReadAllGroupImp()
-        {
-            connect = Configuration.Ctx();
-        }
 
         public List<Tbl_Groups> ReadAllGroup(string sortorder, string searchstring, int id_main)
         {

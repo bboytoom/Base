@@ -97,16 +97,16 @@ namespace Administrator
             );
 
             routes.MapRoute(
-                name: "viwerkpassword",
-                url: "perfil/password",
-                defaults: new { controller = "Profile", action = "ViwerPassword" },
+                name: "checkpassword",
+                url: "perfil/check/{Id}/{Password}",
+                defaults: new { controller = "Profile", action = "CheckPassword", Id = UrlParameter.Optional, Password = UrlParameter.Optional },
                 namespaces: new[] { "Administrator.Controllers" }
             );
 
             routes.MapRoute(
-                name: "checkpassword",
-                url: "perfil/check/{Id}/{Password}",
-                defaults: new { controller = "Profile", action = "CheckPassword", Id = UrlParameter.Optional, Password = UrlParameter.Optional },
+                name: "checkchange",
+                url: "perfil/change",
+                defaults: new { controller = "Profile", action = "ChangePassword" },
                 namespaces: new[] { "Administrator.Controllers" }
             );
 

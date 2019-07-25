@@ -16,51 +16,94 @@ function Edit(ValorId, Tipo) {
 }
 
 function ChangePasword(ValorId) {
-    $.ajax({
-        url: "/perfil/password",
-        dataType: 'html',
-        success: function (data) {
+    Swal.fire({     
+        text: '* Inserte la contraseña actual',
+        input: 'password',
+        inputPlaceholder: 'Contraseña actual',
+        inputAttributes: {
+            maxlength: 16,
+            autocapitalize: 'on',
+            autocorrect: 'off'
+        },
+        confirmButtonText: 'Aceptar',
+        cancelButtonText: 'Cancelar',
+        showCancelButton: true,
+        allowEscapeKey: false,
+        allowOutsideClick: false,
+        focusConfirm: false,
+        width: '25rem',
+        preConfirm: (Input_pass) => {    
+            return fetch('/perfil/check/?Id=' + ValorId + '&Password=' + cleanInput(Input_pass))
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(response.statusText);
+                    }
+
+                    return response.json();
+                })
+                .then(data => {
+                    if (Input_pass.length < 6 || Input_pass.length > 16) {
+                        Swal.showValidationMessage('La contraseña necesita un minimo de caracteres');
+                    } else {
+                        if (!data.Respuesta)
+                            Swal.showValidationMessage('La contraseña no es correcta');
+                    }
+
+                    return data.Respuesta;
+                })
+                .catch(error => {
+                    Swal.showValidationMessage(`Request failed: ${error}`);
+                });       
+        }
+    }).then((result) => {
+        if (result.value) {
             Swal.fire({
-                confirmButtonText: 'Aceptar',
+                title: 'Ingrese la nueva contraseña',
+                type: 'question',
+                confirmButtonText: 'Guardar',
                 cancelButtonText: 'Cancelar',
                 showCancelButton: true,
                 allowEscapeKey: false,
                 allowOutsideClick: false,
+                html:
+                    '<input type="password" id="input_pass_uno" class="swal2-input" placeholder="Nueva contraseña" maxlength="16">' +
+                    '<input type="password" id="input_pass_dos" class="swal2-input" placeholder="Repita la nueva contraseña" maxlength="16">',
+                focusConfirm: false,
                 width: '25rem',
-                html: data,
                 preConfirm: () => {
-                    var Input_password = cleanInput(document.getElementById('perfil_password').value);
-                    var label_password = document.getElementById('label_perfil_pass');
+                    var inputUno = cleanInput(document.getElementById('input_pass_uno').value);
+                    var inputDos = cleanInput(document.getElementById('input_pass_dos').value);
 
-                    if (Input_password !== "" && Input_password.length > 6 && Input_password.length < 16) {
-                        fetch("/perfil/check/?Id=" + ValorId + "&Password=" + Input_password)
-                            .then((response) => { return response.json(); })
-                            .then((data) => {
-                                if (!data.Respuesta) {
-                                    label_password.textContent = 'La contraseña es incorrecta';
+                    if (inputUno !== inputDos)
+                        Swal.showValidationMessage('Las contraseñas no son iguales');
 
-                                    setTimeout(function () {
-                                        label_password.textContent = '';
-                                    }, 4000);
+                    return fetch('/perfil/change', {
+                        method: 'POST',
+                        body: JSON.stringify({ 'Id': ValorId, 'PasswordUno': inputUno, 'PasswordDos': inputDos }),
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    })
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error(response.statusText);
+                            }
 
-                                    return false;
-                                }
-                            }); 
-                    } else {
-                        label_password.textContent = 'La contraseña requiere un minimo de caracteres';
+                            return response.json();
+                        })
+                        .then(data => {                            
+                            if (!data.Respuesta) 
+                                Swal.showValidationMessage('Error al actualizar las contraseñas');
 
-                        setTimeout(function () {
-                            label_password.textContent = '';
-                        }, 4000);
-
-                        return false;
+                            return data.Respuesta;
+                        });
+                }
+            })
+                .then((result) => {
+                    if (result.value) {
+                        console.log('exito');
                     }
-                }
-            }).then((result) => {
-                if (result.value) {
-                    console.log('hola');
-                }
-            });
+                });
         }
     });
 }

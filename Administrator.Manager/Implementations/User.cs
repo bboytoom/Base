@@ -404,15 +404,6 @@ namespace Administrator.Manager.Implementations
                 throw;
             }
         }
-    }
-
-    public class ReadAllUserImp
-    {
-        private Configuration connect;
-        public ReadAllUserImp()
-        {
-            connect = Configuration.Ctx();
-        }
 
         public List<Tbl_Users> ReadAllUser(string sortorder, string searchstring, int id_main)
         {
@@ -437,6 +428,10 @@ namespace Administrator.Manager.Implementations
         }
     }
 
+    #endregion
+
+    #region Cambio de password
+
     public class CheckPasswordImp
     {
         private Configuration connect;
@@ -445,11 +440,11 @@ namespace Administrator.Manager.Implementations
             connect = Configuration.Ctx();
         }
 
-        public bool CheckPassword(int Id, string password)
+        public bool CheckPassword(int Id, string Password)
         {
-            string passwordCry = HEncrypt.PasswordEncryp(password);
+            string passwordCry = HEncrypt.PasswordEncryp(Password);
 
-            var check =  connect.getConexion.Tbl_Users
+            var check = connect.getConexion.Tbl_Users
                 .Where(w => w.Id == Id && w.Password_user == passwordCry).FirstOrDefault();
 
             if (check != null)
@@ -457,7 +452,43 @@ namespace Administrator.Manager.Implementations
 
             return false;
         }
+
+        public bool ChangePasswordImp(int Id, string Password)
+        {
+            Tbl_Users find_user = connect.getConexion.Tbl_Users.Find(Id);
+            string passwordCry;
+
+            if (find_user == null)
+                return false;
+
+            passwordCry = HEncrypt.PasswordEncryp(Password);
+
+            var update_user = new Tbl_Users()
+            {
+                Id = Id,
+                Photo_user = find_user.Photo_user,
+                Type_user = find_user.Type_user,
+                Id_group = find_user.Id_group,
+                Email_user = find_user.Email_user,
+                Password_user = passwordCry,
+                Active_user = find_user.Active_user,
+                MainU_user = find_user.MainU_user,
+                Name_user = find_user.Name_user,
+                LnameM_user = find_user.LnameM_user,
+                LnameP_user = find_user.LnameP_user,
+                UpdateU_user = find_user.UpdateU_user,
+                UpdateD_user = DateTime.Now,
+                CreateD_user = find_user.CreateD_user,
+                CreateU_user = find_user.CreateU_user
+            };
+
+            connect.getConexion.Entry(find_user).CurrentValues.SetValues(update_user);
+            connect.getConexion.SaveChanges();
+
+            return true;
+        }
     }
+
     #endregion
 
     #region carga de imagenes
@@ -485,6 +516,7 @@ namespace Administrator.Manager.Implementations
                     Email_user = find_user.Email_user,
                     Password_user = find_user.Password_user,
                     Active_user = find_user.Active_user,
+                    MainU_user = find_user.MainU_user,
                     Name_user = find_user.Name_user,
                     LnameM_user = find_user.LnameM_user,
                     LnameP_user = find_user.LnameP_user,

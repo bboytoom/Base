@@ -222,21 +222,12 @@ namespace Administrator.Manager.Implementations
             connect = Configuration.Ctx();
         }
 
-        public List<ViewModelEmail> ReadEmail(int Id)
+        public ViewModelEmail ReadEmail(int Id)
         {
             throw new NotImplementedException();
         }
-    }
 
-    public class ReadAllEmailImp
-    {
-        private Configuration connect;
-        public ReadAllEmailImp()
-        {
-            connect = Configuration.Ctx();
-        }
-
-        public List<Tbl_Emails> ReadAllEmail()
+        public List<Tbl_Emails> ReadAllEmail(string sortorder, string searchstring, int id_main)
         {
             throw new NotImplementedException();
         }

@@ -10,16 +10,12 @@ namespace Administrator.Controllers
     [Authorize(Roles = "Administrador,Usuario")]
     public class CatalogsController : Controller
     {
-        private ReadAllGroupImp objReadGroup;
         private ReadGroupImp objReadOnlyGroup;
-        private ReadAllUserImp objReadUser;
         private ReadUserImp objReadOnlyUser;
 
         public CatalogsController()
         {
-            objReadGroup = new ReadAllGroupImp();
             objReadOnlyGroup = new ReadGroupImp();
-            objReadUser = new ReadAllUserImp();
             objReadOnlyUser = new ReadUserImp();
         }
 
@@ -43,7 +39,7 @@ namespace Administrator.Controllers
 
             ViewBag.CurrentFilter = searchString;
 
-            var salida = objReadGroup.ReadAllGroup(sortOrder, searchString, Convert.ToInt32(TempData["id_user"]));
+            var salida = objReadOnlyGroup.ReadAllGroup(sortOrder, searchString, Convert.ToInt32(TempData["id_user"]));
             int pageSize = 10;
             int pageNumber = (page ?? 1);
 
@@ -79,7 +75,7 @@ namespace Administrator.Controllers
 
             ViewBag.CurrentFilter = searchString;
 
-            var salida = objReadUser.ReadAllUser(sortOrder, searchString, Convert.ToInt32(TempData["id_user"]));
+            var salida = objReadOnlyUser.ReadAllUser(sortOrder, searchString, Convert.ToInt32(TempData["id_user"]));
             int pageSize = 10;
             int pageNumber = (page ?? 1);
 
