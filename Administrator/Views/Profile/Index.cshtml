@@ -1,7 +1,7 @@
 ﻿@model Administrator.Manager.Helpers.ViewModelUser
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Perfil";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -17,83 +17,89 @@
                 </div>
             </div>
 
-            <div class="container-fluid">
-                <div>
-                    @Html.DisplayNameFor(model => model.Idgroup)
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <input type="hidden" id="infohidde" name="infohidde" value="@TempData["id_user"]">
+                            <input type="hidden" id="mainhidde" name="mainhidde" value="@TempData["main_user"]">
+
+                            <div class="card-header text-right">
+                                <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mr-2" type="button" onclick="ChangePasword(@Html.DisplayFor(model => model.Id))">
+                                    Cambiar contraseña
+                                </button>
+
+                                <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" type="button" onclick="Edit(@Html.DisplayFor(model => model.Id), 'Usuarios')">
+                                    Editar perfil
+                                </button>
+                            </div>
+
+                            <div class="card-body">
+                                @if (@TempData["id_user"] != @TempData["main_user"])
+                                {
+                                    <div class="row pb-2">
+                                        <div class="col-md-4">
+                                            <label for="user_group_perfil">@Html.DisplayNameFor(model => model.Idgroup)</label>
+
+                                            <div class="input-group mb-2">
+                                                @Html.DropDownListFor(model => model.Idgroup, new SelectList(ViewBag.groupUser, "Id", "Name_group"), "Selecciona el grupo", new { @id = "user_group_perfil", @class = "custom-select", @disabled = "disabled" })
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <label for="user_type_perfil">@Html.DisplayNameFor(model => model.Typeuser)</label>
+
+                                            <div class="input-group mb-2">
+                                                @Html.DropDownListFor(model => model.Typeuser, new SelectList(ViewBag.userType, "Value", "Text"), "Selecciona tipo de usuario", new { @id = "user_type_perfil", @class = "custom-select", @disabled = "disabled" })
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <div class='custom-control custom-switch text-right mt-4'>
+                                                @Html.CheckBoxFor(model => model.Status, new { @id = "user_estado_perfil", @class = "custom-control-input", @disabled = "disabled" })
+                                                <label class='custom-control-label' for='user_estado_perfil'>@Html.DisplayNameFor(model => model.Status)</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+
+                                <div class="row mt-4 pb-3">
+                                    <div class="col-md-6 form-inline">
+                                        <div class="form-group">
+                                            <label for="user_apaterno_perfil">@Html.DisplayNameFor(model => model.Lnamep)</label>
+                                            <input type="text" readonly class="form-control-plaintext form-control" id="user_apaterno_perfil" value="@Html.DisplayFor(model => model.Lnamep)">
+                                        </div>
+
+                                    </div>
+
+                                    <div class="col-md-6 form-inline">
+                                        <div class="form-group">
+                                            <label for="user_amaterno_perfil">@Html.DisplayNameFor(model => model.Lnamem)</label>
+                                            <input type="text" readonly class="form-control-plaintext form-control" id="user_amaterno_perfil" value="@Html.DisplayFor(model => model.Lnamem)">
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <div class="row mt-4 pb-3">
+                                    <div class="col-md-6 form-inline">
+                                        <div class="form-group">
+                                            <label for="user_nombre_perfil">@Html.DisplayNameFor(model => model.Name)</label>
+                                            <input type="text" readonly class="form-control-plaintext form-control" id="user_nombre_perfil" value="@Html.DisplayFor(model => model.Name)">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6 form-inline">
+                                        <div class="form-group">
+                                            <label for="user_correo_perfil">@Html.DisplayNameFor(model => model.Email)</label>
+                                            <input type="text" readonly class="form-control-plaintext form-control" id="user_correo_perfil" value="@Html.DisplayTextFor(model => model.Email)">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-
-                <div>
-                    @Html.DisplayFor(model => model.Idgroup)
-                </div>
-
-                <div>
-                    @Html.DisplayNameFor(model => model.Typeuser)
-                </div>
-
-                <div>
-                    @Html.DisplayFor(model => model.Typeuser)
-                </div>
-
-                <div>
-                    @Html.DisplayNameFor(model => model.Email)
-                </div>
-
-                <div>
-                    @Html.DisplayFor(model => model.Email)
-                </div>
-
-                <div>
-                    @Html.DisplayNameFor(model => model.Password)
-                </div>
-
-                <div>
-                    @Html.DisplayFor(model => model.Password)
-                </div>
-
-                <div>
-                    @Html.DisplayNameFor(model => model.Name)
-                </div>
-
-                <div>
-                    @Html.DisplayFor(model => model.Name)
-                </div>
-
-                <div>
-                    @Html.DisplayNameFor(model => model.Lnamep)
-                </div>
-
-                <div>
-                    @Html.DisplayFor(model => model.Lnamep)
-                </div>
-
-                <div>
-                    @Html.DisplayNameFor(model => model.Lnamem)
-                </div>
-
-                <div>
-                    @Html.DisplayFor(model => model.Lnamem)
-                </div>
-
-                <div>
-                    @Html.DisplayNameFor(model => model.Nameimg)
-                </div>
-
-                <div>
-                    @Html.DisplayFor(model => model.Nameimg)
-                </div>
-
-                <div>
-                    @Html.DisplayNameFor(model => model.Status)
-                </div>
-
-                <div>
-                    @Html.DisplayFor(model => model.Status)
-                </div>
-
-                <p>
-                    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-
-                </p>
             </div>
         </main>
     </section>

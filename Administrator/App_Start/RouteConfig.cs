@@ -97,6 +97,20 @@ namespace Administrator
             );
 
             routes.MapRoute(
+                name: "viwerkpassword",
+                url: "perfil/password",
+                defaults: new { controller = "Profile", action = "ViwerPassword" },
+                namespaces: new[] { "Administrator.Controllers" }
+            );
+
+            routes.MapRoute(
+                name: "checkpassword",
+                url: "perfil/check/{Id}/{Password}",
+                defaults: new { controller = "Profile", action = "CheckPassword", Id = UrlParameter.Optional, Password = UrlParameter.Optional },
+                namespaces: new[] { "Administrator.Controllers" }
+            );
+
+            routes.MapRoute(
                 name: "groupform",
                 url: "grupos/form/{Id}/{Tipo}",
                 defaults: new { controller = "Catalogs", action = "PartialViewGroupF", Id = UrlParameter.Optional, Tipo = UrlParameter.Optional },

@@ -192,6 +192,7 @@
     <Content Include="Areas\Client\Views\Shared\_Header.cshtml" />
     <Content Include="Views\Shared\_Header.cshtml" />
     <Content Include="Views\Profile\Index.cshtml" />
+    <Content Include="Views\Profile\_ChangePassword.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

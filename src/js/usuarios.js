@@ -80,6 +80,14 @@ function LoadModalUser(TIPO, ID, USUARIO, MAIN) {
                         });
                 });
 
+            if (document.title === "Perfil") {
+                var controls = document.getElementsByClassName("control-content");
+
+                for (var i = 0; i < controls.length; i++) {
+                    controls[i].style.display = "none"; 
+                }
+            }
+
             if (TIPO === "actualizar") {
                 document.getElementById('password-content').style.display = "none";
             } else {

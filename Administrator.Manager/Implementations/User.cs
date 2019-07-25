@@ -437,6 +437,27 @@ namespace Administrator.Manager.Implementations
         }
     }
 
+    public class CheckPasswordImp
+    {
+        private Configuration connect;
+        public CheckPasswordImp()
+        {
+            connect = Configuration.Ctx();
+        }
+
+        public bool CheckPassword(int Id, string password)
+        {
+            string passwordCry = HEncrypt.PasswordEncryp(password);
+
+            var check =  connect.getConexion.Tbl_Users
+                .Where(w => w.Id == Id && w.Password_user == passwordCry).FirstOrDefault();
+
+            if (check != null)
+                return true;
+
+            return false;
+        }
+    }
     #endregion
 
     #region carga de imagenes
