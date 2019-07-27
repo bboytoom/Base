@@ -101,7 +101,10 @@ function ChangePasword(ValorId) {
             })
                 .then((result) => {
                     if (result.value) {
-                        console.log('exito');
+                        Swal.insertQueueStep({
+                            type: 'success',
+                            text: 'Contraseña guardada'
+                        });
                     }
                 });
         }
