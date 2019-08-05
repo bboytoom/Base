@@ -1,9 +1,9 @@
-﻿@model PagedList.IPagedList<Administrator.Manager.Data.Tbl_Users>
+﻿@model PagedList.IPagedList<Administrator.Manager.Data.Tbl_Groups>
 @using PagedList.Mvc;
 @using Administrator.Manager.Implementations;
 
 @{
-    ViewBag.Title = "Usuarios";
+    ViewBag.Title = "Grupos";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -15,14 +15,14 @@
         <main class="mdl-layout__content">
             <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center mb-4 border-bottom">
                 <div class="col-md-6">
-                    <h3 class="h3">Usuarios</h3>
+                    <h3 class="h3">Grupos</h3>
                 </div>
 
                 <div class="col-md-6">
-                    @using (Html.BeginForm("ViwerUsers", "Catalogs", FormMethod.Post, new { autocomplete = "off" }))
+                    @using (Html.BeginForm("index", "Groups", FormMethod.Post, new { autocomplete = "off" }))
                     {
                         <div class="input-group">
-                            @Html.TextBox("searchString", ViewBag.CurrentFilter as string, new { maxlength = 80, @class = "form-control", placeholder = "Buscar el elemento" })
+                            @Html.TextBox("searchString", ViewBag.CurrentFilter as string, new { maxlength = 30, @class = "form-control", placeholder = "Buscar el elemento" })
                             <div class="input-group-append">
                                 <button class="btn btn-outline-secondary" type="submit">Buscar</button>
                             </div>
@@ -36,7 +36,7 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header text-right">
-                                @if (PermissionImp.PermissionUser("Create_user_permission", Convert.ToInt32(TempData["id_user"])))
+                                @if (PermissionImp.PermissionUser("Create_group_permission", Convert.ToInt32(TempData["id_user"])))
                                 {
                                     <button id="add_btn" name="@ViewBag.Title" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" type="button">
                                         Agregar nuevo usuario
@@ -51,22 +51,10 @@
                                     <thead>
                                         <tr>
                                             <th class="mdl-data-table__cell--non-numeric" scope="col">
-                                                Tipo de usuario
-                                            </th>
-                                            <th scope="col">
-                                                Foto
+                                                @Html.ActionLink("Grupo", "Index", new { sortorder = ViewBag.NameSort, currentFilter = ViewBag.CurrentFilter })
                                             </th>
                                             <th class="mdl-data-table__cell--non-numeric" scope="col">
-                                                Correo
-                                            </th>
-                                            <th class="mdl-data-table__cell--non-numeric" scope="col">
-                                                @Html.ActionLink("Nombre", "ViwerUsers", new { sortorder = ViewBag.NameSort, currentFilter = ViewBag.CurrentFilter })
-                                            </th>
-                                            <th class="mdl-data-table__cell--non-numeric" scope="col">
-                                                A. paterno
-                                            </th>
-                                            <th class="mdl-data-table__cell--non-numeric" scope="col">
-                                                A. materno
+                                                Descripción
                                             </th>
                                             <th scope="col">
                                                 Estatus
@@ -80,28 +68,16 @@
                                         {
                                             <tr>
                                                 <td class="mdl-data-table__cell--non-numeric">
-                                                    @Html.DisplayFor(modelItem => item.Type_user)
+                                                    @Html.DisplayFor(modelItem => item.Name_group)
+                                                </td>
+                                                <td class="mdl-data-table__cell--non-numeric">
+                                                    @Html.DisplayFor(modelItem => item.Description_group)
                                                 </td>
                                                 <td>
-                                                    @Html.DisplayFor(modelItem => item.Photo_user)
-                                                </td>
-                                                <td class="mdl-data-table__cell--non-numeric">
-                                                    @Html.DisplayFor(modelItem => item.Email_user)
-                                                </td>
-                                                <td class="mdl-data-table__cell--non-numeric">
-                                                    @Html.DisplayFor(modelItem => item.Name_user)
-                                                </td>
-                                                <td class="mdl-data-table__cell--non-numeric">
-                                                    @Html.DisplayFor(modelItem => item.LnameP_user)
-                                                </td>
-                                                <td class="mdl-data-table__cell--non-numeric">
-                                                    @Html.DisplayFor(modelItem => item.LnameM_user)
-                                                </td>
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => item.Active_user)
+                                                    @Html.DisplayFor(modelItem => item.Active_group)
                                                 </td>
 
-                                                @if (PermissionImp.PermissionUser("Update_user_permission", Convert.ToInt32(TempData["id_user"])))
+                                                @if (PermissionImp.PermissionUser("Update_group_permission", Convert.ToInt32(TempData["id_user"])))
                                                 {
                                                     <td>
                                                         <button type="button" class="btn btn-outline-warning btn-sm" onclick="Edit(@Html.DisplayFor(modelItem => item.Id), '@ViewBag.Title')">
@@ -114,7 +90,7 @@
                                                     <td></td>
                                                 }
 
-                                                @if (PermissionImp.PermissionUser("Delete_user_permission", Convert.ToInt32(TempData["id_user"])))
+                                                @if (PermissionImp.PermissionUser("Delete_group_permission", Convert.ToInt32(TempData["id_user"])))
                                                 {
                                                     <td>
                                                         <button type="button" class="btn btn-outline-danger btn-sm" onclick="Delete(@Html.DisplayFor(modelItem => item.Id), '@ViewBag.Title')">
@@ -131,8 +107,9 @@
                                     </tbody>
                                 </table>
                             </div>
+
                             <div class="mdl-card__actions mdl-card--border text-right">
-                                @Html.PagedListPager(Model, page => Url.Action("ViwerUsers", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }), PagedListRenderOptions.OnlyShowFivePagesAtATime)
+                                @Html.PagedListPager(Model, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }), PagedListRenderOptions.OnlyShowFivePagesAtATime)
                             </div>
                         </div>
                     </div>
@@ -140,3 +117,4 @@
             </div>
         </main>
     </section>
+

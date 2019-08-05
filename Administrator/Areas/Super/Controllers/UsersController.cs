@@ -8,14 +8,14 @@ using System.Web.Mvc;
 namespace Administrator.Areas.Super.Controllers
 {
     [Authorize(Roles = "Root,Staff")]
-    public class CatalogsController : Controller
+    public class UsersController : Controller
     {
         private ReadUserImp objReadOnlyUser;
         private UpdateSuperImp objUpdateUser;
         private CreateSuperImp objCreateUser;
         private DeleteUserSuperImp objDeleteUser;
 
-        public CatalogsController()
+        public UsersController()
         {
             objReadOnlyUser = new ReadUserImp();
             objUpdateUser = new UpdateSuperImp();
@@ -23,13 +23,8 @@ namespace Administrator.Areas.Super.Controllers
             objDeleteUser = new DeleteUserSuperImp();
         }
 
-        public ActionResult Index()
-        {
-            return View();
-        }
-
         [CustomAuthorize(permission = "Read_user_permission")]
-        public ActionResult ViwerUsers(string sortOrder, string searchString, string currentFilter, int? page)
+        public ActionResult Index(string sortOrder, string searchString, string currentFilter, int? page)
         {
             ViewBag.CurrentSort = sortOrder;
             ViewBag.NameSort = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
@@ -83,7 +78,7 @@ namespace Administrator.Areas.Super.Controllers
                 objUpdateUser.UserSuper(Data, Convert.ToInt32(TempData["id_user"]), Convert.ToInt32(TempData["main_user"]));
             }
 
-            return RedirectToAction("ViwerUsers", "Catalogs");
+            return RedirectToAction("Index");
         }
 
         [HttpGet]
@@ -91,7 +86,7 @@ namespace Administrator.Areas.Super.Controllers
         public ActionResult DeleteUsers(int Id)
         {
             objDeleteUser.DeleteUserSuper(Id, Convert.ToInt32(TempData["main_user"]));
-            return RedirectToAction("ViwerUsers", "Catalogs");
+            return RedirectToAction("Index");
         }
     }
 }

@@ -8,9 +8,7 @@
                 </a>
 
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                    <a class="dropdown-item" href="@Url.Action("Index", "Profile")"><i class="fas fa-user"></i> Perfil</a>
-                    <a class="dropdown-item" href="@Url.Action("Index", "Catalogs")"><i class="fas fa-archive"></i> Catalogos</a>
-                    <a class="dropdown-item" href="@Url.Action("Index", "Tools")"><i class="fas fa-tools"></i> Herramientas</a>
+                    <a class="dropdown-item" href="@Url.Action("Index", "Profile")"><i class="fas fa-user"></i> Perfil</a>               
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item" href="@Url.Action("LogOff", "Default")"><i class="fas fa-power-off"></i> Salir</a>
                 </div>
@@ -31,5 +29,7 @@
 
     <nav class="nav flex-column mt-4">
         <a class="nav-link" href="@Url.Action("Index", "Dashboard")">Inicio</a>
+        <a class="nav-link" href="@Url.Action("Index", "Groups")">Grupos</a>
+        <a class="nav-link" href="@Url.Action("Index", "Users")">Usuarios</a>
     </nav>
 </div>

@@ -11,7 +11,6 @@ namespace Administrator.Manager.Helpers
 
             typeuser.Add(new SelectListItem() { Text = "Staff", Value = "2" });
             typeuser.Add(new SelectListItem() { Text = "Administrador", Value = "3" });
-
             return typeuser;
         }
 
@@ -20,9 +19,6 @@ namespace Administrator.Manager.Helpers
             List<SelectListItem> typeuser = new List<SelectListItem>();
 
             typeuser.Add(new SelectListItem() { Text = "Usuario", Value = "4" });
-            typeuser.Add(new SelectListItem() { Text = "Proveedor", Value = "5" });
-            typeuser.Add(new SelectListItem() { Text = "Cliente", Value = "6" });
-
             return typeuser;
         }
 

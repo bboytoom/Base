@@ -127,19 +127,9 @@
     <Content Include="Global.asax" />
     <Content Include="Areas\Super\Views\web.config" />
     <Content Include="Areas\Super\Views\Panel\Index.cshtml" />
-    <Content Include="Areas\Provider\Views\web.config" />
-    <Content Include="Areas\Provider\Views\_ViewStart.cshtml" />
-    <Content Include="Areas\Provider\Views\Shared\_Layout.cshtml" />
-    <Content Include="Areas\Provider\Views\Panel\Index.cshtml" />
-    <Content Include="Areas\Client\Views\web.config" />
-    <Content Include="Areas\Client\Views\_ViewStart.cshtml" />
-    <Content Include="Areas\Client\Views\Shared\_Layout.cshtml" />
-    <Content Include="Areas\Client\Views\Panel\Index.cshtml" />
-    <Content Include="Areas\Super\Views\Catalogs\Index.cshtml" />
-    <Content Include="Areas\Provider\Views\Shared\_Header.cshtml" />
-    <Content Include="Areas\Super\Views\Catalogs\ViwerUsers.cshtml" />
-    <Content Include="Areas\Super\Views\Catalogs\CreateUsers.cshtml" />
     <Content Include="Areas\Super\Views\Shared\_Header.cshtml" />
+    <Content Include="Areas\Super\Views\Users\Index.cshtml" />
+    <Content Include="Areas\Super\Views\Users\CreateUsers.cshtml" />
     <None Include="Scripts\jquery-1.8.0.intellisense.js" />
     <Content Include="Scripts\jquery-1.8.0.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
@@ -150,22 +140,16 @@
     <Compile Include="App_Start\CustomAuthorizeAttribute.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.cs" />
-    <Compile Include="Areas\Client\ClientAreaRegistration.cs" />
-    <Compile Include="Areas\Client\Controllers\PanelController.cs" />
-    <Compile Include="Areas\Client\Controllers\SharedController.cs" />
-    <Compile Include="Areas\Provider\Controllers\PanelController.cs" />
-    <Compile Include="Areas\Provider\Controllers\SharedController.cs" />
-    <Compile Include="Areas\Provider\ProviderAreaRegistration.cs" />
-    <Compile Include="Areas\Super\Controllers\CatalogsController.cs" />
     <Compile Include="Areas\Super\Controllers\PanelController.cs" />
     <Compile Include="Areas\Super\Controllers\SharedController.cs" />
+    <Compile Include="Areas\Super\Controllers\UsersController.cs" />
     <Compile Include="Areas\Super\SuperAreaRegistration.cs" />
-    <Compile Include="Controllers\CatalogsController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\DefaultController.cs" />
+    <Compile Include="Controllers\GroupsController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="Controllers\SharedController.cs" />
-    <Compile Include="Controllers\ToolsController.cs" />
+    <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -177,22 +161,18 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Dashboard\Index.cshtml" />
-    <Content Include="Views\Catalogs\Index.cshtml" />
-    <Content Include="Views\Tools\Index.cshtml" />
     <Content Include="Views\Default\Index.cshtml" />
     <Content Include="Views\Default\AttempsLogin.cshtml" />
     <Content Include="Views\Default\LockOutLogin.cshtml" />
-    <Content Include="Views\Catalogs\ViwerGroups.cshtml" />
-    <Content Include="Views\Catalogs\ViwerUsers.cshtml" />
     <Content Include="Views\Shared\_Scrips.cshtml" />
-    <Content Include="Views\Catalogs\_PartialViewGroupF.cshtml" />
-    <Content Include="Views\Catalogs\_PartialViewUserF.cshtml" />
     <Content Include="Areas\Super\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\Super\Views\_ViewStart.cshtml" />
-    <Content Include="Areas\Client\Views\Shared\_Header.cshtml" />
     <Content Include="Views\Shared\_Header.cshtml" />
     <Content Include="Views\Profile\Index.cshtml" />
-    <Content Include="Views\Profile\_ChangePassword.cshtml" />
+    <Content Include="Views\Groups\Index.cshtml" />
+    <Content Include="Views\Groups\_PartialViewGroup.cshtml" />
+    <Content Include="Views\Users\Index.cshtml" />
+    <Content Include="Views\Users\_PartialViewUser.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -1,4 +1,5 @@
-﻿@model Administrator.Manager.Helpers.ViewModelGroup
+﻿
+@model Administrator.Manager.Helpers.ViewModelGroup
 
 <div class="alert alert-danger mt-3" role="alert">
     Los registros que tienen * son obligatorios
@@ -7,7 +8,7 @@
 @using (Html.BeginForm("", "", FormMethod.Post, new { id = "form_group", @class = "row", autocomplete = "off" }))
 {
     @Html.AntiForgeryToken()
-    
+
     <div class='col-12'>
         <div class="row">
             <div class="col-sm-9">

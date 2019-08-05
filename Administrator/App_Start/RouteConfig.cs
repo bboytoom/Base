@@ -30,29 +30,16 @@ namespace Administrator
             );
 
             routes.MapRoute(
-                name: "catalogos",
-                url: "catalogos",
-                defaults: new { controller = "Catalogs", action = "Index" },
-                namespaces: new[] { "Administrator.Controllers" }
-            );
-
-            routes.MapRoute(
-                name: "herramientas",
-                url: "herramientas",
-                defaults: new { controller = "Tools", action = "Index" }
-            );
-
-            routes.MapRoute(
                 name: "grupos",
                 url: "catalogos/grupos",
-                defaults: new { controller = "Catalogs", action = "ViwerGroups" },
+                defaults: new { controller = "Groups", action = "Index" },
                 namespaces: new[] { "Administrator.Controllers" }
             );
 
             routes.MapRoute(
                 name: "usuarios",
                 url: "catalogos/usuarios",
-                defaults: new { controller = "Catalogs", action = "ViwerUsers" },
+                defaults: new { controller = "Users", action = "Index" },
                 namespaces: new[] { "Administrator.Controllers" }
             );
 
@@ -113,14 +100,14 @@ namespace Administrator
             routes.MapRoute(
                 name: "groupform",
                 url: "grupos/form/{Id}/{Tipo}",
-                defaults: new { controller = "Catalogs", action = "PartialViewGroupF", Id = UrlParameter.Optional, Tipo = UrlParameter.Optional },
+                defaults: new { controller = "Groups", action = "PartialViewGroup", Id = UrlParameter.Optional, Tipo = UrlParameter.Optional },
                 namespaces: new[] { "Administrator.Controllers" }
             );
 
             routes.MapRoute(
                 name: "userform",
                 url: "usuarios/form/{Id}/{Tipo}/{Main}",
-                defaults: new { controller = "Catalogs", action = "PartialViewUserF", Id = UrlParameter.Optional, Tipo = UrlParameter.Optional, Main = UrlParameter.Optional },
+                defaults: new { controller = "Users", action = "PartialViewUser", Id = UrlParameter.Optional, Tipo = UrlParameter.Optional, Main = UrlParameter.Optional },
                 namespaces: new[] { "Administrator.Controllers" }
             );
 

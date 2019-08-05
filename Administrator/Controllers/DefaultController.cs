@@ -119,12 +119,6 @@ namespace Administrator.Controllers
                     case 4:
                         claims.Add(new Claim(ClaimTypes.Role, "Usuario"));
                         break;
-                    case 5:
-                        claims.Add(new Claim(ClaimTypes.Role, "Proveedor"));
-                        break;
-                    case 6:
-                        claims.Add(new Claim(ClaimTypes.Role, "Cliente"));
-                        break;
                 }
             }
 

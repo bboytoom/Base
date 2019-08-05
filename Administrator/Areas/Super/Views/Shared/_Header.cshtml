@@ -6,9 +6,7 @@
                     <i class="fas fa-cogs"></i>
                 </a>
 
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                    <a class="dropdown-item" href="@Url.Action("Index", "Catalogs")"><i class="fas fa-archive"></i> Catalogos</a>
-                    <div class="dropdown-divider"></div>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">          
                     <a class="dropdown-item" href="@Url.Action("LogOff", "Default", new { Area="" })"><i class="fas fa-power-off"></i> Salir</a>
                 </div>
             </div>
@@ -28,6 +26,7 @@
 
     <nav class="nav flex-column mt-4">
         <a class="nav-link" href="@Url.Action("Index", "Panel")">Inicio</a>
+        <a class="nav-link" href="@Url.Action("Index", "Users")">Usuario</a>
     </nav>
 </div>
 

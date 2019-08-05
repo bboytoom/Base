@@ -22,7 +22,7 @@
                     <div class="col-12">
                         <div class="card">
 
-                            @using (Html.BeginForm("CreateUsers", "Catalogs", FormMethod.Post, new { id = "create_super_super" }))
+                            @using (Html.BeginForm("CreateUsers", "Users", FormMethod.Post, new { id = "create_super_super" }))
                             {
                                 @Html.AntiForgeryToken()
                                 @Html.HiddenFor(model => model.Id)
@@ -124,3 +124,4 @@
             </div>
         </main>
     </section>
+

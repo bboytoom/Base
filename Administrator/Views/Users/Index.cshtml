@@ -1,14 +1,15 @@
 ﻿@model PagedList.IPagedList<Administrator.Manager.Data.Tbl_Users>
 @using PagedList.Mvc;
+@using Administrator.Manager.Implementations;
 
 @{
     ViewBag.Title = "Usuarios";
-    Layout = "~/Areas/Super/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
     <section class="mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
         @{
-            Html.RenderAction("SharedHeader", "Shared");
+            Html.RenderAction("SharedHeader", "Shared", new { area = "" });
         }
 
         <main class="mdl-layout__content">
@@ -18,7 +19,7 @@
                 </div>
 
                 <div class="col-md-6">
-                    @using (Html.BeginForm("ViwerUsers", "Catalogs", FormMethod.Post, new { autocomplete = "off" }))
+                    @using (Html.BeginForm("Index", "Users", FormMethod.Post, new { autocomplete = "off" }))
                     {
                         <div class="input-group">
                             @Html.TextBox("searchString", ViewBag.CurrentFilter as string, new { maxlength = 80, @class = "form-control", placeholder = "Buscar el elemento" })
@@ -35,9 +36,17 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header text-right">
-                                @Html.ActionLink("Agregar nuevo usuario", "CreateUsers", "Catalogs", new { @class = "mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" })
+                                @if (PermissionImp.PermissionUser("Create_user_permission", Convert.ToInt32(TempData["id_user"])))
+                                {
+                                    <button id="add_btn" name="@ViewBag.Title" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" type="button">
+                                        Agregar nuevo usuario
+                                    </button>
+                                }
                             </div>
                             <div class="table-responsive">
+                                <input type="hidden" id="infohidde" name="infohidde" value="@TempData["id_user"]">
+                                <input type="hidden" id="mainhidde" name="mainhidde" value="@TempData["main_user"]">
+
                                 <table class="table mdl-data-table table-striped table-hover">
                                     <thead>
                                         <tr>
@@ -51,7 +60,7 @@
                                                 Correo
                                             </th>
                                             <th class="mdl-data-table__cell--non-numeric" scope="col">
-                                                @Html.ActionLink("Nombre", "ViwerUsers", new { sortorder = ViewBag.NameSort, currentFilter = ViewBag.CurrentFilter })
+                                                @Html.ActionLink("Nombre", "Index", new { sortorder = ViewBag.NameSort, currentFilter = ViewBag.CurrentFilter })
                                             </th>
                                             <th class="mdl-data-table__cell--non-numeric" scope="col">
                                                 A. paterno
@@ -62,7 +71,6 @@
                                             <th scope="col">
                                                 Estatus
                                             </th>
-                                            <th></th>
                                             <th></th>
                                             <th></th>
                                         </tr>
@@ -92,28 +100,39 @@
                                                 <td>
                                                     @Html.DisplayFor(modelItem => item.Active_user)
                                                 </td>
-                                                <td>
-                                                    <button type="button" class="btn btn-outline-success btn-sm">
-                                                        ver más <i class="fas fa-eye"></i>
-                                                    </button>
-                                                </td>
-                                                <td>
-                                                    <a href="@Url.Action("UpdateUsers","Catalogs", new { Id = @Html.DisplayFor(modelItem => item.Id) })" type="button" class="btn btn-outline-warning btn-sm">
-                                                        Editar <i class="fas fa-edit"></i>
-                                                    </a>
-                                                </td>
-                                                <td>
-                                                    <a href="@Url.Action("DeleteUsers","Catalogs", new { Id = @Html.DisplayFor(modelItem => item.Id) })" type="button" class="btn btn-outline-danger btn-sm">
-                                                        Eliminar <i class="fas fa-trash-alt"></i>
-                                                    </a>
-                                                </td>
+
+                                                @if (PermissionImp.PermissionUser("Update_user_permission", Convert.ToInt32(TempData["id_user"])))
+                                                {
+                                                    <td>
+                                                        <button type="button" class="btn btn-outline-warning btn-sm" onclick="Edit(@Html.DisplayFor(modelItem => item.Id), '@ViewBag.Title')">
+                                                            Editar <i class="fas fa-edit"></i>
+                                                        </button>
+                                                    </td>
+                                                }
+                                                else
+                                                {
+                                                    <td></td>
+                                                }
+
+                                                @if (PermissionImp.PermissionUser("Delete_user_permission", Convert.ToInt32(TempData["id_user"])))
+                                                {
+                                                    <td>
+                                                        <button type="button" class="btn btn-outline-danger btn-sm" onclick="Delete(@Html.DisplayFor(modelItem => item.Id), '@ViewBag.Title')">
+                                                            Eliminar <i class="fas fa-trash-alt"></i>
+                                                        </button>
+                                                    </td>
+                                                }
+                                                else
+                                                {
+                                                    <td></td>
+                                                }
                                             </tr>
                                         }
                                     </tbody>
                                 </table>
                             </div>
                             <div class="mdl-card__actions mdl-card--border text-right">
-                                @Html.PagedListPager(Model, page => Url.Action("ViwerUsers", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }), PagedListRenderOptions.OnlyShowFivePagesAtATime)
+                                @Html.PagedListPager(Model, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }), PagedListRenderOptions.OnlyShowFivePagesAtATime)
                             </div>
                         </div>
                     </div>
