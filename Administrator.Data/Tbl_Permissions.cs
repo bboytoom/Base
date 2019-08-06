@@ -1,4 +1,4 @@
-namespace Administrator.Manager.Data
+namespace Administrator.Data
 {
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;

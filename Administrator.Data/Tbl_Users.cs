@@ -1,9 +1,8 @@
-namespace Administrator.Manager.Data
+namespace Administrator.Data
 {
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-    using System.ComponentModel.DataAnnotations.Schema;
 
     public partial class Tbl_Users
     {
@@ -13,40 +12,31 @@ namespace Administrator.Manager.Data
             Tbl_Emails = new HashSet<Tbl_Emails>();
         }
 
-        [Key]
         public int Id { get; set; }
 
-        [ForeignKey("Tbl_Groups")]
         public int Id_group { get; set; }
 
         public int Type_user { get; set; }
-
-        public int MainU_user { get; set; }
 
         [StringLength(60)]
         public string Photo_user { get; set; }
 
         [Required]
-        [Column(TypeName = "VARCHAR")]
         [StringLength(80)]
         public string Email_user { get; set; }
 
         [Required]
-        [Column(TypeName = "VARCHAR")]
         [StringLength(250)]
         public string Password_user { get; set; }
 
         [Required]
-        [Column(TypeName = "VARCHAR")]
         [StringLength(50)]
         public string Name_user { get; set; }
 
         [Required]
-        [Column(TypeName = "VARCHAR")]
         [StringLength(30)]
         public string LnameP_user { get; set; }
 
-        [Column(TypeName = "VARCHAR")]
         [StringLength(30)]
         public string LnameM_user { get; set; }
 
@@ -69,6 +59,8 @@ namespace Administrator.Manager.Data
         public int? Attemp_user { get; set; }
 
         public int? Cycle_user { get; set; }
+
+        public int MainU_user { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Tbl_Emails> Tbl_Emails { get; set; }

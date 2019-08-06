@@ -1,8 +1,8 @@
-namespace Administrator.Manager.Migrations
+namespace Administrator.Data.Migrations
 {
     using System.Data.Entity.Migrations;
 
-    public partial class Init : DbMigration
+    public partial class Inicial : DbMigration
     {
         public override void Up()
         {
@@ -23,6 +23,7 @@ namespace Administrator.Manager.Migrations
                     DeleteU_email = c.Int(),
                     DeleteD_email = c.DateTime(),
                     Delete_stautus_email = c.Boolean(),
+                    MainU_email = c.Int(nullable: false),
                 })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.Tbl_Users", t => t.Id_user, cascadeDelete: true)
@@ -51,6 +52,7 @@ namespace Administrator.Manager.Migrations
                     Delete_stautus_user = c.Boolean(),
                     Attemp_user = c.Int(),
                     Cycle_user = c.Int(),
+                    MainU_user = c.Int(nullable: false),
                 })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.Tbl_Groups", t => t.Id_group, cascadeDelete: true)
@@ -71,6 +73,7 @@ namespace Administrator.Manager.Migrations
                     DeleteU_group = c.Int(),
                     DeleteD_group = c.DateTime(),
                     Delete_stautus_group = c.Boolean(),
+                    MainU_group = c.Int(nullable: false),
                 })
                 .PrimaryKey(t => t.Id);
 

@@ -1,9 +1,8 @@
-namespace Administrator.Manager.Data
+namespace Administrator.Data
 {
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-    using System.ComponentModel.DataAnnotations.Schema;
 
     public partial class Tbl_Groups
     {
@@ -13,18 +12,12 @@ namespace Administrator.Manager.Data
             Tbl_Users = new HashSet<Tbl_Users>();
         }
 
-        [Key]
         public int Id { get; set; }
 
-        public int MainU_group { get; set; }
-
         [Required]
-        [Column(TypeName = "VARCHAR")]
         [StringLength(30)]
         public string Name_group { get; set; }
 
-
-        [Column(TypeName = "VARCHAR")]
         [StringLength(200)]
         public string Description_group { get; set; }
 
@@ -43,6 +36,8 @@ namespace Administrator.Manager.Data
         public DateTime? DeleteD_group { get; set; }
 
         public bool? Delete_stautus_group { get; set; }
+
+        public int MainU_group { get; set; }
 
         public virtual Tbl_Permissions Tbl_Permissions { get; set; }
 

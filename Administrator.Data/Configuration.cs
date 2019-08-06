@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Administrator.Manager.Data
+namespace Administrator.Data
 {
     public class Configuration
     {

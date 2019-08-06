@@ -1,5 +1,5 @@
 ﻿using Administrator.Contract;
-using Administrator.Manager.Data;
+using Administrator.Data;
 using Administrator.Manager.Helpers;
 using Administrator.Manager.Interfaces;
 using Newtonsoft.Json;

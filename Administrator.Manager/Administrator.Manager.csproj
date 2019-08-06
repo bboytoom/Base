@@ -79,12 +79,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Data\Configuration.cs" />
-    <Compile Include="Data\DataModels.cs" />
-    <Compile Include="Data\Tbl_Emails.cs" />
-    <Compile Include="Data\Tbl_Groups.cs" />
-    <Compile Include="Data\Tbl_Permissions.cs" />
-    <Compile Include="Data\Tbl_Users.cs" />
     <Compile Include="Helpers\HCatalogs.cs" />
     <Compile Include="Helpers\HCheckEmail.cs" />
     <Compile Include="Helpers\HEncrypt.cs" />
@@ -95,15 +89,6 @@
     <Compile Include="Interfaces\IGroup.cs" />
     <Compile Include="Interfaces\ILogin.cs" />
     <Compile Include="Interfaces\IUser.cs" />
-    <Compile Include="Migrations\201904282220278_Init.cs" />
-    <Compile Include="Migrations\201904282220278_Init.Designer.cs">
-      <DependentUpon>201904282220278_Init.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201907181738088_usuario_principal.cs" />
-    <Compile Include="Migrations\201907181738088_usuario_principal.Designer.cs">
-      <DependentUpon>201907181738088_usuario_principal.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -115,14 +100,10 @@
       <Project>{67c54310-9c5f-417a-84f7-ca5553909ea4}</Project>
       <Name>Administrator.Contract</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201904282220278_Init.resx">
-      <DependentUpon>201904282220278_Init.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201907181738088_usuario_principal.resx">
-      <DependentUpon>201907181738088_usuario_principal.cs</DependentUpon>
-    </EmbeddedResource>
+    <ProjectReference Include="..\Administrator.Data\Administrator.Data.csproj">
+      <Project>{5E80E894-11DF-403A-94F1-D42D54B22F6E}</Project>
+      <Name>Administrator.Data</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
