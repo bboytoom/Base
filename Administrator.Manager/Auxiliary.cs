@@ -1,7 +1,5 @@
-﻿using Administrator.Contract;
-using Administrator.Data;
+﻿using Administrator.Data;
 using Administrator.Manager.Helpers;
-using Administrator.Manager.Interfaces;
 using System;
 using System.Linq;
 
@@ -63,51 +61,6 @@ namespace Administrator.Manager
             connect.getConexion.SaveChanges();
 
             return true;
-        }
-    }
-
-    #endregion
-
-    #region carga de imagenes
-
-    public class UploadImgImp : IUploadImg
-    {
-        private Configuration connect;
-        private UploadImgImp()
-        {
-            connect = Configuration.Ctx();
-        }
-
-        public void UploadImg(ViewModelUpload File)
-        {
-            if (File.Image != null || File.Image != "")
-            {
-                Tbl_Users find_user = connect.getConexion.Tbl_Users.Find(File.Id);
-
-                var update_user = new Tbl_Users()
-                {
-                    Id = File.Id,
-                    Photo_user = File.Name,
-                    Type_user = find_user.Type_user,
-                    Id_group = find_user.Id_group,
-                    Email_user = find_user.Email_user,
-                    Password_user = find_user.Password_user,
-                    Active_user = find_user.Active_user,
-                    MainU_user = find_user.MainU_user,
-                    Name_user = find_user.Name_user,
-                    LnameM_user = find_user.LnameM_user,
-                    LnameP_user = find_user.LnameP_user,
-                    UpdateD_user = find_user.UpdateD_user,
-                    UpdateU_user = find_user.UpdateU_user,
-                    CreateD_user = find_user.CreateD_user,
-                    CreateU_user = find_user.CreateU_user
-                };
-
-                connect.getConexion.Entry(find_user).CurrentValues.SetValues(update_user);
-                connect.getConexion.SaveChanges();
-
-                HImages.ImagesSys(File.Image, File.Name, "/Administrator/Images");
-            }
         }
     }
 

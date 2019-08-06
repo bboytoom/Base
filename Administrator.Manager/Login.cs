@@ -1,66 +1,11 @@
 ﻿using Administrator.Contract;
 using Administrator.Data;
 using Administrator.Manager.Helpers;
-using Administrator.Manager.Interfaces;
-using Newtonsoft.Json;
 using System;
 using System.Linq;
-using System.Net;
-using System.ServiceModel.Web;
 
 namespace Administrator.Manager
 {
-    #region verifica correo
-
-    public class CheckEmailImp : ICheckEmail
-    {
-        private Configuration connect;
-        private CheckEmailImp()
-        {
-            connect = Configuration.Ctx();
-        }
-
-        public string CheckEmail(string Email)
-        {
-            string email_clean;
-
-            if (Email == "" || Email == null)
-                return JsonConvert.SerializeObject(new { Status = 200, Respuesta = false });
-
-            email_clean = WebUtility.HtmlEncode(Email.ToLower());
-
-            if (!HCheckEmail.EmailCheck(email_clean))
-                return JsonConvert.SerializeObject(new { Status = 200, Respuesta = false });
-
-            try
-            {
-                var query_failed = connect.getConexion.Tbl_Users
-                    .Where(w => w.Email_user == email_clean && w.Active_user == false)
-                    .FirstOrDefault();
-
-                if (query_failed == null)
-                {
-                    var query = connect.getConexion.Tbl_Users
-                    .Where(w => w.Email_user == email_clean).FirstOrDefault();
-
-                    if (query == null)
-                        return JsonConvert.SerializeObject(new { Status = 404, Respuesta = false });
-
-                    return JsonConvert.SerializeObject(new { Status = 200, Respuesta = true });
-                }
-
-                return JsonConvert.SerializeObject(new { Status = 401, Respuesta = false });
-            }
-            catch (Exception)
-            {
-                CustomErrorDetail customError = new CustomErrorDetail(500, "Error en la peticion", "Hubo un error en la peticion a la base");
-                throw new WebFaultException<CustomErrorDetail>(customError, HttpStatusCode.InternalServerError);
-            }
-        }
-    }
-
-    #endregion
-
     #region verifica credenciales
 
     public class LoginImp
