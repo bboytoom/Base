@@ -1,6 +1,6 @@
 ﻿using Administrator.App_Start;
-using Administrator.Manager.Helpers;
 using Administrator.Manager;
+using Administrator.Manager.Helpers;
 using PagedList;
 using System;
 using System.Web.Mvc;
@@ -10,11 +10,11 @@ namespace Administrator.Controllers
     [Authorize(Roles = "Administrador,Usuario")]
     public class UsersController : Controller
     {
-        private ReadUserImp objReadOnlyUser;
+        private UserImp ObjUser;
 
         public UsersController()
         {
-            objReadOnlyUser = new ReadUserImp();
+            ObjUser = new UserImp();
         }
 
         [CustomAuthorize(permission = "Read_user_permission")]
@@ -30,7 +30,7 @@ namespace Administrator.Controllers
 
             ViewBag.CurrentFilter = searchString;
 
-            var salida = objReadOnlyUser.ReadAllUser(sortOrder, searchString, Convert.ToInt32(TempData["id_user"]));
+            var salida = ObjUser.ReadAll(sortOrder, searchString, Convert.ToInt32(TempData["id_user"]));
             int pageSize = 10;
             int pageNumber = (page ?? 1);
 
@@ -45,7 +45,7 @@ namespace Administrator.Controllers
 
             if (Id != 0 && Tipo == "actualizar")
             {
-                var usuario = objReadOnlyUser.ReadUser(Id);
+                var usuario = ObjUser.Read(Id);
                 return PartialView("_PartialViewUser", usuario);
             }
 

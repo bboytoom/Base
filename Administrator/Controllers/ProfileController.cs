@@ -1,5 +1,5 @@
-﻿using Administrator.Manager.Helpers;
-using Administrator.Manager;
+﻿using Administrator.Manager;
+using Administrator.Manager.Helpers;
 using System;
 using System.Web.Mvc;
 
@@ -8,12 +8,12 @@ namespace Administrator.Controllers
     [Authorize(Roles = "Administrador,Usuario")]
     public class ProfileController : Controller
     {
-        private ReadUserImp objReadOnlyUser;
+        private UserImp ObjUser;
         private CheckPasswordImp objChekPass;
 
         public ProfileController()
         {
-            objReadOnlyUser = new ReadUserImp();
+            ObjUser = new UserImp();
             objChekPass = new CheckPasswordImp();
         }
 
@@ -22,7 +22,7 @@ namespace Administrator.Controllers
             ViewBag.groupUser = ReadGroupUserImp.ReadGroupUser(Convert.ToInt32(TempData["main_user"]));
             ViewBag.userType = HCatalogs.GetTypeUser();
 
-            var usuario = objReadOnlyUser.ReadUser(Convert.ToInt32(TempData["id_user"]));
+            var usuario = ObjUser.Read(Convert.ToInt32(TempData["id_user"]));
             return View("Index", usuario);
         }
 

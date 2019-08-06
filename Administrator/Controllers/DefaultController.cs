@@ -1,5 +1,4 @@
 ﻿using Administrator.Contract;
-using Administrator.Data;
 using Administrator.Manager;
 using Administrator.Manager.Helpers;
 using Microsoft.AspNet.Identity;
@@ -91,20 +90,20 @@ namespace Administrator.Controllers
             return Result;
         }
 
-        private JsonResult SingInUser(Tbl_Users objetcModel, bool Rememberme)
+        private JsonResult SingInUser(ViewModelClaims objetcModel, bool Rememberme)
         {
             List<Claim> claims = new List<Claim>
             {
-                new Claim(ClaimTypes.NameIdentifier, objetcModel.Id.ToString()),
-                new Claim("Fullname", $"{objetcModel.Name_user} {objetcModel.LnameP_user}"),
-                new Claim("MainUser", objetcModel.MainU_user.ToString()),
-                new Claim("Email", objetcModel.Email_user.ToString()),
-                new Claim("PhotoUser", objetcModel.Photo_user.ToString())
+                new Claim(ClaimTypes.NameIdentifier, objetcModel.Identificador),
+                new Claim("Fullname", objetcModel.Fullname),
+                new Claim("MainUser", objetcModel.MainUser),
+                new Claim("Email", objetcModel.Email),
+                new Claim("PhotoUser", objetcModel.PhotoUser)
             };
 
-            if (objetcModel.Type_user != 0)
+            if (objetcModel.TypeUser != 0)
             {
-                int usetType = objetcModel.Type_user;
+                int usetType = objetcModel.TypeUser;
 
                 switch (usetType)
                 {
@@ -128,7 +127,7 @@ namespace Administrator.Controllers
             IAuthenticationManager authenticationManager = HttpContext.GetOwinContext().Authentication;
             authenticationManager.SignIn(new AuthenticationProperties() { IsPersistent = Rememberme }, Identity);
 
-            return ReturnJson(objetcModel.Type_user);
+            return ReturnJson(objetcModel.TypeUser);
         }
 
         private JsonResult ReturnJson(int tipo)

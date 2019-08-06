@@ -71,12 +71,24 @@ namespace Administrator.Manager
             connect = Configuration.Ctx();
         }
 
-        public Tbl_Users Login(ViewModelsAuth data)
+        public ViewModelClaims Login(ViewModelsAuth data)
         {
             string password_clean;
             password_clean = HEncrypt.PasswordEncryp(data.Password);
 
-            return connect.getConexion.Tbl_Users.Where(w => w.Email_user == data.Email && w.Password_user == password_clean).FirstOrDefault();
+            ViewModelClaims salida = connect.getConexion.Tbl_Users
+                .Where(w => w.Email_user == data.Email && w.Password_user == password_clean)
+                .Select(s => new ViewModelClaims
+                {
+                    Identificador = s.Id.ToString(),
+                    Fullname = s.Name_user + " " + s.LnameP_user + " " + s.LnameM_user,
+                    MainUser = s.MainU_user.ToString(),
+                    Email = s.Email_user,
+                    PhotoUser = s.Photo_user,
+                    TypeUser = s.Type_user,
+                }).FirstOrDefault();
+
+            return salida;
         }
     }
 

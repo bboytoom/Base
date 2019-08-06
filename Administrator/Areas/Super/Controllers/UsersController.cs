@@ -11,17 +11,11 @@ namespace Administrator.Areas.Super.Controllers
     [Authorize(Roles = "Root,Staff")]
     public class UsersController : Controller
     {
-        private ReadUserImp objReadOnlyUser;
-        private UpdateSuperImp objUpdateUser;
-        private CreateSuperImp objCreateUser;
-        private DeleteUserSuperImp objDeleteUser;
-
+        private UserImp ObjUser;
+ 
         public UsersController()
         {
-            objReadOnlyUser = new ReadUserImp();
-            objUpdateUser = new UpdateSuperImp();
-            objCreateUser = new CreateSuperImp();
-            objDeleteUser = new DeleteUserSuperImp();
+            ObjUser = new UserImp();
         }
 
         [CustomAuthorize(permission = "Read_user_permission")]
@@ -37,7 +31,7 @@ namespace Administrator.Areas.Super.Controllers
 
             ViewBag.CurrentFilter = searchString;
 
-            var salida = objReadOnlyUser.ReadAllUser(sortOrder, searchString, Convert.ToInt32(TempData["id_user"]));
+            var salida = ObjUser.ReadAll(sortOrder, searchString, Convert.ToInt32(TempData["id_user"]));
             int pageSize = 10;
             int pageNumber = (page ?? 1);
 
@@ -63,7 +57,7 @@ namespace Administrator.Areas.Super.Controllers
             ViewBag.userType = HCatalogs.GetTypeUserSuper();
             ViewBag.passWor = "no";
 
-            return View("CreateUsers", objReadOnlyUser.ReadUser(Id));
+            return View("CreateUsers", ObjUser.Read(Id));
         }
 
         [HttpPost]
@@ -72,11 +66,11 @@ namespace Administrator.Areas.Super.Controllers
         {
             if (Data.Id == 0)
             {
-                objCreateUser.UserSuper(Data, Convert.ToInt32(TempData["id_user"]), Convert.ToInt32(TempData["main_user"]));
+                ObjUser.Create(Data, Convert.ToInt32(TempData["id_user"]), Convert.ToInt32(TempData["main_user"]));
             }
             else
             {
-                objUpdateUser.UserSuper(Data, Convert.ToInt32(TempData["id_user"]), Convert.ToInt32(TempData["main_user"]));
+                ObjUser.Update(Data, Convert.ToInt32(TempData["id_user"]), Convert.ToInt32(TempData["main_user"]));
             }
 
             return RedirectToAction("Index");
@@ -86,7 +80,7 @@ namespace Administrator.Areas.Super.Controllers
         [CustomAuthorize(permission = "Delete_user_permission")]
         public ActionResult DeleteUsers(int Id)
         {
-            objDeleteUser.DeleteUserSuper(Id, Convert.ToInt32(TempData["main_user"]));
+            ObjUser.Delete(Id, Convert.ToInt32(TempData["main_user"]));
             return RedirectToAction("Index");
         }
     }

@@ -92,46 +92,6 @@ namespace Administrator.Manager
         }
     }
 
-    public class CreateSuperImp
-    {
-        private Configuration connect;
-        public CreateSuperImp()
-        {
-            connect = Configuration.Ctx();
-        }
-
-        public void UserSuper(ViewModelUser Data, int HieghUser, int MainUser)
-        {
-            string passwordCry = HEncrypt.PasswordEncryp(Data.Password);
-
-            try
-            {
-                var insert_user = new Tbl_Users()
-                {
-                    Id_group = Data.Idgroup,
-                    Type_user = Data.Typeuser,
-                    MainU_user = MainUser,
-                    Email_user = Data.Email,
-                    Password_user = passwordCry,
-                    Name_user = Data.Name,
-                    LnameP_user = Data.Lnamep,
-                    LnameM_user = Data.Lnamem,
-                    Active_user = true,
-                    Photo_user = "default.png",
-                    CreateU_user = HieghUser,
-                    CreateD_user = DateTime.Now
-                };
-
-                connect.getConexion.Tbl_Users.Add(insert_user);
-                connect.getConexion.SaveChanges();
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-        }
-    }
-
     #endregion
 
     #region Actualizar usuario
@@ -223,49 +183,6 @@ namespace Administrator.Manager
         }
     }
 
-    public class UpdateSuperImp
-    {
-        private Configuration connect;
-        public UpdateSuperImp()
-        {
-            connect = Configuration.Ctx();
-        }
-
-        public void UserSuper(ViewModelUser Data, int HieghUser, int MainUser)
-        {
-            try
-            {
-                Tbl_Users find_user = connect.getConexion.Tbl_Users.Find(Data.Id);
-
-                var update_user = new Tbl_Users()
-                {
-                    Id = Data.Id,
-                    Id_group = Data.Idgroup,
-                    Type_user = Data.Typeuser,
-                    MainU_user = find_user.MainU_user,
-                    Email_user = Data.Email,
-                    Password_user = find_user.Password_user,
-                    Name_user = Data.Name,
-                    LnameP_user = Data.Lnamep,
-                    LnameM_user = Data.Lnamem,
-                    Photo_user = find_user.Photo_user,
-                    Active_user = Data.Status,
-                    UpdateU_user = HieghUser,
-                    UpdateD_user = DateTime.Now,
-                    CreateU_user = find_user.CreateU_user,
-                    CreateD_user = find_user.CreateD_user
-                };
-
-                connect.getConexion.Entry(find_user).CurrentValues.SetValues(update_user);
-                connect.getConexion.SaveChanges();
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-        }
-    }
-
     #endregion
 
     #region Eliminar usuario
@@ -326,15 +243,84 @@ namespace Administrator.Manager
         }
     }
 
-    public class DeleteUserSuperImp
+    #endregion
+
+    #region ABC de la clase usuario usuario
+
+    public class UserImp
     {
         private Configuration connect;
-        public DeleteUserSuperImp()
+        public UserImp()
         {
             connect = Configuration.Ctx();
         }
 
-        public void DeleteUserSuper(int Id, int HieghUser)
+        public void Create(ViewModelUser Data, int HieghUser, int MainUser)
+        {
+            string passwordCry = HEncrypt.PasswordEncryp(Data.Password);
+
+            try
+            {
+                var insert_user = new Tbl_Users()
+                {
+                    Id_group = Data.Idgroup,
+                    Type_user = Data.Typeuser,
+                    MainU_user = MainUser,
+                    Email_user = Data.Email,
+                    Password_user = passwordCry,
+                    Name_user = Data.Name,
+                    LnameP_user = Data.Lnamep,
+                    LnameM_user = Data.Lnamem,
+                    Active_user = true,
+                    Photo_user = "default.png",
+                    CreateU_user = HieghUser,
+                    CreateD_user = DateTime.Now
+                };
+
+                connect.getConexion.Tbl_Users.Add(insert_user);
+                connect.getConexion.SaveChanges();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public void Update(ViewModelUser Data, int HieghUser, int MainUser)
+        {
+            try
+            {
+                Tbl_Users find_user = connect.getConexion.Tbl_Users.Find(Data.Id);
+
+                var update_user = new Tbl_Users()
+                {
+                    Id = Data.Id,
+                    Id_group = Data.Idgroup,
+                    Type_user = Data.Typeuser,
+                    MainU_user = find_user.MainU_user,
+                    Email_user = Data.Email,
+                    Password_user = find_user.Password_user,
+                    Name_user = Data.Name,
+                    LnameP_user = Data.Lnamep,
+                    LnameM_user = Data.Lnamem,
+                    Photo_user = find_user.Photo_user,
+                    Active_user = Data.Status,
+                    UpdateU_user = HieghUser,
+                    UpdateD_user = DateTime.Now,
+                    CreateU_user = find_user.CreateU_user,
+                    CreateD_user = find_user.CreateD_user
+                };
+
+                connect.getConexion.Entry(find_user).CurrentValues.SetValues(update_user);
+                connect.getConexion.SaveChanges();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public void Delete(int Id, int HieghUser)
         {
             Tbl_Users find_user = connect.getConexion.Tbl_Users.Find(Id);
 
@@ -366,21 +352,8 @@ namespace Administrator.Manager
                 throw;
             }
         }
-    }
 
-    #endregion
-
-    #region Mostrar usuario
-
-    public class ReadUserImp
-    {
-        private Configuration connect;
-        public ReadUserImp()
-        {
-            connect = Configuration.Ctx();
-        }
-
-        public ViewModelUser ReadUser(int Id)
+        public ViewModelUser Read(int Id)
         {
             try
             {
@@ -406,7 +379,7 @@ namespace Administrator.Manager
             }
         }
 
-        public List<Tbl_Users> ReadAllUser(string sortorder, string searchstring, int id_main)
+        public List<Tbl_Users> ReadAll(string sortorder, string searchstring, int id_main)
         {
             var show_user = from s in connect.getConexion.Tbl_Users where s.MainU_user == id_main select s;
 
