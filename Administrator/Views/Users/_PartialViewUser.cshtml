@@ -47,7 +47,7 @@
                         <label for="user_group">* Seleccion un grupo</label>
 
                         <div class="input-group mb-2">
-                            @Html.DropDownListFor(model => model.Idgroup, new SelectList(ViewBag.groupUser, "Id", "Name_group"), "Selecciona el grupo", new { @id = "user_group", @class = "custom-select" })
+                            @Html.DropDownListFor(model => model.Idgroup, new SelectList(ViewBag.groupUser, "Id", "Name"), "Selecciona el grupo", new { @id = "user_group", @class = "custom-select" })
                         </div>
                         <span id="lable_group" style="display:none; color: red;">No selecciono un grupo</span>
                     </div>

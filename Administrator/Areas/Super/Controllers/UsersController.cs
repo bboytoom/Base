@@ -12,7 +12,7 @@ namespace Administrator.Areas.Super.Controllers
     public class UsersController : Controller
     {
         private UserImp ObjUser;
- 
+
         public UsersController()
         {
             ObjUser = new UserImp();

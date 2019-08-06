@@ -379,22 +379,29 @@ namespace Administrator.Manager
             }
         }
 
-        public List<Tbl_Users> ReadAll(string sortorder, string searchstring, int id_main)
+        public List<ViewModelReadUser> ReadAll(string sortorder, string searchstring, int id_main)
         {
-            var show_user = from s in connect.getConexion.Tbl_Users where s.MainU_user == id_main select s;
+            var show_user = from s in connect.getConexion.Tbl_Users
+                            where s.MainU_user == id_main
+                            select new ViewModelReadUser
+                            {
+                                Id = s.Id,
+                                Email = s.Email_user,
+                                Photo = s.Photo_user,
+                                FullName = s.LnameP_user + " " + s.LnameM_user + " " + s.Name_user,
+                                Status = s.Active_user
+                            };
 
             if (!String.IsNullOrEmpty(searchstring))
-            {
-                show_user = show_user.Where(s => s.Name_user.Contains(searchstring));
-            }
+                show_user = show_user.Where(s => s.FullName.Contains(searchstring));
 
             switch (sortorder)
             {
                 case "name_desc":
-                    show_user = show_user.OrderByDescending(s => s.Name_user);
+                    show_user = show_user.OrderByDescending(s => s.FullName);
                     break;
                 default:
-                    show_user = show_user.OrderBy(s => s.Name_user);
+                    show_user = show_user.OrderBy(s => s.FullName);
                     break;
             }
 

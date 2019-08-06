@@ -1,4 +1,4 @@
-﻿@model PagedList.IPagedList<Administrator.Data.Tbl_Users>
+﻿@model PagedList.IPagedList<Administrator.Contract.ViewModelReadUser>
 @using PagedList.Mvc;
 
 @{
@@ -40,10 +40,7 @@
                         <div class="table-responsive">
                             <table class="table mdl-data-table table-striped table-hover">
                                 <thead>
-                                    <tr>
-                                        <th class="mdl-data-table__cell--non-numeric" scope="col">
-                                            Tipo de usuario
-                                        </th>
+                                    <tr>                  
                                         <th scope="col">
                                             Foto
                                         </th>
@@ -71,26 +68,17 @@
                                     @foreach (var item in Model)
                                     {
                                         <tr>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Photo)
+                                            </td>
                                             <td class="mdl-data-table__cell--non-numeric">
-                                                @Html.DisplayFor(modelItem => item.Type_user)
+                                                @Html.DisplayFor(modelItem => item.Email)
+                                            </td>
+                                            <td class="mdl-data-table__cell--non-numeric">
+                                                @Html.DisplayFor(modelItem => item.FullName)
                                             </td>
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.Photo_user)
-                                            </td>
-                                            <td class="mdl-data-table__cell--non-numeric">
-                                                @Html.DisplayFor(modelItem => item.Email_user)
-                                            </td>
-                                            <td class="mdl-data-table__cell--non-numeric">
-                                                @Html.DisplayFor(modelItem => item.Name_user)
-                                            </td>
-                                            <td class="mdl-data-table__cell--non-numeric">
-                                                @Html.DisplayFor(modelItem => item.LnameP_user)
-                                            </td>
-                                            <td class="mdl-data-table__cell--non-numeric">
-                                                @Html.DisplayFor(modelItem => item.LnameM_user)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.Active_user)
+                                                @Html.DisplayFor(modelItem => item.Status)
                                             </td>
                                             <td>
                                                 <button type="button" class="btn btn-outline-success btn-sm">

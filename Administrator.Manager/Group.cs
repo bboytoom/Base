@@ -288,22 +288,28 @@ namespace Administrator.Manager
             }
         }
 
-        public List<Tbl_Groups> ReadAllGroup(string sortorder, string searchstring, int id_main)
+        public List<ViewModelReadGroup> ReadAllGroup(string sortorder, string searchstring, int id_main)
         {
-            var show_group = from s in connect.getConexion.Tbl_Groups where s.MainU_group == id_main select s;
+            var show_group = from s in connect.getConexion.Tbl_Groups
+                             where s.MainU_group == id_main
+                             select new ViewModelReadGroup
+                             {
+                                 Id = s.Id,
+                                 Group = s.Name_group,
+                                 Description = s.Description_group,
+                                 Status = s.Active_group
+                             };
 
             if (!String.IsNullOrEmpty(searchstring))
-            {
-                show_group = show_group.Where(s => s.Name_group.Contains(searchstring));
-            }
+                show_group = show_group.Where(s => s.Group.Contains(searchstring));
 
             switch (sortorder)
             {
                 case "name_desc":
-                    show_group = show_group.OrderByDescending(s => s.Name_group);
+                    show_group = show_group.OrderByDescending(s => s.Group);
                     break;
                 default:
-                    show_group = show_group.OrderBy(s => s.Name_group);
+                    show_group = show_group.OrderBy(s => s.Group);
                     break;
             }
 
@@ -313,10 +319,19 @@ namespace Administrator.Manager
 
     public static class ReadGroupUserImp
     {
-        public static List<Tbl_Groups> ReadGroupUser(int Id)
+        public static List<ViewModelGroupList> ReadGroupUser(int Id)
         {
             Configuration connect = Configuration.Ctx();
-            return connect.getConexion.Tbl_Groups.Where(w => w.MainU_group == Id && w.Id != 1).ToList();
+
+            List<ViewModelGroupList> salida = connect.getConexion.Tbl_Groups
+                .Where(w => w.MainU_group == Id && w.Id != 1)
+                .Select(s => new ViewModelGroupList
+                {
+                    Id = s.Id,
+                    Name = s.Name_group
+                }).ToList();
+
+            return salida;
         }
     }
 

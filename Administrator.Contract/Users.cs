@@ -2,6 +2,15 @@
 
 namespace Administrator.Contract
 {
+    public class ViewModelReadUser
+    {
+        public int Id { get; set; }
+        public string Photo { get; set; }
+        public string Email { get; set; }
+        public string FullName { get; set; }
+        public bool Status { get; set; }
+    }
+
     public class ViewModelUser
     {
         public int Id { get; set; }

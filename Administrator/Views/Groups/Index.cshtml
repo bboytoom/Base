@@ -1,4 +1,4 @@
-﻿@model PagedList.IPagedList<Administrator.Data.Tbl_Groups>
+﻿@model PagedList.IPagedList<Administrator.Contract.ViewModelReadGroup>
 @using PagedList.Mvc;
 @using Administrator.Manager;
 
@@ -68,13 +68,13 @@
                                         {
                                             <tr>
                                                 <td class="mdl-data-table__cell--non-numeric">
-                                                    @Html.DisplayFor(modelItem => item.Name_group)
+                                                    @Html.DisplayFor(modelItem => item.Group)
                                                 </td>
                                                 <td class="mdl-data-table__cell--non-numeric">
-                                                    @Html.DisplayFor(modelItem => item.Description_group)
+                                                    @Html.DisplayFor(modelItem => item.Description)
                                                 </td>
                                                 <td>
-                                                    @Html.DisplayFor(modelItem => item.Active_group)
+                                                    @Html.DisplayFor(modelItem => item.Status)
                                                 </td>
 
                                                 @if (PermissionImp.PermissionUser("Update_group_permission", Convert.ToInt32(TempData["id_user"])))
