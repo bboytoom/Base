@@ -8,7 +8,7 @@ using System.Linq;
 using System.Net;
 using System.ServiceModel.Web;
 
-namespace Administrator.Manager.Implementations
+namespace Administrator.Manager
 {
     #region verifica correo
 

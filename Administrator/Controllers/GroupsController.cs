@@ -1,5 +1,5 @@
 ﻿using Administrator.App_Start;
-using Administrator.Manager.Implementations;
+using Administrator.Manager;
 using PagedList;
 using System;
 using System.Web.Mvc;

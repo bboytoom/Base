@@ -1,4 +1,4 @@
-﻿using Administrator.Manager.Implementations;
+﻿using Administrator.Manager;
 using System;
 using System.Linq;
 using System.Security.Claims;

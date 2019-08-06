@@ -79,13 +79,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Auxiliary.cs" />
     <Compile Include="Helpers\HCatalogs.cs" />
     <Compile Include="Helpers\HCheckEmail.cs" />
     <Compile Include="Helpers\HEncrypt.cs" />
     <Compile Include="Helpers\HImages.cs" />
-    <Compile Include="Implementations\Group.cs" />
-    <Compile Include="Implementations\Login.cs" />
-    <Compile Include="Implementations\User.cs" />
+    <Compile Include="Group.cs" />
+    <Compile Include="Login.cs" />
+    <Compile Include="User.cs" />
     <Compile Include="Interfaces\IGroup.cs" />
     <Compile Include="Interfaces\ILogin.cs" />
     <Compile Include="Interfaces\IUser.cs" />

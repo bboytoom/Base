@@ -1,5 +1,5 @@
 ﻿using Administrator.Manager.Helpers;
-using Administrator.Manager.Implementations;
+using Administrator.Manager;
 using System;
 using System.Web.Mvc;
 

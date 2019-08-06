@@ -1,7 +1,7 @@
 ﻿using Administrator.App_Start;
 using Administrator.Contract;
+using Administrator.Manager;
 using Administrator.Manager.Helpers;
-using Administrator.Manager.Implementations;
 using PagedList;
 using System;
 using System.Web.Mvc;

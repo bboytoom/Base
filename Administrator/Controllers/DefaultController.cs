@@ -1,7 +1,7 @@
 ﻿using Administrator.Contract;
 using Administrator.Data;
+using Administrator.Manager;
 using Administrator.Manager.Helpers;
-using Administrator.Manager.Implementations;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
 using System;
