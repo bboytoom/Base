@@ -89,13 +89,9 @@
     <Compile Include="Helpers\HCheckEmail.cs" />
     <Compile Include="Helpers\HEncrypt.cs" />
     <Compile Include="Helpers\HImages.cs" />
-    <Compile Include="Helpers\HOutJson.cs" />
-    <Compile Include="Helpers\HViewModel.cs" />
-    <Compile Include="Implementations\Email.cs" />
     <Compile Include="Implementations\Group.cs" />
     <Compile Include="Implementations\Login.cs" />
     <Compile Include="Implementations\User.cs" />
-    <Compile Include="Interfaces\IEmail.cs" />
     <Compile Include="Interfaces\IGroup.cs" />
     <Compile Include="Interfaces\ILogin.cs" />
     <Compile Include="Interfaces\IUser.cs" />
@@ -114,7 +110,12 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Administrator.Contract\Administrator.Contract.csproj">
+      <Project>{67c54310-9c5f-417a-84f7-ca5553909ea4}</Project>
+      <Name>Administrator.Contract</Name>
+    </ProjectReference>
+  </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201904282220278_Init.resx">
       <DependentUpon>201904282220278_Init.cs</DependentUpon>

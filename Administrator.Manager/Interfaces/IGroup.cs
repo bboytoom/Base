@@ -1,4 +1,4 @@
-﻿using Administrator.Manager.Helpers;
+﻿using Administrator.Contract;
 using System.ServiceModel;
 using System.ServiceModel.Web;
 

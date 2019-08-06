@@ -71,9 +71,6 @@
     <Content Include="Global.asax" />
     <Content Include="Web.config" />
     <Content Include="wscheckemail.svc" />
-    <Content Include="wsemailcreate.svc" />
-    <Content Include="wsemaildelete.svc" />
-    <Content Include="wsemailupdate.svc" />
     <Content Include="wsgroupcreate.svc" />
     <Content Include="wsgroupdelete.svc" />
     <Content Include="wsgroupupdate.svc" />

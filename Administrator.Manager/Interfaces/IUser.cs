@@ -1,4 +1,4 @@
-﻿using Administrator.Manager.Helpers;
+﻿using Administrator.Contract;
 using System.ServiceModel;
 using System.ServiceModel.Web;
 
@@ -35,7 +35,7 @@ namespace Administrator.Manager.Interfaces
     {
         [OperationContract]
         [WebInvoke(RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "/upload", Method = "POST", BodyStyle = WebMessageBodyStyle.Wrapped)]
-        void UploadImg(ViewModelUploadImg File);
+        void UploadImg(ViewModelUpload File);
     }
 
     #endregion

@@ -1,7 +1,14 @@
 ﻿using System.Runtime.Serialization;
 
-namespace Administrator.Manager.Helpers
+namespace Administrator.Contract
 {
+    public class ViewModelUpload
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string Image { get; set; }
+    }
+
     [DataContract]
     public class CustomErrorDetail
     {

@@ -1,4 +1,5 @@
-﻿using Administrator.Manager.Data;
+﻿using Administrator.Contract;
+using Administrator.Manager.Data;
 using Administrator.Manager.Helpers;
 using Administrator.Manager.Implementations;
 using Microsoft.AspNet.Identity;
@@ -42,7 +43,7 @@ namespace Administrator.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public JsonResult Index(ViewModelsLogin data)
+        public JsonResult Index(ViewModelsAuth data)
         {
             JsonResult Result;
             string email_clean;

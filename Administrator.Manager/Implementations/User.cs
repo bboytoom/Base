@@ -1,4 +1,5 @@
-﻿using Administrator.Manager.Data;
+﻿using Administrator.Contract;
+using Administrator.Manager.Data;
 using Administrator.Manager.Helpers;
 using Administrator.Manager.Interfaces;
 using Newtonsoft.Json;
@@ -501,7 +502,7 @@ namespace Administrator.Manager.Implementations
             connect = Configuration.Ctx();
         }
 
-        public void UploadImg(ViewModelUploadImg File)
+        public void UploadImg(ViewModelUpload File)
         {
             if (File.Image != null || File.Image != "")
             {

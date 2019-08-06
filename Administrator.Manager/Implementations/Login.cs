@@ -1,4 +1,5 @@
-﻿using Administrator.Manager.Data;
+﻿using Administrator.Contract;
+using Administrator.Manager.Data;
 using Administrator.Manager.Helpers;
 using Administrator.Manager.Interfaces;
 using Newtonsoft.Json;
@@ -70,7 +71,7 @@ namespace Administrator.Manager.Implementations
             connect = Configuration.Ctx();
         }
 
-        public Tbl_Users Login(ViewModelsLogin data)
+        public Tbl_Users Login(ViewModelsAuth data)
         {
             string password_clean;
             password_clean = HEncrypt.PasswordEncryp(data.Password);

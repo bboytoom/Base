@@ -184,6 +184,10 @@
     <Folder Include="Images\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Administrator.Contract\Administrator.Contract.csproj">
+      <Project>{67C54310-9C5F-417A-84F7-CA5553909EA4}</Project>
+      <Name>Administrator.Contract</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Administrator.Manager\Administrator.Manager.csproj">
       <Project>{0a345ac9-dd75-44ed-ab3e-014de89d4dbe}</Project>
       <Name>Administrator.Manager</Name>
