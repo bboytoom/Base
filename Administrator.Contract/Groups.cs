@@ -22,7 +22,7 @@ namespace Administrator.Contract
         [Display(Name = "Nombre de grupo:")]
         [Required(ErrorMessage = "* El campo de nombre es obligatorio")]
         [StringLength(30, ErrorMessage = "Longitud máxima 80", MinimumLength = 4)]
-        public string Name { get; set; }
+        public string Group { get; set; }
         [Display(Name = "Descripcion:")]
         [StringLength(200, ErrorMessage = "Longitud máxima 80", MinimumLength = 4)]
         public string Description { get; set; }
@@ -50,14 +50,6 @@ namespace Administrator.Contract
         public bool Updatepermission { get; set; }
         [Display(Name = "Eliminar permiso:")]
         public bool Deletepermission { get; set; }
-        [Display(Name = "Mostrar email:")]
-        public bool Reademail { get; set; }
-        [Display(Name = "Mostrar crear:")]
-        public bool Createemail { get; set; }
-        [Display(Name = "Actualizar email:")]
-        public bool Updateemail { get; set; }
-        [Display(Name = "Eliminar email:")]
-        public bool Deleteemail { get; set; }
         [Display(Name = "Estatus:")]
         public bool Status { get; set; }
         public int HighUser { get; set; }

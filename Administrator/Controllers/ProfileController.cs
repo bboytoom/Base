@@ -1,29 +1,18 @@
-﻿using Administrator.Manager;
-using Administrator.Manager.Helpers;
-using System;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 
 namespace Administrator.Controllers
 {
     [Authorize(Roles = "Administrador,Usuario")]
     public class ProfileController : Controller
     {
-        private UserImp ObjUser;
-        private CheckPasswordImp objChekPass;
-
         public ProfileController()
         {
-            ObjUser = new UserImp();
-            objChekPass = new CheckPasswordImp();
+
         }
 
         public ActionResult Index()
         {
-            ViewBag.groupUser = ReadGroupUserImp.ReadGroupUser(Convert.ToInt32(TempData["main_user"]));
-            ViewBag.userType = HCatalogs.GetTypeUser();
-
-            var usuario = ObjUser.Read(Convert.ToInt32(TempData["id_user"]));
-            return View("Index", usuario);
+            return View("Index");
         }
 
         #region Acciones del cambio de password
@@ -31,22 +20,13 @@ namespace Administrator.Controllers
         [HttpGet]
         public JsonResult CheckPassword(int Id, string Password)
         {
-            if (Id == 0 || Password == "")
-                return Json(new { Respuesta = false }, JsonRequestBehavior.AllowGet);
-
-            return Json(new { Respuesta = objChekPass.CheckPassword(Id, Password) }, JsonRequestBehavior.AllowGet);
+            return Json(new { Respuesta = true }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
         public JsonResult ChangePassword(int Id, string PasswordUno, string PasswordDos)
         {
-            if (PasswordUno == "" || PasswordDos == "")
-                return Json(new { Respuesta = false }, JsonRequestBehavior.AllowGet);
-
-            if (PasswordUno != PasswordDos)
-                return Json(new { Respuesta = false }, JsonRequestBehavior.AllowGet);
-
-            return Json(new { Respuesta = objChekPass.ChangePasswordImp(Id, PasswordUno) }, JsonRequestBehavior.AllowGet);
+            return Json(new { Respuesta = true }, JsonRequestBehavior.AllowGet);
         }
 
         #endregion

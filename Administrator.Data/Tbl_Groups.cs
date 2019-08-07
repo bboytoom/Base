@@ -3,7 +3,9 @@ namespace Administrator.Data
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
 
+    [Table("Groups", Schema = "Manager")]
     public partial class Tbl_Groups
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -12,34 +14,82 @@ namespace Administrator.Data
             Tbl_Users = new HashSet<Tbl_Users>();
         }
 
+        [Column("id", Order = 0)]
+        [Key]
         public int Id { get; set; }
 
+        [Column("id_main", Order = 1)]
         [Required]
-        [StringLength(30)]
-        public string Name_group { get; set; }
+        public int Id_main { get; set; }
 
-        [StringLength(200)]
-        public string Description_group { get; set; }
+        [Column("group", Order = 2, TypeName = "VARCHAR")]
+        [Required]
+        [MaxLength(30)]
+        public string Group { get; set; }
 
-        public bool Active_group { get; set; }
+        [Column("description", Order = 3, TypeName = "VARCHAR")]
+        [MaxLength(200)]
+        public string Description { get; set; }
 
-        public int? UpdateU_group { get; set; }
+        [Column("read_user", Order = 4)]
+        public bool Read_user { get; set; }
 
-        public DateTime? UpdateD_group { get; set; }
+        [Column("update_user", Order = 5)]
+        public bool Update_user { get; set; }
 
-        public int? CreateU_group { get; set; }
+        [Column("create_user", Order = 6)]
+        public bool Create_user { get; set; }
 
-        public DateTime? CreateD_group { get; set; }
+        [Column("delete_user", Order = 7)]
+        public bool Delete_user { get; set; }
 
-        public int? DeleteU_group { get; set; }
+        [Column("read_group", Order = 8)]
+        public bool Read_group { get; set; }
 
-        public DateTime? DeleteD_group { get; set; }
+        [Column("update_group", Order = 9)]
+        public bool Update_group { get; set; }
 
-        public bool? Delete_stautus_group { get; set; }
+        [Column("create_group", Order = 10)]
+        public bool Create_group { get; set; }
 
-        public int MainU_group { get; set; }
+        [Column("delete_group", Order = 11)]
+        public bool Delete_group { get; set; }
 
-        public virtual Tbl_Permissions Tbl_Permissions { get; set; }
+        [Column("read_permission", Order = 12)]
+        public bool Read_permission { get; set; }
+
+        [Column("update_permission", Order = 13)]
+        public bool Update_permission { get; set; }
+
+        [Column("create_permission", Order = 14)]
+        public bool Create_permission { get; set; }
+
+        [Column("delete_permission", Order = 15)]
+        public bool Delete_permission { get; set; }
+
+        [Column("status", Order = 16)]
+        public bool Status { get; set; }
+
+        [Column("edit_user", Order = 17)]
+        public int? Edit_user { get; set; }
+
+        [Column("edit_date", Order = 18)]
+        public DateTime? Edit_date { get; set; }
+
+        [Column("generate_user", Order = 19)]
+        public int? Generate_user { get; set; }
+
+        [Column("generate_date", Order = 20)]
+        public DateTime? Generate_date { get; set; }
+
+        [Column("remove_user", Order = 21)]
+        public int? Remove_user { get; set; }
+
+        [Column("remove_date", Order = 22)]
+        public DateTime? Remove_date { get; set; }
+
+        [Column("remove_status", Order = 23)]
+        public bool? Remove_status { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Tbl_Users> Tbl_Users { get; set; }

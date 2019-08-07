@@ -1,69 +1,93 @@
 namespace Administrator.Data
 {
     using System;
-    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
 
+    [Table("Users", Schema = "Manager")]
     public partial class Tbl_Users
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Tbl_Users()
         {
-            Tbl_Emails = new HashSet<Tbl_Emails>();
+
         }
 
+        [Column("id", Order = 0)]
+        [Key]
         public int Id { get; set; }
 
+        [Column("id_main", Order = 1)]
+        [Required]
+        public int Id_main { get; set; }
+
+        [Column("id_group", Order = 2)]
+        [Required]
         public int Id_group { get; set; }
 
-        public int Type_user { get; set; }
-
-        [StringLength(60)]
-        public string Photo_user { get; set; }
-
+        [Column("type", Order = 3)]
         [Required]
-        [StringLength(80)]
-        public string Email_user { get; set; }
+        public int Type { get; set; }
 
+        [Column("photo", Order = 4, TypeName = "VARCHAR")]
+        [MaxLength(60)]
+        public string Photo { get; set; }
+
+        [Column("email", Order = 5, TypeName = "VARCHAR")]
         [Required]
-        [StringLength(250)]
-        public string Password_user { get; set; }
+        [MaxLength(80)]
+        public string Email { get; set; }
 
+        [Column("password", Order = 6, TypeName = "VARCHAR")]
         [Required]
-        [StringLength(50)]
-        public string Name_user { get; set; }
+        [MaxLength(250)]
+        public string Password { get; set; }
 
+        [Column("name", Order = 7, TypeName = "VARCHAR")]
         [Required]
-        [StringLength(30)]
-        public string LnameP_user { get; set; }
+        [MaxLength(50)]
+        public string Name { get; set; }
 
-        [StringLength(30)]
-        public string LnameM_user { get; set; }
+        [Column("lastnamep", Order = 8, TypeName = "VARCHAR")]
+        [Required]
+        [MaxLength(30)]
+        public string LnameP { get; set; }
 
-        public bool Active_user { get; set; }
+        [Column("lastnamem", Order = 9, TypeName = "VARCHAR")]
+        [MaxLength(30)]
+        public string LnameM { get; set; }
 
-        public int? UpdateU_user { get; set; }
+        [Column("attemp", Order = 10)]
+        public int? Attemp { get; set; }
 
-        public DateTime? UpdateD_user { get; set; }
+        [Column("cycle", Order = 11)]
+        public int? Cycle { get; set; }
 
-        public int? CreateU_user { get; set; }
+        [Column("status", Order = 12)]
+        public bool Status { get; set; }
 
-        public DateTime? CreateD_user { get; set; }
+        [Column("edit_user", Order = 13)]
+        public int? Edit_user { get; set; }
 
-        public int? DeleteU_user { get; set; }
+        [Column("edit_date", Order = 14)]
+        public DateTime? Edit_date { get; set; }
 
-        public DateTime? DeleteD_user { get; set; }
+        [Column("generate_user", Order = 15)]
+        public int? Generate_user { get; set; }
 
-        public bool? Delete_stautus_user { get; set; }
+        [Column("generate_date", Order = 16)]
+        public DateTime? Generate_date { get; set; }
 
-        public int? Attemp_user { get; set; }
+        [Column("remove_user", Order = 17)]
+        public int? Remove_user { get; set; }
 
-        public int? Cycle_user { get; set; }
+        [Column("remove_date", Order = 18)]
+        public DateTime? Remove_date { get; set; }
 
-        public int MainU_user { get; set; }
+        [Column("remove_status", Order = 19)]
+        public bool? Remove_status { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Tbl_Emails> Tbl_Emails { get; set; }
 
         public virtual Tbl_Groups Tbl_Groups { get; set; }
     }

@@ -21,7 +21,7 @@ namespace Administrator.Contract
 
         [Display(Name = "Tipo de usuario:")]
         [Required(ErrorMessage = "* El campo de tipo de usuario es obligatorio")]
-        public int Typeuser { get; set; }
+        public int Type { get; set; }
 
         [Display(Name = "Correo del usuario:")]
         [Required(ErrorMessage = "* El campo de Correo es obligatorio")]
@@ -49,7 +49,7 @@ namespace Administrator.Contract
         [Display(Name = "Apellido materno:")]
         [StringLength(30, ErrorMessage = "Longitud entre 50 y 3 caracteres.", MinimumLength = 4)]
         public string Lnamem { get; set; }
-        public string Nameimg { get; set; }
+        public string Photo { get; set; }
         public bool Status { get; set; }
         public int HighUser { get; set; }
         public int MainUser { get; set; }

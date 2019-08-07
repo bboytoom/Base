@@ -52,15 +52,13 @@
   <ItemGroup>
     <Compile Include="Configuration.cs" />
     <Compile Include="DataModels.cs" />
-    <Compile Include="Migrations\201908060206177_Inicial.cs" />
-    <Compile Include="Migrations\201908060206177_Inicial.Designer.cs">
-      <DependentUpon>201908060206177_Inicial.cs</DependentUpon>
+    <Compile Include="Migrations\201908062134298_DeleteTables.cs" />
+    <Compile Include="Migrations\201908062134298_DeleteTables.Designer.cs">
+      <DependentUpon>201908062134298_DeleteTables.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Tbl_Emails.cs" />
     <Compile Include="Tbl_Groups.cs" />
-    <Compile Include="Tbl_Permissions.cs" />
     <Compile Include="Tbl_Users.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -68,8 +66,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201908060206177_Inicial.resx">
-      <DependentUpon>201908060206177_Inicial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201908062134298_DeleteTables.resx">
+      <DependentUpon>201908062134298_DeleteTables.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

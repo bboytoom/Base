@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace Administrator.Manager
 {
-    #region ABC de la clase usuario usuario
+    #region ABC de la clase User
 
     public class UserImp
     {
@@ -17,30 +17,32 @@ namespace Administrator.Manager
             connect = Configuration.Ctx();
         }
 
-        public void Create(ViewModelUser Data, int HieghUser, int MainUser)
+        public bool Create(ViewModelUser data, int hieghUser, int main)
         {
-            string passwordCry = HEncrypt.PasswordEncryp(Data.Password);
+            string passwordCry = HEncrypt.PasswordEncryp(data.Password);
 
             try
             {
                 var insert_user = new Tbl_Users()
                 {
-                    Id_group = Data.Idgroup,
-                    Type_user = Data.Typeuser,
-                    MainU_user = MainUser,
-                    Email_user = Data.Email,
-                    Password_user = passwordCry,
-                    Name_user = Data.Name,
-                    LnameP_user = Data.Lnamep,
-                    LnameM_user = Data.Lnamem,
-                    Active_user = true,
-                    Photo_user = "default.png",
-                    CreateU_user = HieghUser,
-                    CreateD_user = DateTime.Now
+                    Id_group = data.Idgroup,
+                    Type = data.Type,
+                    Id_main = main,
+                    Email = data.Email,
+                    Password = passwordCry,
+                    Name = data.Name,
+                    LnameP = data.Lnamep,
+                    LnameM = data.Lnamem,
+                    Status = true,
+                    Photo = "default.png",
+                    Generate_user = hieghUser,
+                    Generate_date = DateTime.Now
                 };
 
                 connect.getConexion.Tbl_Users.Add(insert_user);
                 connect.getConexion.SaveChanges();
+
+                return true;
             }
             catch (Exception)
             {
@@ -48,33 +50,35 @@ namespace Administrator.Manager
             }
         }
 
-        public void Update(ViewModelUser Data, int HieghUser, int MainUser)
+        public bool Update(ViewModelUser data, int hieghUser)
         {
             try
             {
-                Tbl_Users find_user = connect.getConexion.Tbl_Users.Find(Data.Id);
+                Tbl_Users find_user = connect.getConexion.Tbl_Users.Find(data.Id);
 
                 var update_user = new Tbl_Users()
                 {
-                    Id = Data.Id,
-                    Id_group = Data.Idgroup,
-                    Type_user = Data.Typeuser,
-                    MainU_user = find_user.MainU_user,
-                    Email_user = Data.Email,
-                    Password_user = find_user.Password_user,
-                    Name_user = Data.Name,
-                    LnameP_user = Data.Lnamep,
-                    LnameM_user = Data.Lnamem,
-                    Photo_user = find_user.Photo_user,
-                    Active_user = Data.Status,
-                    UpdateU_user = HieghUser,
-                    UpdateD_user = DateTime.Now,
-                    CreateU_user = find_user.CreateU_user,
-                    CreateD_user = find_user.CreateD_user
+                    Id = data.Id,
+                    Id_group = data.Idgroup,
+                    Type = data.Type,
+                    Id_main = find_user.Id_main,
+                    Email = data.Email,
+                    Password = find_user.Password,
+                    Name = data.Name,
+                    LnameP = data.Lnamep,
+                    LnameM = data.Lnamem,
+                    Photo = find_user.Photo,
+                    Status = data.Status,
+                    Edit_user = hieghUser,
+                    Edit_date = DateTime.Now,
+                    Generate_user = find_user.Generate_user,
+                    Generate_date = find_user.Generate_date
                 };
 
                 connect.getConexion.Entry(find_user).CurrentValues.SetValues(update_user);
                 connect.getConexion.SaveChanges();
+
+                return true;
             }
             catch (Exception)
             {
@@ -82,32 +86,34 @@ namespace Administrator.Manager
             }
         }
 
-        public void Delete(int Id, int HieghUser)
+        public bool Delete(int id, int hieghUser)
         {
-            Tbl_Users find_user = connect.getConexion.Tbl_Users.Find(Id);
+            Tbl_Users find_user = connect.getConexion.Tbl_Users.Find(id);
 
             try
             {
                 var delete_user = new Tbl_Users()
                 {
-                    Id = Id,
+                    Id = id,
                     Id_group = find_user.Id_group,
-                    MainU_user = find_user.MainU_user,
-                    Type_user = find_user.Type_user,
-                    Photo_user = find_user.Photo_user,
-                    Email_user = find_user.Email_user,
-                    Password_user = find_user.Password_user,
-                    Name_user = find_user.Name_user,
-                    LnameP_user = find_user.LnameP_user,
-                    LnameM_user = find_user.LnameM_user,
-                    Active_user = false,
-                    DeleteU_user = HieghUser,
-                    DeleteD_user = DateTime.Now,
-                    Delete_stautus_user = true
+                    Id_main = find_user.Id_main,
+                    Type = find_user.Type,
+                    Photo = find_user.Photo,
+                    Email = find_user.Email,
+                    Password = find_user.Password,
+                    Name = find_user.Name,
+                    LnameP = find_user.LnameP,
+                    LnameM = find_user.LnameM,
+                    Status = false,
+                    Remove_user = hieghUser,
+                    Remove_date = DateTime.Now,
+                    Remove_status = true
                 };
 
                 connect.getConexion.Entry(find_user).CurrentValues.SetValues(delete_user);
                 connect.getConexion.SaveChanges();
+
+                return true;
             }
             catch (Exception)
             {
@@ -115,59 +121,39 @@ namespace Administrator.Manager
             }
         }
 
-        public ViewModelUser Read(int Id)
+        public ViewModelUser Read(int id)
         {
-            try
-            {
-                ViewModelUser salida = connect.getConexion.Tbl_Users.Where(w => w.Id == Id)
-                    .Select(s => new ViewModelUser
+            ViewModelUser result = connect.getConexion.Tbl_Users
+                    .Where(w => w.Id == id).Select(s => new ViewModelUser
                     {
                         Id = s.Id,
                         Idgroup = s.Id_group,
-                        Typeuser = s.Type_user,
-                        Email = s.Email_user,
-                        Name = s.Name_user,
-                        Nameimg = s.Photo_user,
-                        Lnamep = s.LnameP_user,
-                        Lnamem = s.LnameM_user,
-                        Status = s.Active_user
+                        Type = s.Type,
+                        Email = s.Email,
+                        Name = s.Name,
+                        Photo = s.Photo,
+                        Lnamep = s.LnameP,
+                        Lnamem = s.LnameM,
+                        Status = s.Status
                     }).FirstOrDefault();
 
-                return salida;
-            }
-            catch (Exception)
-            {
-                throw;
-            }
+            return result;
         }
 
-        public List<ViewModelReadUser> ReadAll(string sortorder, string searchstring, int id_main)
+        public List<ViewModelReadUser> ReadAll(int id_main)
         {
-            var show_user = from s in connect.getConexion.Tbl_Users
-                            where s.MainU_user == id_main
-                            select new ViewModelReadUser
-                            {
-                                Id = s.Id,
-                                Email = s.Email_user,
-                                Photo = s.Photo_user,
-                                FullName = s.LnameP_user + " " + s.LnameM_user + " " + s.Name_user,
-                                Status = s.Active_user
-                            };
+            List<ViewModelReadUser> result = connect.getConexion
+                .Tbl_Users.Where(w => w.Id_main == id_main)
+                .Select(s => new ViewModelReadUser
+                {
+                    Id = s.Id,
+                    Email = s.Email,
+                    Photo = s.Photo,
+                    FullName = s.LnameP + " " + s.LnameM + " " + s.Name,
+                    Status = s.Status
+                }).ToList();
 
-            if (!String.IsNullOrEmpty(searchstring))
-                show_user = show_user.Where(s => s.FullName.Contains(searchstring));
-
-            switch (sortorder)
-            {
-                case "name_desc":
-                    show_user = show_user.OrderByDescending(s => s.FullName);
-                    break;
-                default:
-                    show_user = show_user.OrderBy(s => s.FullName);
-                    break;
-            }
-
-            return show_user.ToList();
+            return result;
         }
     }
 

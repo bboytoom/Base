@@ -6,12 +6,12 @@ namespace Administrator.Manager.Helpers
 {
     public static class HEncrypt
     {
-        public static string PasswordEncryp(string Password)
+        public static string PasswordEncryp(string password)
         {
             try
             {
-                SHA512 sha512 = SHA512Managed.Create();
-                byte[] bytes = Encoding.UTF8.GetBytes(Password);
+                SHA512 sha512 = SHA512.Create();
+                byte[] bytes = Encoding.UTF8.GetBytes(password);
                 byte[] hash = sha512.ComputeHash(bytes);
                 return GetStringFromHash(hash);
             }

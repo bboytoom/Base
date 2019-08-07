@@ -21,7 +21,7 @@ namespace Administrator.App_Start
             var Claims = Principal.Claims.ToList();
             string id_usuario = Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier).Value;
 
-            if (!PermissionImp.PermissionUser(permission, Convert.ToInt32(id_usuario)))
+            if (!PermissionImp.Check(permission, Convert.ToInt32(id_usuario)))
             {
                 filterContext.Result = new RedirectToRouteResult(new RouteValueDictionary(new
                 {

@@ -7,13 +7,13 @@ namespace Administrator.Data.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class Inicial : IMigrationMetadata
+    public sealed partial class DeleteTables : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(Inicial));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(DeleteTables));
         
         string IMigrationMetadata.Id
         {
-            get { return "201908060206177_Inicial"; }
+            get { return "201908062134298_DeleteTables"; }
         }
         
         string IMigrationMetadata.Source

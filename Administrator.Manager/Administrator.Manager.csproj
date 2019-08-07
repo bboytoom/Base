@@ -95,7 +95,7 @@
       <Name>Administrator.Contract</Name>
     </ProjectReference>
     <ProjectReference Include="..\Administrator.Data\Administrator.Data.csproj">
-      <Project>{5E80E894-11DF-403A-94F1-D42D54B22F6E}</Project>
+      <Project>{5e80e894-11df-403a-94f1-d42d54b22f6e}</Project>
       <Name>Administrator.Data</Name>
     </ProjectReference>
   </ItemGroup>

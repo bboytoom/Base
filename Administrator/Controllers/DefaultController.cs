@@ -58,12 +58,12 @@ namespace Administrator.Controllers
             if (!HCheckEmail.EmailCheck(email_clean))
                 return Json(new { Status = 415, Respuesta = "Correo electronico no valido" }, JsonRequestBehavior.AllowGet);
 
-            if (!CStatusUser.StatusUser(data.Email))
+            if (!Validation.Status(data.Email))
                 return Json(new { Status = 401, Respuesta = "Usuario inactivo, consulte a su administrador" }, JsonRequestBehavior.AllowGet);
 
             if (objLogin.Login(data) == null)
             {
-                if (LockOutUser.InsertAttemps(email_clean))
+                if (Validation.InsertAttemps(email_clean))
                 {
                     HttpCookie attempCookie = new HttpCookie("_attempts")
                     {
@@ -73,7 +73,7 @@ namespace Administrator.Controllers
 
                     Response.Cookies.Add(attempCookie);
 
-                    LockOutUser.InsertCycle(email_clean);
+                    Validation.InsertCycle(email_clean);
                     return Json(new { Status = 403, Respuesta = "Usuario bloqueado temporalmente" }, JsonRequestBehavior.AllowGet);
                 }
 
@@ -83,7 +83,7 @@ namespace Administrator.Controllers
             else
             {
                 Response.Cookies["_attempts"].Expires = DateTime.Now.AddMinutes(-1);
-                LockOutUser.ResetAttemps(email_clean);
+                Validation.ResetAttemps(email_clean);
                 Result = SingInUser(objLogin.Login(data), data.Rememberme);
             }
 

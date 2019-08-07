@@ -19,7 +19,7 @@
                     }
                     else
                     {
-                        <img id="user_img" src="~/Images/@Html.DisplayFor(model => model.Nameimg)" class="card-img-top upload__image-user" alt="@Html.DisplayFor(model => model.Nameimg)">
+                        <img id="user_img" src="~/Images/@Html.DisplayFor(model => model.Photo)" class="card-img-top upload__image-user" alt="@Html.DisplayFor(model => model.Photo)">
                     }
                 }
 
@@ -56,7 +56,7 @@
                         <label for="user_type">* Seleccion el tipo de usuario</label>
 
                         <div class="input-group mb-2">
-                            @Html.DropDownListFor(model => model.Typeuser, new SelectList(ViewBag.userType, "Value", "Text"), "Selecciona tipo de usuario", new { @id = "user_type", @class = "custom-select" })
+                            @Html.DropDownListFor(model => model.Type, new SelectList(ViewBag.userType, "Value", "Text"), "Selecciona tipo de usuario", new { @id = "user_type", @class = "custom-select" })
                         </div>
                         <span id="label_type" style="display:none; color: red;">No selecciono el tipo de usuario</span>
                     </div>

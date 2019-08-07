@@ -1,82 +1,108 @@
-﻿using Administrator.Data;
+﻿using Administrator.Contract;
+using Administrator.Data;
 using Administrator.Manager.Helpers;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Administrator.Manager
 {
-    #region Cambio de password
+    #region Actualizacion del password
 
-    public class CheckPasswordImp
+    public class PasswordImp
     {
         private Configuration connect;
-        public CheckPasswordImp()
+        public PasswordImp()
         {
             connect = Configuration.Ctx();
         }
 
-        public bool CheckPassword(int Id, string Password)
+        public bool Check(int id, string password)
         {
-            string passwordCry = HEncrypt.PasswordEncryp(Password);
+            string passwordCry = HEncrypt.PasswordEncryp(password);
 
-            var check = connect.getConexion.Tbl_Users
-                .Where(w => w.Id == Id && w.Password_user == passwordCry).FirstOrDefault();
+            var result = connect.getConexion.Tbl_Users
+                .Where(w => w.Id == id && w.Password == passwordCry).FirstOrDefault();
 
-            if (check != null)
+            if (result != null)
                 return true;
 
             return false;
         }
 
-        public bool ChangePasswordImp(int Id, string Password)
+        public bool Change(int id, string password)
         {
-            Tbl_Users find_user = connect.getConexion.Tbl_Users.Find(Id);
-            string passwordCry;
+            string passwordCry = HEncrypt.PasswordEncryp(password);
+            Tbl_Users find_user = connect.getConexion.Tbl_Users.Find(id);
 
-            if (find_user == null)
-                return false;
-
-            passwordCry = HEncrypt.PasswordEncryp(Password);
-
-            var update_user = new Tbl_Users()
+            try
             {
-                Id = Id,
-                Photo_user = find_user.Photo_user,
-                Type_user = find_user.Type_user,
-                Id_group = find_user.Id_group,
-                Email_user = find_user.Email_user,
-                Password_user = passwordCry,
-                Active_user = find_user.Active_user,
-                MainU_user = find_user.MainU_user,
-                Name_user = find_user.Name_user,
-                LnameM_user = find_user.LnameM_user,
-                LnameP_user = find_user.LnameP_user,
-                UpdateU_user = find_user.UpdateU_user,
-                UpdateD_user = DateTime.Now,
-                CreateD_user = find_user.CreateD_user,
-                CreateU_user = find_user.CreateU_user
-            };
+                var update_user = new Tbl_Users()
+                {
+                    Id = id,
+                    Id_main = find_user.Id_main,
+                    Id_group = find_user.Id_group,
+                    Photo = find_user.Photo,
+                    Type = find_user.Type,
+                    Email = find_user.Email,
+                    Password = passwordCry,
+                    Name = find_user.Name,
+                    LnameM = find_user.LnameM,
+                    LnameP = find_user.LnameP,
+                    Status = find_user.Status,
+                    Edit_user = find_user.Edit_user,
+                    Edit_date = DateTime.Now,
+                    Generate_user = find_user.Generate_user,
+                    Generate_date = find_user.Generate_date
+                };
 
-            connect.getConexion.Entry(find_user).CurrentValues.SetValues(update_user);
-            connect.getConexion.SaveChanges();
+                connect.getConexion.Entry(find_user).CurrentValues.SetValues(update_user);
+                connect.getConexion.SaveChanges();
 
-            return true;
+                return true;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
     }
 
     #endregion
 
-    #region Obtiene permisos del usuario
+    #region Obtiene el permisos del usuario para cada evento
 
     public static class PermissionImp
     {
-        public static bool PermissionUser(string NamePermision, int Id)
+        public static bool Check(string Permision, int Id)
         {
             Configuration connect = Configuration.Ctx();
 
             return connect.getConexion.Database
-                .SqlQuery<bool>("SELECT " + NamePermision + " FROM dbo.Tbl_Permissions p LEFT JOIN " +
-                "dbo.Tbl_Users u ON p.Id_group = u.Id_group WHERE u.Id = " + Id).FirstOrDefault();
+                .SqlQuery<bool>("SELECT " + Permision + " Manager.Groups g " +
+                "LEFT JOIN Manager.Users u ON g.id = u.id_group WHERE u.id = " + Id).FirstOrDefault();
+        }
+    }
+
+    #endregion
+
+    #region Obtiene los grupos que le pertenecen a los usuarios
+
+    public static class GroupXUserImp
+    {
+        public static List<ViewModelGroupList> Read(int id)
+        {
+            Configuration connect = Configuration.Ctx();
+
+            List<ViewModelGroupList> result = connect.getConexion.Tbl_Groups
+                .Where(w => w.Id_main == id && w.Id != 1)
+                .Select(s => new ViewModelGroupList
+                {
+                    Id = s.Id,
+                    Name = s.Group
+                }).ToList();
+
+            return result;
         }
     }
 

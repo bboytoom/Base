@@ -8,16 +8,16 @@ namespace Administrator.Manager.Helpers
     {
         private static bool invalid = false;
 
-        public static bool EmailCheck(string Email)
+        public static bool EmailCheck(string email)
         {
             invalid = false;
 
-            if (String.IsNullOrEmpty(Email))
+            if (String.IsNullOrEmpty(email))
                 return false;
 
             try
             {
-                Email = Regex.Replace(Email, @"(@)(.+)$", DomainMapper,
+                email = Regex.Replace(email, @"(@)(.+)$", DomainMapper,
                                       RegexOptions.None, TimeSpan.FromMilliseconds(200));
             }
             catch (RegexMatchTimeoutException)
@@ -30,7 +30,7 @@ namespace Administrator.Manager.Helpers
 
             try
             {
-                return Regex.IsMatch(Email,
+                return Regex.IsMatch(email,
                       @"^(?("")("".+?(?<!\\)""@)|(([0-9a-z]((\.(?!\.))|[-!#\$%&'\*\+/=\?\^`\{\}\|~\w])*)(?<=[0-9a-z])@))" +
                       @"(?(\[)(\[(\d{1,3}\.){3}\d{1,3}\])|(([0-9a-z][-0-9a-z]*[0-9a-z]*\.)+[a-z0-9][\-a-z0-9]{0,22}[a-z0-9]))$",
                       RegexOptions.IgnoreCase, TimeSpan.FromMilliseconds(250));

@@ -1,5 +1,4 @@
-﻿@model PagedList.IPagedList<Administrator.Contract.ViewModelReadUser>
-@using PagedList.Mvc;
+﻿@model List<Administrator.Contract.ViewModelReadUser>
 @using Administrator.Manager;
 
 @{
@@ -36,7 +35,7 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header text-right">
-                                @if (PermissionImp.PermissionUser("Create_user_permission", Convert.ToInt32(TempData["id_user"])))
+                                @if (PermissionImp.Check("Create_user_permission", Convert.ToInt32(TempData["id_user"])))
                                 {
                                     <button id="add_btn" name="@ViewBag.Title" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" type="button">
                                         Agregar nuevo usuario
@@ -83,7 +82,7 @@
                                                     @Html.DisplayFor(modelItem => item.Status)
                                                 </td>
 
-                                                @if (PermissionImp.PermissionUser("Update_user_permission", Convert.ToInt32(TempData["id_user"])))
+                                                @if (PermissionImp.Check("Update_user_permission", Convert.ToInt32(TempData["id_user"])))
                                                 {
                                                     <td>
                                                         <button type="button" class="btn btn-outline-warning btn-sm" onclick="Edit(@Html.DisplayFor(modelItem => item.Id), '@ViewBag.Title')">
@@ -96,7 +95,7 @@
                                                     <td></td>
                                                 }
 
-                                                @if (PermissionImp.PermissionUser("Delete_user_permission", Convert.ToInt32(TempData["id_user"])))
+                                                @if (PermissionImp.Check("Delete_user_permission", Convert.ToInt32(TempData["id_user"])))
                                                 {
                                                     <td>
                                                         <button type="button" class="btn btn-outline-danger btn-sm" onclick="Delete(@Html.DisplayFor(modelItem => item.Id), '@ViewBag.Title')">
@@ -113,9 +112,7 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <div class="mdl-card__actions mdl-card--border text-right">
-                                @Html.PagedListPager(Model, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }), PagedListRenderOptions.OnlyShowFivePagesAtATime)
-                            </div>
+                      
                         </div>
                     </div>
                 </div>
