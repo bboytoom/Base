@@ -5,6 +5,8 @@ namespace Administrator.Manager.Helpers
 {
     public static class HCatalogs
     {
+        #region Catalogo para los tipos de usuario
+
         public static List<SelectListItem> GetTypeUserSuper()
         {
             List<SelectListItem> typeuser = new List<SelectListItem>();
@@ -22,6 +24,10 @@ namespace Administrator.Manager.Helpers
             return typeuser;
         }
 
+        #endregion
+
+        #region Catalogo para los tipos de telefono y/o correo
+
         public static List<SelectListItem> GetTypeData()
         {
             List<SelectListItem> typedata = new List<SelectListItem>();
@@ -34,6 +40,10 @@ namespace Administrator.Manager.Helpers
             return typedata;
         }
 
+        #endregion
+
+        #region Catalogo para los telefonos
+
         public static List<SelectListItem> GetTypePhone()
         {
             List<SelectListItem> typephono = new List<SelectListItem>();
@@ -43,5 +53,7 @@ namespace Administrator.Manager.Helpers
 
             return typephono;
         }
+
+        #endregion
     }
 }

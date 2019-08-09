@@ -2,14 +2,28 @@
 
 namespace Administrator.Contract
 {
+    #region ViewModel que realiza el despliegue de los usuarios
+
     public class ViewModelReadUser
     {
         public int Id { get; set; }
+
+        [Display(Name = "Foto de usuario")]
         public string Photo { get; set; }
+
+        [Display(Name = "Correo del usuario")]
         public string Email { get; set; }
+
+        [Display(Name = "Nombre")]
         public string FullName { get; set; }
+
+        [Display(Name = "Estatus")]
         public bool Status { get; set; }
     }
+
+    #endregion
+
+    #region ViewModel necesario para el formulario del usuario
 
     public class ViewModelUser
     {
@@ -49,9 +63,15 @@ namespace Administrator.Contract
         [Display(Name = "Apellido materno:")]
         [StringLength(30, ErrorMessage = "Longitud entre 50 y 3 caracteres.", MinimumLength = 4)]
         public string Lnamem { get; set; }
+
+        [Display(Name = "Foto de usuario:")]
         public string Photo { get; set; }
+
+        [Display(Name = "Estatus:")]
         public bool Status { get; set; }
         public int HighUser { get; set; }
         public int MainUser { get; set; }
     }
+
+    #endregion
 }

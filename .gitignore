@@ -268,8 +268,4 @@ __pycache__/
 
 *.js.map
 package-lock.json
-test/
-Administrator/Content/
-Administrator/Images/
-Administrator/Scripts/
 package-lock.json

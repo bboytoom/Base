@@ -2,19 +2,35 @@
 
 namespace Administrator.Contract
 {
+    #region ViewModel que despliega los grupos que le pertenecen a cada usuario
+
     public class ViewModelGroupList
     {
         public int Id { get; set; }
         public string Name { get; set; }
     }
 
+    #endregion 
+
+    #region ViewModel que realiza el despliegue de los grupos
+
     public class ViewModelReadGroup
     {
         public int Id { get; set; }
+
+        [Display(Name = "Nombre de grupo")]
         public string Group { get; set; }
+
+        [Display(Name = "Descripcion")]
         public string Description { get; set; }
+
+        [Display(Name = "Estatus")]
         public bool Status { get; set; }
     }
+
+    #endregion
+
+    #region ViewModel necesario para el formulario de grupos
 
     public class ViewModelGroup
     {
@@ -55,4 +71,6 @@ namespace Administrator.Contract
         public int HighUser { get; set; }
         public int Main { get; set; }
     }
+
+    #endregion
 }
