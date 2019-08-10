@@ -1,5 +1,6 @@
 ﻿using Administrator.Contract;
 using Administrator.Data;
+using Administrator.Query.Interface;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,10 +9,10 @@ namespace Administrator.Query
 {
     #region ABC de la clase User
 
-    public class UserImp
+    public class UsersImp : IOperations<ViewModelUser, ViewModelReadUser>
     {
         private Configuration connect;
-        public UserImp()
+        public UsersImp()
         {
             connect = Configuration.Ctx();
         }
@@ -37,42 +38,6 @@ namespace Administrator.Query
                 };
 
                 connect.getConexion.Tbl_Users.Add(insert_user);
-                connect.getConexion.SaveChanges();
-
-                return true;
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-        }
-
-        public bool Update(ViewModelUser data, int hieghUser)
-        {
-            try
-            {
-                Tbl_Users find_user = connect.getConexion.Tbl_Users.Find(data.Id);
-
-                var update_user = new Tbl_Users()
-                {
-                    Id = data.Id,
-                    Id_group = data.Idgroup,
-                    Type = data.Type,
-                    Id_main = find_user.Id_main,
-                    Email = data.Email,
-                    Password = find_user.Password,
-                    Name = data.Name,
-                    LnameP = data.Lnamep,
-                    LnameM = data.Lnamem,
-                    Photo = find_user.Photo,
-                    Status = data.Status,
-                    Edit_user = hieghUser,
-                    Edit_date = DateTime.Now,
-                    Generate_user = find_user.Generate_user,
-                    Generate_date = find_user.Generate_date
-                };
-
-                connect.getConexion.Entry(find_user).CurrentValues.SetValues(update_user);
                 connect.getConexion.SaveChanges();
 
                 return true;
@@ -121,7 +86,7 @@ namespace Administrator.Query
         public ViewModelUser Read(int id)
         {
             ViewModelUser result = connect.getConexion.Tbl_Users
-                    .Where(w => w.Id == id).Select(s => new ViewModelUser
+                    .Where(w => w.Id.Equals(id)).Select(s => new ViewModelUser
                     {
                         Id = s.Id,
                         Idgroup = s.Id_group,
@@ -137,10 +102,10 @@ namespace Administrator.Query
             return result;
         }
 
-        public List<ViewModelReadUser> ReadAll(int id_main)
+        public IEnumerable<ViewModelReadUser> ReadAll(int id_main)
         {
-            List<ViewModelReadUser> result = connect.getConexion
-                .Tbl_Users.Where(w => w.Id_main == id_main)
+            IEnumerable<ViewModelReadUser> result = connect.getConexion
+                .Tbl_Users.Where(w => w.Id_main.Equals(id_main))
                 .Select(s => new ViewModelReadUser
                 {
                     Id = s.Id,
@@ -151,6 +116,42 @@ namespace Administrator.Query
                 }).ToList();
 
             return result;
+        }
+
+        public bool Update(ViewModelUser data, int hieghUser)
+        { 
+            try
+            {
+                Tbl_Users find_user = connect.getConexion.Tbl_Users.Find(data.Id);
+
+                var update_user = new Tbl_Users()
+                {
+                    Id = data.Id,
+                    Id_group = data.Idgroup,
+                    Type = data.Type,
+                    Id_main = find_user.Id_main,
+                    Email = data.Email,
+                    Password = find_user.Password,
+                    Name = data.Name,
+                    LnameP = data.Lnamep,
+                    LnameM = data.Lnamem,
+                    Photo = find_user.Photo,
+                    Status = data.Status,
+                    Edit_user = hieghUser,
+                    Edit_date = DateTime.Now,
+                    Generate_user = find_user.Generate_user,
+                    Generate_date = find_user.Generate_date
+                };
+
+                connect.getConexion.Entry(find_user).CurrentValues.SetValues(update_user);
+                connect.getConexion.SaveChanges();
+
+                return true;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
     }
 

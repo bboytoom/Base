@@ -2,6 +2,19 @@
 
 namespace Administrator.Contract
 {
+    #region ViewModel de autenticacion de cambios
+
+    public class ViewModelPassword
+    {
+        [Display(Name = "Nueva contraseña:")]
+        [Required(ErrorMessage = "* El campo es obligatorio")]
+        [DataType(DataType.Password)]
+        [StringLength(19, ErrorMessage = "Longitud entre 6 y 15 caracteres.", MinimumLength = 7)]
+        public string Password { get; set; }
+    }
+
+    #endregion
+
     #region ViewModel necesario para restablecer el correo del usuario
 
     public class ViewModelChangeEmail
