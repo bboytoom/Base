@@ -119,7 +119,7 @@ namespace Administrator.Query
         }
 
         public bool Update(ViewModelUser data, int hieghUser)
-        { 
+        {
             try
             {
                 Tbl_Users find_user = connect.getConexion.Tbl_Users.Find(data.Id);

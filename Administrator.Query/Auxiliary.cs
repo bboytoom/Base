@@ -10,7 +10,7 @@ namespace Administrator.Query
     public static class PermissionImp
     {
         public static bool Check(string permision, int id)
-        {   
+        {
             var _connect = Configuration.Ctx();
 
             return _connect.getConexion.Database

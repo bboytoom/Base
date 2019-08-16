@@ -43,7 +43,7 @@ namespace Administrator.Manager
 
         public IEnumerable<ViewModelReadGroup> ReadAll(int id_main)
         {
-            if(id_main == 0)
+            if (id_main == 0)
                 throw new ArgumentOutOfRangeException("id_main", "La funcion tiene un valor no permitido");
 
             return _ObjGroup.ReadAll(id_main);

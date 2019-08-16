@@ -8,18 +8,18 @@ namespace Administrator.Query
 {
     #region Verifica credenciales del usuario
 
-    public class LoginImp
+    public class Auth
     {
         private Configuration connect;
-        public LoginImp()
+        public Auth()
         {
             connect = Configuration.Ctx();
         }
 
-        public ViewModelClaims Login(ViewModelsAuth data)
+        public ViewModelClaims Login(string email, string password)
         {
             ViewModelClaims result = connect.getConexion.Tbl_Users
-                .Where(w => w.Email == data.Email && w.Password == data.Password)
+                .Where(w => w.Email == email && w.Password == password)
                 .Select(s => new ViewModelClaims
                 {
                     Identificador = s.Id.ToString(),
@@ -31,6 +31,22 @@ namespace Administrator.Query
                 }).FirstOrDefault();
 
             return result;
+        }
+
+        public bool CheckUserExist(string email)
+        {
+            var result = connect.getConexion.Tbl_Users
+                    .Where(w => w.Email == email).FirstOrDefault();
+
+            return !string.IsNullOrEmpty(result.Email);
+        }
+
+        public bool CheckUserActive(string email)
+        {
+            var result = connect.getConexion.Tbl_Users
+                    .Where(w => w.Email == email).FirstOrDefault();
+
+            return result.Status;
         }
     }
 

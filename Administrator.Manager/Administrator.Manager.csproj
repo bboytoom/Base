@@ -62,13 +62,27 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Authentication.cs" />
+    <Compile Include="Auxiliary.cs" />
+    <Compile Include="Groups.cs" />
     <Compile Include="Helpers\HCatalogs.cs" />
     <Compile Include="Helpers\HCheckEmail.cs" />
     <Compile Include="Helpers\HEncrypt.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Users.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Administrator.Contract\Administrator.Contract.csproj">
+      <Project>{67c54310-9c5f-417a-84f7-ca5553909ea4}</Project>
+      <Name>Administrator.Contract</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Administrator.Query\Administrator.Query.csproj">
+      <Project>{491cf6b9-d57c-413f-a6c3-b6a49b0e06f6}</Project>
+      <Name>Administrator.Query</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
