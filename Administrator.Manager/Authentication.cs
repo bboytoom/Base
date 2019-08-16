@@ -21,19 +21,19 @@ namespace Administrator.Manager
             string password_cryp;
 
             if (string.IsNullOrEmpty(email))
-                throw new ArgumentNullException(email);
+                throw new ArgumentNullException(email, "El argumento esta vacio o es nulo");
 
             email_clean = WebUtility.HtmlEncode(email).ToLower();
 
             if (!HCheckEmail.EmailCheck(email_clean))
-                throw new ArgumentOutOfRangeException("email_clean", "El correo no es correcto");
+                throw new ArgumentOutOfRangeException(nameof(email_clean), "El correo no es correcto");
 
             if (string.IsNullOrEmpty(password))
-                throw new ArgumentNullException(password);
+                throw new ArgumentNullException(password, "El argumento se encuentra vacio");
 
             password_cryp = HEncrypt.PasswordEncryp(password);
 
-            return ObjAuth.Login(email_clean.ToLower(), password_cryp);
+            return ObjAuth.Login(email_clean, password_cryp);
         }
 
         public bool CheckUser(string email)
@@ -46,15 +46,15 @@ namespace Administrator.Manager
             email_clean = WebUtility.HtmlEncode(email).ToLower();
 
             if (!HCheckEmail.EmailCheck(email_clean))
-                throw new ArgumentOutOfRangeException("email_clean", "El correo no es correcto");
+                throw new ArgumentOutOfRangeException(nameof(email_clean), "El correo no es correcto");
 
-            if (ObjAuth.CheckUserActive(email_clean))
+            if (ObjAuth.CheckUserExist(email_clean))
                 return false;
 
-            return ObjAuth.CheckUserExist(email_clean.ToLower());
+            return ObjAuth.CheckUserActive(email_clean);
         }
 
-        public static bool ValidStatus(string email)
+        public bool ValidAttemps(string email)
         {
             string email_clean;
 
@@ -64,27 +64,12 @@ namespace Administrator.Manager
             email_clean = WebUtility.HtmlEncode(email).ToLower();
 
             if (!HCheckEmail.EmailCheck(email_clean))
-                throw new ArgumentOutOfRangeException("email_clean", "El correo no es correcto");
-
-            return Validation.Status(email);
-        }
-
-        public static bool ValidAttemps(string email)
-        {
-            string email_clean;
-
-            if (string.IsNullOrEmpty(email))
-                throw new ArgumentNullException(email);
-
-            email_clean = WebUtility.HtmlEncode(email).ToLower();
-
-            if (!HCheckEmail.EmailCheck(email_clean))
-                throw new ArgumentOutOfRangeException("email_clean", "El correo no es correcto");
+                throw new ArgumentOutOfRangeException(nameof(email), "El correo no es correcto");
 
             return Validation.InsertAttemps(email_clean);
         }
 
-        public static bool ValidCycle(string email)
+        public bool ValidCycle(string email)
         {
             string email_clean;
 
@@ -94,12 +79,12 @@ namespace Administrator.Manager
             email_clean = WebUtility.HtmlEncode(email).ToLower();
 
             if (!HCheckEmail.EmailCheck(email_clean))
-                throw new ArgumentOutOfRangeException("email_clean", "El correo no es correcto");
+                throw new ArgumentOutOfRangeException(nameof(email), "El correo no es correcto");
 
             return Validation.InsertCycle(email_clean);
         }
 
-        public static bool ValidResetAttemp(string email)
+        public bool ValidResetAttemp(string email)
         {
             string email_clean;
 
@@ -109,7 +94,7 @@ namespace Administrator.Manager
             email_clean = WebUtility.HtmlEncode(email).ToLower();
 
             if (!HCheckEmail.EmailCheck(email_clean))
-                throw new ArgumentOutOfRangeException("email_clean", "El correo no es correcto");
+                throw new ArgumentOutOfRangeException(nameof(email), "El correo no es correcto");
 
             return Validation.ResetAttemps(email_clean);
         }

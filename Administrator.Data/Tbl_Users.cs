@@ -5,14 +5,8 @@ namespace Administrator.Data
     using System.ComponentModel.DataAnnotations.Schema;
 
     [Table("Users", Schema = "Manager")]
-    public partial class Tbl_Users
+    public class Tbl_Users
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Tbl_Users()
-        {
-
-        }
-
         [Column("id", Order = 0)]
         [Key]
         public int Id { get; set; }

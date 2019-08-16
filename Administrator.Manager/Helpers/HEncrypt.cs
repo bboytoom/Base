@@ -10,9 +10,13 @@ namespace Administrator.Manager.Helpers
         {
             try
             {
-                SHA512 sha512 = SHA512.Create();
-                byte[] bytes = Encoding.UTF8.GetBytes(password);
-                byte[] hash = sha512.ComputeHash(bytes);
+                byte[] hash;
+                using (SHA512 sha512 = SHA512.Create())
+                {
+                    byte[] bytes = Encoding.UTF8.GetBytes(password);
+                    hash = sha512.ComputeHash(bytes);
+                }
+
                 return GetStringFromHash(hash);
             }
             catch (Exception)

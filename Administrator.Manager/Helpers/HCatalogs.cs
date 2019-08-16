@@ -11,8 +11,8 @@ namespace Administrator.Manager.Helpers
         {
             List<SelectListItem> typeuser = new List<SelectListItem>();
 
-            typeuser.Add(new SelectListItem() { Text = "Staff", Value = "2" });
-            typeuser.Add(new SelectListItem() { Text = "Administrador", Value = "3" });
+            typeuser.Add(new SelectListItem { Text = "Staff", Value = "2" });
+            typeuser.Add(new SelectListItem { Text = "Administrador", Value = "3" });
             return typeuser;
         }
 
@@ -20,7 +20,7 @@ namespace Administrator.Manager.Helpers
         {
             List<SelectListItem> typeuser = new List<SelectListItem>();
 
-            typeuser.Add(new SelectListItem() { Text = "Usuario", Value = "4" });
+            typeuser.Add(new SelectListItem { Text = "Usuario", Value = "4" });
             return typeuser;
         }
 
@@ -32,10 +32,10 @@ namespace Administrator.Manager.Helpers
         {
             List<SelectListItem> typedata = new List<SelectListItem>();
 
-            typedata.Add(new SelectListItem() { Text = "Usuario", Value = "1" });
-            typedata.Add(new SelectListItem() { Text = "Oficina", Value = "2" });
-            typedata.Add(new SelectListItem() { Text = "Casa", Value = "3" });
-            typedata.Add(new SelectListItem() { Text = "Negocio", Value = "4" });
+            typedata.Add(new SelectListItem { Text = "Usuario", Value = "1" });
+            typedata.Add(new SelectListItem { Text = "Oficina", Value = "2" });
+            typedata.Add(new SelectListItem { Text = "Casa", Value = "3" });
+            typedata.Add(new SelectListItem { Text = "Negocio", Value = "4" });
 
             return typedata;
         }
@@ -48,8 +48,8 @@ namespace Administrator.Manager.Helpers
         {
             List<SelectListItem> typephono = new List<SelectListItem>();
 
-            typephono.Add(new SelectListItem() { Text = "Fijo", Value = "1" });
-            typephono.Add(new SelectListItem() { Text = "Movil", Value = "2" });
+            typephono.Add(new SelectListItem { Text = "Fijo", Value = "1" });
+            typephono.Add(new SelectListItem { Text = "Movil", Value = "2" });
 
             return typephono;
         }

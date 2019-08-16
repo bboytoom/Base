@@ -21,7 +21,7 @@ namespace Administrator.Query
         {
             try
             {
-                var create_group = new Tbl_Groups()
+                var create_group = new Tbl_Groups
                 {
                     Id = data.Id,
                     Id_main = main,
@@ -61,7 +61,7 @@ namespace Administrator.Query
             {
                 var search_group = _connect.getConexion.Tbl_Groups.Find(id);
 
-                var delete_group = new Tbl_Groups()
+                var delete_group = new Tbl_Groups
                 {
                     Id = search_group.Id,
                     Id_main = search_group.Id_main,
@@ -133,7 +133,7 @@ namespace Administrator.Query
             {
                 var search_group = _connect.getConexion.Tbl_Groups.Find(data.Id);
 
-                var update_group = new Tbl_Groups()
+                var update_group = new Tbl_Groups
                 {
                     Id = data.Id,
                     Id_main = search_group.Id_main,

@@ -26,8 +26,7 @@ namespace Administrator.Query
                     Fullname = s.Name + " " + s.LnameP + " " + s.LnameM,
                     MainUser = s.Id_main.ToString(),
                     Email = s.Email,
-                    PhotoUser = s.Photo,
-                    TypeUser = s.Type,
+                    TypeUser = s.Type
                 }).FirstOrDefault();
 
             return result;
@@ -38,7 +37,7 @@ namespace Administrator.Query
             var result = connect.getConexion.Tbl_Users
                     .Where(w => w.Email == email).FirstOrDefault();
 
-            return !string.IsNullOrEmpty(result.Email);
+            return string.IsNullOrEmpty(result.Email);
         }
 
         public bool CheckUserActive(string email)
@@ -56,18 +55,12 @@ namespace Administrator.Query
 
     public static class Validation
     {
-        public static bool Status(string email)
-        {
-            var connect = Configuration.Ctx();
-            return connect.getConexion.Tbl_Users.Where(w => w.Email == email).FirstOrDefault().Status;
-        }
-
         public static bool InsertAttemps(string email)
         {
             var connect = Configuration.Ctx();
             Tbl_Users find_user = connect.getConexion.Tbl_Users.Where(w => w.Email == email).FirstOrDefault();
 
-            var insert_attemp = new Tbl_Users()
+            var insert_attemp = new Tbl_Users
             {
                 Id = find_user.Id,
                 Id_group = find_user.Id_group,
@@ -102,7 +95,7 @@ namespace Administrator.Query
             var connect = Configuration.Ctx();
             Tbl_Users find_user = connect.getConexion.Tbl_Users.Where(w => w.Email == email).FirstOrDefault();
 
-            var cycle_attemp = new Tbl_Users()
+            var cycle_attemp = new Tbl_Users
             {
                 Id = find_user.Id,
                 Id_group = find_user.Id_group,
@@ -126,9 +119,9 @@ namespace Administrator.Query
             connect.getConexion.Entry(find_user).CurrentValues.SetValues(cycle_attemp);
             connect.getConexion.SaveChanges();
 
-            if (find_user.Cycle == 3)
+            if (find_user.Cycle == 4)
             {
-                var lockuot_user = new Tbl_Users()
+                var lockuot_user = new Tbl_Users
                 {
                     Id = find_user.Id,
                     Id_group = find_user.Id_group,
@@ -151,9 +144,11 @@ namespace Administrator.Query
 
                 connect.getConexion.Entry(find_user).CurrentValues.SetValues(lockuot_user);
                 connect.getConexion.SaveChanges();
+
+                return true;
             }
 
-            return true;
+            return false;
         }
 
         public static bool ResetAttemps(string email)
@@ -162,7 +157,7 @@ namespace Administrator.Query
 
             Tbl_Users find_user = connect.getConexion.Tbl_Users.Where(w => w.Email == email).FirstOrDefault();
 
-            var reset_attemp = new Tbl_Users()
+            var reset_attemp = new Tbl_Users
             {
                 Id = find_user.Id,
                 Id_group = find_user.Id_group,
@@ -219,7 +214,7 @@ namespace Administrator.Query
 
             try
             {
-                var update_user = new Tbl_Users()
+                var update_user = new Tbl_Users
                 {
                     Id = id,
                     Id_main = find_user.Id_main,
@@ -255,7 +250,7 @@ namespace Administrator.Query
 
             try
             {
-                var update_user = new Tbl_Users()
+                var update_user = new Tbl_Users
                 {
                     Id = id,
                     Id_main = find_user.Id_main,

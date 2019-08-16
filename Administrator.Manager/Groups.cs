@@ -16,8 +16,11 @@ namespace Administrator.Manager
 
         public bool Create(ViewModelGroup data, int hieghUser, int main)
         {
-            if (hieghUser == 0 && main == 0)
-                throw new ArgumentOutOfRangeException("hieghUser", "La funcion tiene un valor no permitido");
+            if (hieghUser == 0)
+                throw new ArgumentOutOfRangeException(nameof(hieghUser), "La funcion tiene un valor no permitido");
+
+            if (main == 0)
+                throw new ArgumentOutOfRangeException(nameof(main), "La funcion tiene un valor no permitido");
 
             if (string.IsNullOrEmpty(data.Group))
                 throw new ArgumentNullException(data.Group);
@@ -27,8 +30,11 @@ namespace Administrator.Manager
 
         public bool Delete(int id, int hieghUser)
         {
-            if (id == 0 && hieghUser == 0)
-                throw new ArgumentOutOfRangeException("id, hieghUser", "La funcion tiene un valor no permitido");
+            if (id == 0)
+                throw new ArgumentOutOfRangeException(nameof(id), "La funcion tiene un valor no permitido");
+
+            if (hieghUser == 0)
+                throw new ArgumentOutOfRangeException(nameof(hieghUser), "La funcion tiene un valor no permitido");
 
             return _ObjGroup.Delete(id, hieghUser);
         }
@@ -36,7 +42,7 @@ namespace Administrator.Manager
         public ViewModelGroup Read(int id)
         {
             if (id == 0)
-                throw new ArgumentOutOfRangeException("id", "La funcion tiene un valor no permitido");
+                throw new ArgumentOutOfRangeException(nameof(id), "La funcion tiene un valor no permitido");
 
             return _ObjGroup.Read(id);
         }
@@ -44,7 +50,7 @@ namespace Administrator.Manager
         public IEnumerable<ViewModelReadGroup> ReadAll(int id_main)
         {
             if (id_main == 0)
-                throw new ArgumentOutOfRangeException("id_main", "La funcion tiene un valor no permitido");
+                throw new ArgumentOutOfRangeException(nameof(id_main), "La funcion tiene un valor no permitido");
 
             return _ObjGroup.ReadAll(id_main);
         }
@@ -52,7 +58,7 @@ namespace Administrator.Manager
         public bool Update(ViewModelGroup data, int hieghUser)
         {
             if (hieghUser == 0 && data.Id == 0)
-                throw new ArgumentOutOfRangeException("hieghUser", "La funcion tiene un valor no permitido");
+                throw new ArgumentOutOfRangeException(nameof(hieghUser), "La funcion tiene un valor no permitido");
 
             if (string.IsNullOrEmpty(data.Group))
                 throw new ArgumentNullException(data.Group);

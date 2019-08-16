@@ -21,7 +21,7 @@ namespace Administrator.Query
         {
             try
             {
-                var insert_user = new Tbl_Users()
+                var insert_user = new Tbl_Users
                 {
                     Id_group = data.Idgroup,
                     Type = data.Type,
@@ -54,7 +54,7 @@ namespace Administrator.Query
 
             try
             {
-                var delete_user = new Tbl_Users()
+                var delete_user = new Tbl_Users
                 {
                     Id = id,
                     Id_group = find_user.Id_group,
@@ -124,7 +124,7 @@ namespace Administrator.Query
             {
                 Tbl_Users find_user = connect.getConexion.Tbl_Users.Find(data.Id);
 
-                var update_user = new Tbl_Users()
+                var update_user = new Tbl_Users
                 {
                     Id = data.Id,
                     Id_group = data.Idgroup,

@@ -4,7 +4,7 @@ namespace Administrator.Data
 {
     public class Configuration
     {
-        private static Configuration _Ctx = null;
+        private static Configuration _Ctx;
         private DataModels conexion;
 
         private Configuration()

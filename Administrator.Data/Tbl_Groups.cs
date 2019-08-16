@@ -6,13 +6,10 @@ namespace Administrator.Data
     using System.ComponentModel.DataAnnotations.Schema;
 
     [Table("Groups", Schema = "Manager")]
-    public partial class Tbl_Groups
+    public class Tbl_Groups
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Tbl_Groups()
-        {
-            Tbl_Users = new HashSet<Tbl_Users>();
-        }
+        public Tbl_Groups() => Tbl_Users = new HashSet<Tbl_Users>();
 
         [Column("id", Order = 0)]
         [Key]

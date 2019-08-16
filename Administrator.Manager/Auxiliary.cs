@@ -10,7 +10,7 @@ namespace Administrator.Manager
         public static bool Permission(string permision, int id)
         {
             if (id == 0)
-                throw new ArgumentOutOfRangeException("hieghUser", "La funcion tiene un valor no permitido");
+                throw new ArgumentOutOfRangeException(nameof(id), "La funcion tiene un valor no permitido");
 
             if (string.IsNullOrEmpty(permision))
                 throw new ArgumentNullException(permision);
@@ -21,7 +21,7 @@ namespace Administrator.Manager
         public static IEnumerable<ViewModelGroupList> Groups(int id)
         {
             if (id == 0)
-                throw new ArgumentOutOfRangeException("hieghUser", "La funcion tiene un valor no permitido");
+                throw new ArgumentOutOfRangeException(nameof(id), "La funcion tiene un valor no permitido");
 
             return GroupXUserImp.Read(id);
         }

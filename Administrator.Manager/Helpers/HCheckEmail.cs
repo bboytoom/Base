@@ -6,7 +6,7 @@ namespace Administrator.Manager.Helpers
 {
     public static class HCheckEmail
     {
-        private static bool invalid = false;
+        private static bool invalid;
 
         public static bool EmailCheck(string email)
         {

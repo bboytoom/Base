@@ -2,7 +2,7 @@ namespace Administrator.Data
 {
     using System.Data.Entity;
 
-    public partial class DataModels : DbContext
+    public class DataModels : DbContext
     {
         public DataModels()
             : base("name=DataModels")
