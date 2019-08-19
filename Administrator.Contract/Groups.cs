@@ -2,16 +2,6 @@
 
 namespace Administrator.Contract
 {
-    #region ViewModel que despliega los grupos que le pertenecen a cada usuario
-
-    public class ViewModelGroupList
-    {
-        public int Id { get; set; }
-        public string Name { get; set; }
-    }
-
-    #endregion 
-
     #region ViewModel que realiza el despliegue de los grupos
 
     public class ViewModelReadGroup

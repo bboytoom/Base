@@ -1,7 +1,7 @@
-﻿using Administrator.Contract;
-using Administrator.Query;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using Administrator.Contract;
+using Administrator.Query;
 
 namespace Administrator.Manager
 {

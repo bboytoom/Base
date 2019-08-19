@@ -1,13 +1,18 @@
-﻿using Administrator.Contract;
+using System;
+using Administrator.Contract;
 using Administrator.Manager;
 using NUnit.Framework;
-using System;
 
-namespace Administrator.Test
+namespace Tests
 {
-    [TestFixture]
     public class Login
     {
+        [SetUp]
+        public void Setup()
+        {
+
+        }
+
         #region Test de la funcion Login
 
         [Test]
@@ -221,5 +226,6 @@ namespace Administrator.Test
         }
 
         #endregion
+
     }
 }

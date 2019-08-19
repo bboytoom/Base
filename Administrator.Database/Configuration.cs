@@ -1,6 +1,5 @@
 ﻿using System;
-
-namespace Administrator.Data
+namespace Administrator.Database
 {
     public class Configuration
     {

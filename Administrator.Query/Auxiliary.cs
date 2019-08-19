@@ -1,40 +1,29 @@
-﻿using Administrator.Contract;
-using Administrator.Data;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using Administrator.Contract;
+using Administrator.Database;
 
 namespace Administrator.Query
 {
-    #region Obtiene el permisos del usuario para cada evento
+    #region Catalogos
 
-    public static class PermissionImp
+    public class Auxiliary
     {
-        public static bool Check(string permision, int id)
-        {
-            var _connect = Configuration.Ctx();
+        private Configuration _connect;
 
-            return _connect.getConexion.Database
-                .SqlQuery<bool>("SELECT " + permision + " Manager.Groups g " +
-                "LEFT JOIN Manager.Users u ON g.id = u.id_group WHERE u.id = " + id).FirstOrDefault();
+        public Auxiliary()
+        {
+            _connect = Configuration.Ctx();
         }
-    }
 
-    #endregion
-
-    #region Obtiene los grupos que le pertenecen a los usuarios
-
-    public static class GroupXUserImp
-    {
-        public static IEnumerable<ViewModelGroupList> Read(int id)
+        public IEnumerable<ViewModelCatlogs> GroupUsers(int id)
         {
-            Configuration connect = Configuration.Ctx();
-
-            IEnumerable<ViewModelGroupList> result = connect.getConexion.Tbl_Groups
+            IEnumerable<ViewModelCatlogs> result = _connect.getConexion.Tbl_Groups
                 .Where(w => w.Id_main.Equals(id) && w.Id != 1)
-                .Select(s => new ViewModelGroupList
+                .Select(s => new ViewModelCatlogs
                 {
-                    Id = s.Id,
-                    Name = s.Group
+                    Value = s.Id,
+                    Text = s.Group
                 }).ToList();
 
             return result;

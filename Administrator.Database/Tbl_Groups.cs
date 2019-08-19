@@ -1,14 +1,13 @@
-namespace Administrator.Data
-{
-    using System;
-    using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-    using System.ComponentModel.DataAnnotations.Schema;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
-    [Table("Groups", Schema = "Manager")]
+namespace Administrator.Database
+{
+    [Table("Groups")]
     public class Tbl_Groups
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Tbl_Groups() => Tbl_Users = new HashSet<Tbl_Users>();
 
         [Column("id", Order = 0)]
@@ -19,12 +18,12 @@ namespace Administrator.Data
         [Required]
         public int Id_main { get; set; }
 
-        [Column("group", Order = 2, TypeName = "VARCHAR")]
+        [Column("group", Order = 2, TypeName = "varchar(30)")]
         [Required]
         [MaxLength(30)]
         public string Group { get; set; }
 
-        [Column("description", Order = 3, TypeName = "VARCHAR")]
+        [Column("description", Order = 3, TypeName = "varchar(200)")]
         [MaxLength(200)]
         public string Description { get; set; }
 
@@ -88,7 +87,6 @@ namespace Administrator.Data
         [Column("remove_status", Order = 23)]
         public bool? Remove_status { get; set; }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Tbl_Users> Tbl_Users { get; set; }
     }
 }

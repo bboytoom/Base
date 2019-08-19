@@ -1,10 +1,10 @@
-namespace Administrator.Data
-{
-    using System;
-    using System.ComponentModel.DataAnnotations;
-    using System.ComponentModel.DataAnnotations.Schema;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
-    [Table("Users", Schema = "Manager")]
+namespace Administrator.Database
+{
+    [Table("Users")]
     public class Tbl_Users
     {
         [Column("id", Order = 0)]
@@ -23,31 +23,31 @@ namespace Administrator.Data
         [Required]
         public int Type { get; set; }
 
-        [Column("photo", Order = 4, TypeName = "VARCHAR")]
+        [Column("photo", Order = 4, TypeName = "varchar(60)")]
         [MaxLength(60)]
         public string Photo { get; set; }
 
-        [Column("email", Order = 5, TypeName = "VARCHAR")]
+        [Column("email", Order = 5, TypeName = "varchar(80)")]
         [Required]
         [MaxLength(80)]
         public string Email { get; set; }
 
-        [Column("password", Order = 6, TypeName = "VARCHAR")]
+        [Column("password", Order = 6, TypeName = "varchar(250)")]
         [Required]
         [MaxLength(250)]
         public string Password { get; set; }
 
-        [Column("name", Order = 7, TypeName = "VARCHAR")]
+        [Column("name", Order = 7, TypeName = "varchar(50)")]
         [Required]
         [MaxLength(50)]
         public string Name { get; set; }
 
-        [Column("lastnamep", Order = 8, TypeName = "VARCHAR")]
+        [Column("lastnamep", Order = 8, TypeName = "varchar(30)")]
         [Required]
         [MaxLength(30)]
         public string LnameP { get; set; }
 
-        [Column("lastnamem", Order = 9, TypeName = "VARCHAR")]
+        [Column("lastnamem", Order = 9, TypeName = "varchar(30)")]
         [MaxLength(30)]
         public string LnameM { get; set; }
 
@@ -81,8 +81,7 @@ namespace Administrator.Data
         [Column("remove_status", Order = 19)]
         public bool? Remove_status { get; set; }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-
+        [ForeignKey("Id_group")]
         public virtual Tbl_Groups Tbl_Groups { get; set; }
     }
 }
