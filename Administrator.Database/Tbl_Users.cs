@@ -83,5 +83,8 @@ namespace Administrator.Database
 
         [ForeignKey("Id_group")]
         public virtual Tbl_Groups Tbl_Groups { get; set; }
+
+        [ForeignKey("Type")]
+        public virtual Cat_Users Cat_Users { get; set; }
     }
 }

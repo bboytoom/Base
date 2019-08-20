@@ -5,6 +5,9 @@ namespace Administrator.Database
     public class DataModels : DbContext
     {
         public DbSet<Tbl_Groups> Tbl_Groups { get; set; }
+
+        public DbSet<Cat_Users> Cat_Users { get; set; }
+
         public DbSet<Tbl_Users> Tbl_Users { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -21,6 +24,13 @@ namespace Administrator.Database
                 entity.HasKey(p => p.Id);
                 entity.Property(e => e.Id_main).IsRequired();
                 entity.Property(e => e.Group).IsRequired();
+            });
+
+            modelBuilder.Entity<Cat_Users>(entity =>
+            {
+                entity.HasKey(p => p.Id);
+                entity.Property(e => e.Id_main).IsRequired();
+                entity.Property(e => e.Name).IsRequired();
             });
 
             modelBuilder.Entity<Tbl_Users>(entity =>

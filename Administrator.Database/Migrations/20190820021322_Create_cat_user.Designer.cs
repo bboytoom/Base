@@ -3,14 +3,16 @@ using System;
 using Administrator.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Administrator.Database.Migrations
 {
     [DbContext(typeof(DataModels))]
-    partial class DataModelsModelSnapshot : ModelSnapshot
+    [Migration("20190820021322_Create_cat_user")]
+    partial class Create_cat_user
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
