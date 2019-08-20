@@ -21,7 +21,7 @@ namespace Administrator.Query
                 .Select(s => new ViewModelClaims
                 {
                     Identificador = s.Id.ToString(),
-                    Fullname = s.Name + " " + s.LnameP + " " + s.LnameM,
+                    Fullname = s.Name + " " + s.LnameP + " " + s.LnameM ,
                     MainUser = s.Id_main.ToString(),
                     Email = s.Email,
                     TypeUser = s.Type
@@ -35,7 +35,10 @@ namespace Administrator.Query
             var result = connect.getConexion.Tbl_Users
                     .Where(w => w.Email == email).FirstOrDefault();
 
-            return string.IsNullOrEmpty(result.Email);
+            if (result == null)
+                return false;
+
+            return true;
         }
 
         public bool CheckUserActive(string email)

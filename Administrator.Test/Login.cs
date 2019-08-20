@@ -49,24 +49,21 @@ namespace Tests
         }
 
         [Test]
+        public void LoginUserNoExist()
+        {
+            Authentication ObjTestAuth = new Authentication();
+
+            ViewModelClaims expectativa = ObjTestAuth.Login("noexiste@hotmail.es", "holamundo");
+            Assert.IsNull(expectativa);
+        }
+
+        [Test]
         public void LoginUser()
         {
             Authentication ObjTestAuth = new Authentication();
 
-            int id = 1;
-            int main = 1;
-
-            ViewModelClaims actual = new ViewModelClaims
-            {
-                Identificador = id.ToString(),
-                Email = "root@hotmail.es",
-                Fullname = "soy root paterno materno",
-                MainUser = main.ToString(),
-                TypeUser = 1
-            };
-
             ViewModelClaims expectativa = ObjTestAuth.Login("root@hotmail.es", "holamundo");
-            Assert.Equals(actual, expectativa);
+            Assert.IsNotNull(expectativa);
         }
 
 
@@ -144,9 +141,9 @@ namespace Tests
         {
             Authentication ObjTestAuth = new Authentication();
 
-            for (int i = 0; i <= 3; i++)
+            for (int i = 0; i <= 2; i++)
             {
-                Assert.IsFalse(ObjTestAuth.ValidAttemps("administrador@hotmail.es"));
+                ObjTestAuth.ValidAttemps("administrador@hotmail.es");
             }
 
             Assert.IsTrue(ObjTestAuth.ValidAttemps("administrador@hotmail.es"));
@@ -183,9 +180,9 @@ namespace Tests
         {
             Authentication ObjTestAuth = new Authentication();
 
-            for (int i = 0; i <= 3; i++)
+            for (int i = 0; i <= 2; i++)
             {
-                Assert.IsFalse(ObjTestAuth.ValidCycle("administrador@hotmail.es"));
+                ObjTestAuth.ValidCycle("administrador@hotmail.es");
             }
 
             Assert.IsTrue(ObjTestAuth.ValidCycle("administrador@hotmail.es"));
@@ -222,7 +219,7 @@ namespace Tests
         {
             Authentication ObjTestAuth = new Authentication();
 
-            Assert.IsTrue(ObjTestAuth.ValidResetAttemp("prueba@hotmail.com"));
+            Assert.IsTrue(ObjTestAuth.ValidResetAttemp("administrador@hotmail.es"));
         }
 
         #endregion

@@ -48,7 +48,7 @@ namespace Administrator.Manager
             if (!HCheckEmail.EmailCheck(email_clean))
                 throw new ArgumentOutOfRangeException(nameof(email_clean), "El correo no es correcto");
 
-            if (ObjAuth.CheckUserExist(email_clean))
+            if (!ObjAuth.CheckUserExist(email_clean))
                 return false;
 
             return ObjAuth.CheckUserActive(email_clean);

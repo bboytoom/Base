@@ -163,6 +163,8 @@ namespace Administrator.Database
                     LnameP = "paterno",
                     LnameM = "materno",
                     Status = true,
+                    Attemp = 0,
+                    Cycle = 0,
                     Generate_user = 1,
                     Generate_date = DateTime.Now
                 },
@@ -179,6 +181,8 @@ namespace Administrator.Database
                     LnameP = "adminpaterno",
                     LnameM = "adminmaterno",
                     Status = true,
+                    Attemp = 0,
+                    Cycle = 0,
                     Generate_user = 1,
                     Generate_date = DateTime.Now
                 }
