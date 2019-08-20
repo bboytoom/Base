@@ -1,7 +1,7 @@
-﻿using System;
-using System.Linq;
-using Administrator.Database;
+﻿using Administrator.Database;
 using Administrator.Query.Interface;
+using System;
+using System.Linq;
 
 namespace Administrator.Query
 {

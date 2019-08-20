@@ -1,6 +1,6 @@
-﻿using System.Linq;
-using Administrator.Contract;
+﻿using Administrator.Contract;
 using Administrator.Database;
+using System.Linq;
 
 namespace Administrator.Query
 {

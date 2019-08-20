@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Administrator.Contract;
+﻿using Administrator.Contract;
 using Administrator.Database;
 using Administrator.Query.Interface;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Administrator.Query
 {

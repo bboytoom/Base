@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
@@ -9,8 +9,8 @@
     <Compile Remove="Helpers\HCatalogs.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Administrator.Query\Administrator.Query.csproj" />
     <ProjectReference Include="..\Administrator.Contract\Administrator.Contract.csproj" />
+    <ProjectReference Include="..\Administrator.Query\Administrator.Query.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Helpers\" />

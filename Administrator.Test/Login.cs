@@ -1,7 +1,7 @@
-using System;
 using Administrator.Contract;
 using Administrator.Manager;
 using NUnit.Framework;
+using System;
 
 namespace Tests
 {

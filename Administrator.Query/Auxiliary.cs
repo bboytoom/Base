@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Administrator.Contract;
+﻿using Administrator.Contract;
 using Administrator.Database;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Administrator.Query
 {

@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Administrator.Manager\Administrator.Manager.csproj" />
     <ProjectReference Include="..\Administrator.Contract\Administrator.Contract.csproj" />
+    <ProjectReference Include="..\Administrator.Manager\Administrator.Manager.csproj" />
   </ItemGroup>
 </Project>

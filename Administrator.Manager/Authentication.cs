@@ -1,8 +1,8 @@
-﻿using System;
-using System.Net;
-using Administrator.Contract;
+﻿using Administrator.Contract;
 using Administrator.Manager.Helpers;
 using Administrator.Query;
+using System;
+using System.Net;
 
 namespace Administrator.Manager
 {

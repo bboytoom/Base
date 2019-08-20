@@ -2,7 +2,6 @@
 
 namespace Administrator.Contract
 {
-    
     #region ViewModel para catalogos en general
 
     public class ViewModelCatlogs
