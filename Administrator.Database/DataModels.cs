@@ -43,6 +43,8 @@ namespace Administrator.Database
                 entity.Property(e => e.Name).IsRequired();
                 entity.Property(e => e.LnameP).IsRequired();
             });
+
+            modelBuilder.Seed();
         }
     }
 }

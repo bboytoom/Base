@@ -16,10 +16,23 @@ namespace Administrator.Query
             _connect = Configuration.Ctx();
         }
 
-        public IEnumerable<ViewModelCatlogs> GroupUsers(int id)
+        public IEnumerable<ViewModelCatlogs> TypeUsers(int id, int id_main)
+        {
+            IEnumerable<ViewModelCatlogs> result = _connect.getConexion.Cat_Users
+                .Where(w => w.Id.Equals(id) && w.Id_main.Equals(id_main))
+                .Select(s => new ViewModelCatlogs
+                {
+                    Value = s.Id,
+                    Text = s.Name
+                }).ToList();
+
+            return result;
+        }
+
+        public IEnumerable<ViewModelCatlogs> GroupUsers(int id, int id_main)
         {
             IEnumerable<ViewModelCatlogs> result = _connect.getConexion.Tbl_Groups
-                .Where(w => w.Id_main.Equals(id) && w.Id != 1)
+                .Where(w => w.Id.Equals(id) && w.Id_main.Equals(id_main))
                 .Select(s => new ViewModelCatlogs
                 {
                     Value = s.Id,

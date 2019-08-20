@@ -59,13 +59,13 @@ namespace Tests
             ViewModelClaims actual = new ViewModelClaims
             {
                 Identificador = id.ToString(),
-                Email = "soyroot@hotmail.es",
-                Fullname = "soy root",
+                Email = "root@hotmail.es",
+                Fullname = "soy root paterno materno",
                 MainUser = main.ToString(),
                 TypeUser = 1
             };
 
-            ViewModelClaims expectativa = ObjTestAuth.Login("soyroot@hotmail.es", "@Holamundo");
+            ViewModelClaims expectativa = ObjTestAuth.Login("root@hotmail.es", "holamundo");
             Assert.Equals(actual, expectativa);
         }
 
@@ -108,7 +108,7 @@ namespace Tests
         public void UserExistSuccess()
         {
             Authentication ObjTestAuth = new Authentication();
-            string correo = "soyroot@hotmail.es";
+            string correo = "administrador@hotmail.es";
 
             Assert.IsTrue(ObjTestAuth.CheckUser(correo));
         }
@@ -144,12 +144,12 @@ namespace Tests
         {
             Authentication ObjTestAuth = new Authentication();
 
-            for (int i = 0; i <= 2; i++)
+            for (int i = 0; i <= 3; i++)
             {
-                Assert.IsFalse(ObjTestAuth.ValidAttemps("novalido@hotmail.com"));
+                Assert.IsFalse(ObjTestAuth.ValidAttemps("administrador@hotmail.es"));
             }
 
-            Assert.IsTrue(ObjTestAuth.ValidAttemps("prueba@hotmail.com"));
+            Assert.IsTrue(ObjTestAuth.ValidAttemps("administrador@hotmail.es"));
         }
 
         #endregion
@@ -185,10 +185,10 @@ namespace Tests
 
             for (int i = 0; i <= 3; i++)
             {
-                Assert.IsFalse(ObjTestAuth.ValidCycle("novalido@hotmail.com"));
+                Assert.IsFalse(ObjTestAuth.ValidCycle("administrador@hotmail.es"));
             }
 
-            Assert.IsTrue(ObjTestAuth.ValidCycle("prueba@hotmail.com"));
+            Assert.IsTrue(ObjTestAuth.ValidCycle("administrador@hotmail.es"));
         }
 
         #endregion
