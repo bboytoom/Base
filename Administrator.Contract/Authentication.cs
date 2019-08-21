@@ -2,6 +2,18 @@
 
 namespace Administrator.Contract
 {
+    #region ViewModel que realiza el el registro de ingreso
+
+    public class ViewModelEntryUser
+    {
+        public int Id_user { get; set; }
+        public string FullName { get; set; }
+        public string IP_User { get; set; }
+        public string Browser { get; set; }
+    }
+
+    #endregion
+
     #region ViewModel necesario para el formulario de autenticacion
 
     public class ViewModelsAuth

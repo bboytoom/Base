@@ -224,5 +224,24 @@ namespace Tests
 
         #endregion
 
+        #region Test de la bitacora de ingreso
+
+        [Test]
+        public void CreateLog()
+        {
+            Authentication ObjTestAuth = new Authentication();
+
+            ViewModelEntryUser result = new ViewModelEntryUser
+            {
+                Id_user = 1,
+                FullName = "soy root paterno materno",
+                IP_User = "132.160.80.206",
+                Browser = "Chrome 76.0.3809.100 en OS X 10.14.5 64-bit"
+            };
+
+            Assert.IsTrue(ObjTestAuth.CreateEntry(result));
+        }
+
+        #endregion
     }
 }

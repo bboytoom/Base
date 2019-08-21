@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -7,6 +8,8 @@ namespace Administrator.Database
     [Table("Users")]
     public class Tbl_Users
     {
+        public Tbl_Users() => Tbl_Entry = new HashSet<Tbl_Entry>();
+
         [Column("id", Order = 0)]
         [Key]
         public int Id { get; set; }
@@ -86,5 +89,7 @@ namespace Administrator.Database
 
         [ForeignKey("Type")]
         public virtual Cat_Users Cat_Users { get; set; }
+
+        public virtual ICollection<Tbl_Entry> Tbl_Entry { get; set; }
     }
 }

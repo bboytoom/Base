@@ -9,7 +9,7 @@ namespace Administrator.Manager
     public class Authentication
     {
         private Auth ObjAuth;
-
+ 
         public Authentication()
         {
             ObjAuth = new Auth();
@@ -97,6 +97,23 @@ namespace Administrator.Manager
                 throw new ArgumentOutOfRangeException(nameof(email), "El correo no es correcto");
 
             return Validation.ResetAttemps(email_clean);
+        }
+
+        public bool CreateEntry(ViewModelEntryUser data)
+        {          
+            if (data.Id_user == 0)
+                throw new ArgumentOutOfRangeException(nameof(data.Id_user), "La funcion tiene un valor no permitido");
+
+            if (string.IsNullOrEmpty(data.FullName))
+                throw new ArgumentNullException(data.FullName);
+
+            if (string.IsNullOrEmpty(data.IP_User))
+                throw new ArgumentNullException(data.IP_User);
+
+            if (string.IsNullOrEmpty(data.Browser))
+                throw new ArgumentNullException(data.Browser);
+
+            return ObjAuth.Create(data);
         }
     }
 }

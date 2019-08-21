@@ -10,6 +10,8 @@ namespace Administrator.Database
 
         public DbSet<Tbl_Users> Tbl_Users { get; set; }
 
+        public DbSet<Tbl_Entry> Tbl_Entry { get; set; }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseMySql("server=localhost;database=DbSystem;user=root;password=bboytoom");
@@ -42,6 +44,14 @@ namespace Administrator.Database
                 entity.Property(e => e.Password).IsRequired();
                 entity.Property(e => e.Name).IsRequired();
                 entity.Property(e => e.LnameP).IsRequired();
+            });
+
+            modelBuilder.Entity<Tbl_Entry>(entity =>
+            {
+                entity.HasKey(p => p.Id);
+                entity.Property(e => e.FullName).IsRequired();
+                entity.Property(e => e.IP_User).IsRequired();
+                entity.Property(e => e.Browser).IsRequired();
             });
 
             modelBuilder.Seed();

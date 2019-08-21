@@ -16,8 +16,11 @@ namespace Administrator.Manager
 
         public bool Create(ViewModelUser data, int hieghUser, int main)
         {
-            if (hieghUser == 0 && main == 0)
+            if (hieghUser == 0)
                 throw new ArgumentOutOfRangeException(nameof(hieghUser), "La funcion tiene un valor no permitido");
+
+            if (main == 0)
+                throw new ArgumentOutOfRangeException(nameof(main), "La funcion tiene un valor no permitido");
 
             if (string.IsNullOrEmpty(data.Email))
                 throw new ArgumentNullException(data.Email);

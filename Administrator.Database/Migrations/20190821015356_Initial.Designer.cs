@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Administrator.Database.Migrations
 {
     [DbContext(typeof(DataModels))]
-    [Migration("20190820034349_semilla_uno")]
-    partial class semilla_uno
+    [Migration("20190821015356_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -72,7 +72,7 @@ namespace Administrator.Database.Migrations
                         {
                             Id = 1,
                             Description = "Usuario con todos los privilegios",
-                            Generate_date = new DateTime(2019, 8, 19, 22, 43, 47, 546, DateTimeKind.Local).AddTicks(5059),
+                            Generate_date = new DateTime(2019, 8, 20, 20, 53, 56, 79, DateTimeKind.Local).AddTicks(9640),
                             Generate_user = 1,
                             Id_main = 1,
                             Name = "ROOT",
@@ -82,7 +82,7 @@ namespace Administrator.Database.Migrations
                         {
                             Id = 2,
                             Description = "Usuario de apoyo",
-                            Generate_date = new DateTime(2019, 8, 19, 22, 43, 47, 546, DateTimeKind.Local).AddTicks(6800),
+                            Generate_date = new DateTime(2019, 8, 20, 20, 53, 56, 80, DateTimeKind.Local).AddTicks(380),
                             Generate_user = 1,
                             Id_main = 1,
                             Name = "STAFF",
@@ -92,7 +92,7 @@ namespace Administrator.Database.Migrations
                         {
                             Id = 3,
                             Description = "Usuario de apoyo",
-                            Generate_date = new DateTime(2019, 8, 19, 22, 43, 47, 546, DateTimeKind.Local).AddTicks(6844),
+                            Generate_date = new DateTime(2019, 8, 20, 20, 53, 56, 80, DateTimeKind.Local).AddTicks(400),
                             Generate_user = 1,
                             Id_main = 1,
                             Name = "ADMINISTRADOR",
@@ -102,7 +102,7 @@ namespace Administrator.Database.Migrations
                         {
                             Id = 4,
                             Description = "Usuario de apoyo para el administrador",
-                            Generate_date = new DateTime(2019, 8, 19, 22, 43, 47, 546, DateTimeKind.Local).AddTicks(6860),
+                            Generate_date = new DateTime(2019, 8, 20, 20, 53, 56, 80, DateTimeKind.Local).AddTicks(410),
                             Generate_user = 1,
                             Id_main = 1,
                             Name = "USUARIO",
@@ -112,7 +112,7 @@ namespace Administrator.Database.Migrations
                         {
                             Id = 5,
                             Description = "Cliente del administrador",
-                            Generate_date = new DateTime(2019, 8, 19, 22, 43, 47, 546, DateTimeKind.Local).AddTicks(6880),
+                            Generate_date = new DateTime(2019, 8, 20, 20, 53, 56, 80, DateTimeKind.Local).AddTicks(420),
                             Generate_user = 1,
                             Id_main = 1,
                             Name = "CLIENTE",
@@ -122,7 +122,7 @@ namespace Administrator.Database.Migrations
                         {
                             Id = 6,
                             Description = "Proveedor del administrador",
-                            Generate_date = new DateTime(2019, 8, 19, 22, 43, 47, 546, DateTimeKind.Local).AddTicks(6895),
+                            Generate_date = new DateTime(2019, 8, 20, 20, 53, 56, 80, DateTimeKind.Local).AddTicks(420),
                             Generate_user = 1,
                             Id_main = 1,
                             Name = "PROVEEDOR",
@@ -132,12 +132,49 @@ namespace Administrator.Database.Migrations
                         {
                             Id = 7,
                             Description = "contador del administrador",
-                            Generate_date = new DateTime(2019, 8, 19, 22, 43, 47, 546, DateTimeKind.Local).AddTicks(6916),
+                            Generate_date = new DateTime(2019, 8, 20, 20, 53, 56, 80, DateTimeKind.Local).AddTicks(430),
                             Generate_user = 1,
                             Id_main = 1,
                             Name = "CONTADOR",
                             Status = true
                         });
+                });
+
+            modelBuilder.Entity("Administrator.Database.Tbl_Entry", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("id");
+
+                    b.Property<string>("Browser")
+                        .IsRequired()
+                        .HasColumnName("browser")
+                        .HasColumnType("varchar(50)")
+                        .HasMaxLength(50);
+
+                    b.Property<DateTime?>("Entry_date")
+                        .HasColumnName("entry_date");
+
+                    b.Property<string>("FullName")
+                        .IsRequired()
+                        .HasColumnName("fullname")
+                        .HasColumnType("varchar(80)")
+                        .HasMaxLength(80);
+
+                    b.Property<string>("IP_User")
+                        .IsRequired()
+                        .HasColumnName("ip")
+                        .HasColumnType("varchar(15)")
+                        .HasMaxLength(15);
+
+                    b.Property<int>("Id_user")
+                        .HasColumnName("id_user");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Id_user");
+
+                    b.ToTable("Entry");
                 });
 
             modelBuilder.Entity("Administrator.Database.Tbl_Groups", b =>
@@ -235,7 +272,7 @@ namespace Administrator.Database.Migrations
                             Delete_permission = true,
                             Delete_user = true,
                             Description = "Grupo del Administrador General",
-                            Generate_date = new DateTime(2019, 8, 19, 22, 43, 47, 534, DateTimeKind.Local).AddTicks(9977),
+                            Generate_date = new DateTime(2019, 8, 20, 20, 53, 56, 72, DateTimeKind.Local).AddTicks(9790),
                             Generate_user = 1,
                             Group = "Root",
                             Id_main = 1,
@@ -257,7 +294,7 @@ namespace Administrator.Database.Migrations
                             Delete_permission = false,
                             Delete_user = false,
                             Description = "Grupo de apoyo para el administrador general",
-                            Generate_date = new DateTime(2019, 8, 19, 22, 43, 47, 540, DateTimeKind.Local).AddTicks(8263),
+                            Generate_date = new DateTime(2019, 8, 20, 20, 53, 56, 77, DateTimeKind.Local).AddTicks(5860),
                             Generate_user = 1,
                             Group = "Staff",
                             Id_main = 1,
@@ -279,7 +316,7 @@ namespace Administrator.Database.Migrations
                             Delete_permission = true,
                             Delete_user = true,
                             Description = "Grupo del administrador de la cuenta",
-                            Generate_date = new DateTime(2019, 8, 19, 22, 43, 47, 540, DateTimeKind.Local).AddTicks(8312),
+                            Generate_date = new DateTime(2019, 8, 20, 20, 53, 56, 77, DateTimeKind.Local).AddTicks(5880),
                             Generate_user = 1,
                             Group = "Administrador",
                             Id_main = 1,
@@ -384,8 +421,10 @@ namespace Administrator.Database.Migrations
                         new
                         {
                             Id = 1,
+                            Attemp = 0,
+                            Cycle = 0,
                             Email = "root@hotmail.es",
-                            Generate_date = new DateTime(2019, 8, 19, 22, 43, 47, 548, DateTimeKind.Local).AddTicks(4570),
+                            Generate_date = new DateTime(2019, 8, 20, 20, 53, 56, 81, DateTimeKind.Local).AddTicks(610),
                             Generate_user = 1,
                             Id_group = 1,
                             Id_main = 1,
@@ -400,8 +439,10 @@ namespace Administrator.Database.Migrations
                         new
                         {
                             Id = 2,
+                            Attemp = 0,
+                            Cycle = 0,
                             Email = "administrador@hotmail.es",
-                            Generate_date = new DateTime(2019, 8, 19, 22, 43, 47, 548, DateTimeKind.Local).AddTicks(6948),
+                            Generate_date = new DateTime(2019, 8, 20, 20, 53, 56, 81, DateTimeKind.Local).AddTicks(1350),
                             Generate_user = 1,
                             Id_group = 3,
                             Id_main = 1,
@@ -413,6 +454,14 @@ namespace Administrator.Database.Migrations
                             Status = true,
                             Type = 3
                         });
+                });
+
+            modelBuilder.Entity("Administrator.Database.Tbl_Entry", b =>
+                {
+                    b.HasOne("Administrator.Database.Tbl_Users", "Tbl_Users")
+                        .WithMany("Tbl_Entry")
+                        .HasForeignKey("Id_user")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Administrator.Database.Tbl_Users", b =>

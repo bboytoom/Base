@@ -1,5 +1,6 @@
 ﻿using Administrator.Contract;
 using Administrator.Database;
+using System;
 using System.Linq;
 
 namespace Administrator.Query
@@ -8,15 +9,15 @@ namespace Administrator.Query
 
     public class Auth
     {
-        private Configuration connect;
+        private Configuration _connect;
         public Auth()
         {
-            connect = Configuration.Ctx();
+            _connect = Configuration.Ctx();
         }
 
         public ViewModelClaims Login(string email, string password)
         {
-            ViewModelClaims result = connect.getConexion.Tbl_Users
+            ViewModelClaims result = _connect.getConexion.Tbl_Users
                 .Where(w => w.Email == email && w.Password == password)
                 .Select(s => new ViewModelClaims
                 {
@@ -32,7 +33,7 @@ namespace Administrator.Query
 
         public bool CheckUserExist(string email)
         {
-            var result = connect.getConexion.Tbl_Users
+            var result = _connect.getConexion.Tbl_Users
                     .Where(w => w.Email == email).FirstOrDefault();
 
             if (result == null)
@@ -43,10 +44,34 @@ namespace Administrator.Query
 
         public bool CheckUserActive(string email)
         {
-            var result = connect.getConexion.Tbl_Users
+            var result = _connect.getConexion.Tbl_Users
                     .Where(w => w.Email == email).FirstOrDefault();
 
             return result.Status;
+        }
+
+        public bool Create(ViewModelEntryUser data)
+        {
+            try
+            {
+                var create_entry = new Tbl_Entry
+                {
+                    Id_user = data.Id_user,
+                    FullName = data.FullName,
+                    IP_User = data.IP_User,
+                    Browser = data.Browser,
+                    Entry_date = DateTime.Now
+                };
+
+                _connect.getConexion.Tbl_Entry.Add(create_entry);
+                _connect.getConexion.SaveChanges();
+
+                return true;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
     }
 
@@ -58,8 +83,8 @@ namespace Administrator.Query
     {
         public static bool InsertAttemps(string email)
         {
-            var connect = Configuration.Ctx();
-            Tbl_Users find_user = connect.getConexion.Tbl_Users.Where(w => w.Email == email).FirstOrDefault();
+            var _connect = Configuration.Ctx();
+            Tbl_Users find_user = _connect.getConexion.Tbl_Users.Where(w => w.Email == email).FirstOrDefault();
 
             var insert_attemp = new Tbl_Users
             {
@@ -82,8 +107,8 @@ namespace Administrator.Query
                 Attemp = (find_user.Attemp + 1)
             };
 
-            connect.getConexion.Entry(find_user).CurrentValues.SetValues(insert_attemp);
-            connect.getConexion.SaveChanges();
+            _connect.getConexion.Entry(find_user).CurrentValues.SetValues(insert_attemp);
+            _connect.getConexion.SaveChanges();
 
             if (find_user.Attemp == 4)
                 return true;
@@ -93,8 +118,8 @@ namespace Administrator.Query
 
         public static bool InsertCycle(string email)
         {
-            var connect = Configuration.Ctx();
-            Tbl_Users find_user = connect.getConexion.Tbl_Users.Where(w => w.Email == email).FirstOrDefault();
+            var _connect = Configuration.Ctx();
+            Tbl_Users find_user = _connect.getConexion.Tbl_Users.Where(w => w.Email == email).FirstOrDefault();
 
             var cycle_attemp = new Tbl_Users
             {
@@ -117,8 +142,8 @@ namespace Administrator.Query
                 Cycle = (find_user.Cycle + 1)
             };
 
-            connect.getConexion.Entry(find_user).CurrentValues.SetValues(cycle_attemp);
-            connect.getConexion.SaveChanges();
+            _connect.getConexion.Entry(find_user).CurrentValues.SetValues(cycle_attemp);
+            _connect.getConexion.SaveChanges();
 
             if (find_user.Cycle == 4)
             {
@@ -143,8 +168,8 @@ namespace Administrator.Query
                     Cycle = 0
                 };
 
-                connect.getConexion.Entry(find_user).CurrentValues.SetValues(lockuot_user);
-                connect.getConexion.SaveChanges();
+                _connect.getConexion.Entry(find_user).CurrentValues.SetValues(lockuot_user);
+                _connect.getConexion.SaveChanges();
 
                 return true;
             }
@@ -154,9 +179,9 @@ namespace Administrator.Query
 
         public static bool ResetAttemps(string email)
         {
-            var connect = Configuration.Ctx();
+            var _connect = Configuration.Ctx();
 
-            Tbl_Users find_user = connect.getConexion.Tbl_Users.Where(w => w.Email == email).FirstOrDefault();
+            Tbl_Users find_user = _connect.getConexion.Tbl_Users.Where(w => w.Email == email).FirstOrDefault();
 
             var reset_attemp = new Tbl_Users
             {
@@ -179,12 +204,12 @@ namespace Administrator.Query
                 Cycle = 0
             };
 
-            connect.getConexion.Entry(find_user).CurrentValues.SetValues(reset_attemp);
-            connect.getConexion.SaveChanges();
+            _connect.getConexion.Entry(find_user).CurrentValues.SetValues(reset_attemp);
+            _connect.getConexion.SaveChanges();
 
             return true;
         }
     }
 
-    #endregion  
+    #endregion
 }
