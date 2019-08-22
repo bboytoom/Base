@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Administrator.Database.Migrations
 {
     [DbContext(typeof(DataModels))]
-    [Migration("20190821015356_Initial")]
+    [Migration("20190822041220_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -66,78 +66,6 @@ namespace Administrator.Database.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Cat_Users");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Description = "Usuario con todos los privilegios",
-                            Generate_date = new DateTime(2019, 8, 20, 20, 53, 56, 79, DateTimeKind.Local).AddTicks(9640),
-                            Generate_user = 1,
-                            Id_main = 1,
-                            Name = "ROOT",
-                            Status = true
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Description = "Usuario de apoyo",
-                            Generate_date = new DateTime(2019, 8, 20, 20, 53, 56, 80, DateTimeKind.Local).AddTicks(380),
-                            Generate_user = 1,
-                            Id_main = 1,
-                            Name = "STAFF",
-                            Status = true
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Description = "Usuario de apoyo",
-                            Generate_date = new DateTime(2019, 8, 20, 20, 53, 56, 80, DateTimeKind.Local).AddTicks(400),
-                            Generate_user = 1,
-                            Id_main = 1,
-                            Name = "ADMINISTRADOR",
-                            Status = true
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Description = "Usuario de apoyo para el administrador",
-                            Generate_date = new DateTime(2019, 8, 20, 20, 53, 56, 80, DateTimeKind.Local).AddTicks(410),
-                            Generate_user = 1,
-                            Id_main = 1,
-                            Name = "USUARIO",
-                            Status = true
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Description = "Cliente del administrador",
-                            Generate_date = new DateTime(2019, 8, 20, 20, 53, 56, 80, DateTimeKind.Local).AddTicks(420),
-                            Generate_user = 1,
-                            Id_main = 1,
-                            Name = "CLIENTE",
-                            Status = true
-                        },
-                        new
-                        {
-                            Id = 6,
-                            Description = "Proveedor del administrador",
-                            Generate_date = new DateTime(2019, 8, 20, 20, 53, 56, 80, DateTimeKind.Local).AddTicks(420),
-                            Generate_user = 1,
-                            Id_main = 1,
-                            Name = "PROVEEDOR",
-                            Status = true
-                        },
-                        new
-                        {
-                            Id = 7,
-                            Description = "contador del administrador",
-                            Generate_date = new DateTime(2019, 8, 20, 20, 53, 56, 80, DateTimeKind.Local).AddTicks(430),
-                            Generate_user = 1,
-                            Id_main = 1,
-                            Name = "CONTADOR",
-                            Status = true
-                        });
                 });
 
             modelBuilder.Entity("Administrator.Database.Tbl_Entry", b =>
@@ -183,24 +111,6 @@ namespace Administrator.Database.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnName("id");
 
-                    b.Property<bool>("Create_group")
-                        .HasColumnName("create_group");
-
-                    b.Property<bool>("Create_permission")
-                        .HasColumnName("create_permission");
-
-                    b.Property<bool>("Create_user")
-                        .HasColumnName("create_user");
-
-                    b.Property<bool>("Delete_group")
-                        .HasColumnName("delete_group");
-
-                    b.Property<bool>("Delete_permission")
-                        .HasColumnName("delete_permission");
-
-                    b.Property<bool>("Delete_user")
-                        .HasColumnName("delete_user");
-
                     b.Property<string>("Description")
                         .HasColumnName("description")
                         .HasColumnType("varchar(200)")
@@ -227,15 +137,6 @@ namespace Administrator.Database.Migrations
                     b.Property<int>("Id_main")
                         .HasColumnName("id_main");
 
-                    b.Property<bool>("Read_group")
-                        .HasColumnName("read_group");
-
-                    b.Property<bool>("Read_permission")
-                        .HasColumnName("read_permission");
-
-                    b.Property<bool>("Read_user")
-                        .HasColumnName("read_user");
-
                     b.Property<DateTime?>("Remove_date")
                         .HasColumnName("remove_date");
 
@@ -248,6 +149,77 @@ namespace Administrator.Database.Migrations
                     b.Property<bool>("Status")
                         .HasColumnName("status");
 
+                    b.HasKey("Id");
+
+                    b.ToTable("Groups");
+                });
+
+            modelBuilder.Entity("Administrator.Database.Tbl_Permission_Root", b =>
+                {
+                    b.Property<int>("Id")
+                        .HasColumnName("id_group");
+
+                    b.Property<bool>("Create_permission")
+                        .HasColumnName("create_permission");
+
+                    b.Property<bool>("Create_user")
+                        .HasColumnName("create_user");
+
+                    b.Property<bool>("Delete_permission")
+                        .HasColumnName("delete_permission");
+
+                    b.Property<bool>("Delete_user")
+                        .HasColumnName("delete_user");
+
+                    b.Property<bool>("Read_permission")
+                        .HasColumnName("read_permission");
+
+                    b.Property<bool>("Read_user")
+                        .HasColumnName("read_user");
+
+                    b.Property<bool>("Update_permission")
+                        .HasColumnName("update_permission");
+
+                    b.Property<bool>("Update_user")
+                        .HasColumnName("update_user");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Permission_Root");
+                });
+
+            modelBuilder.Entity("Administrator.Database.Tbl_Permission_User", b =>
+                {
+                    b.Property<int>("Id")
+                        .HasColumnName("id_group");
+
+                    b.Property<bool>("Create_group")
+                        .HasColumnName("create_group");
+
+                    b.Property<bool>("Create_permission")
+                        .HasColumnName("create_permission");
+
+                    b.Property<bool>("Create_user")
+                        .HasColumnName("create_user");
+
+                    b.Property<bool>("Delete_group")
+                        .HasColumnName("delete_group");
+
+                    b.Property<bool>("Delete_permission")
+                        .HasColumnName("delete_permission");
+
+                    b.Property<bool>("Delete_user")
+                        .HasColumnName("delete_user");
+
+                    b.Property<bool>("Read_group")
+                        .HasColumnName("read_group");
+
+                    b.Property<bool>("Read_permission")
+                        .HasColumnName("read_permission");
+
+                    b.Property<bool>("Read_user")
+                        .HasColumnName("read_user");
+
                     b.Property<bool>("Update_group")
                         .HasColumnName("update_group");
 
@@ -259,75 +231,7 @@ namespace Administrator.Database.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Groups");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Create_group = true,
-                            Create_permission = true,
-                            Create_user = true,
-                            Delete_group = true,
-                            Delete_permission = true,
-                            Delete_user = true,
-                            Description = "Grupo del Administrador General",
-                            Generate_date = new DateTime(2019, 8, 20, 20, 53, 56, 72, DateTimeKind.Local).AddTicks(9790),
-                            Generate_user = 1,
-                            Group = "Root",
-                            Id_main = 1,
-                            Read_group = true,
-                            Read_permission = true,
-                            Read_user = true,
-                            Status = true,
-                            Update_group = true,
-                            Update_permission = true,
-                            Update_user = true
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Create_group = true,
-                            Create_permission = false,
-                            Create_user = true,
-                            Delete_group = false,
-                            Delete_permission = false,
-                            Delete_user = false,
-                            Description = "Grupo de apoyo para el administrador general",
-                            Generate_date = new DateTime(2019, 8, 20, 20, 53, 56, 77, DateTimeKind.Local).AddTicks(5860),
-                            Generate_user = 1,
-                            Group = "Staff",
-                            Id_main = 1,
-                            Read_group = true,
-                            Read_permission = false,
-                            Read_user = true,
-                            Status = true,
-                            Update_group = false,
-                            Update_permission = false,
-                            Update_user = true
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Create_group = true,
-                            Create_permission = true,
-                            Create_user = true,
-                            Delete_group = true,
-                            Delete_permission = true,
-                            Delete_user = true,
-                            Description = "Grupo del administrador de la cuenta",
-                            Generate_date = new DateTime(2019, 8, 20, 20, 53, 56, 77, DateTimeKind.Local).AddTicks(5880),
-                            Generate_user = 1,
-                            Group = "Administrador",
-                            Id_main = 1,
-                            Read_group = true,
-                            Read_permission = true,
-                            Read_user = true,
-                            Status = true,
-                            Update_group = true,
-                            Update_permission = true,
-                            Update_user = true
-                        });
+                    b.ToTable("Permission_User");
                 });
 
             modelBuilder.Entity("Administrator.Database.Tbl_Users", b =>
@@ -416,44 +320,6 @@ namespace Administrator.Database.Migrations
                     b.HasIndex("Type");
 
                     b.ToTable("Users");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Attemp = 0,
-                            Cycle = 0,
-                            Email = "root@hotmail.es",
-                            Generate_date = new DateTime(2019, 8, 20, 20, 53, 56, 81, DateTimeKind.Local).AddTicks(610),
-                            Generate_user = 1,
-                            Id_group = 1,
-                            Id_main = 1,
-                            LnameM = "materno",
-                            LnameP = "paterno",
-                            Name = "soy root",
-                            Password = "6859F96680702A57A951EABE43FEC49964EA51DDE72DF97E43A1FCF6F8B41B89A51CAE8F3162C0CBB3E7FD0850577759AA653E25C4BDFD57264015FA6588360F",
-                            Photo = "default.png",
-                            Status = true,
-                            Type = 1
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Attemp = 0,
-                            Cycle = 0,
-                            Email = "administrador@hotmail.es",
-                            Generate_date = new DateTime(2019, 8, 20, 20, 53, 56, 81, DateTimeKind.Local).AddTicks(1350),
-                            Generate_user = 1,
-                            Id_group = 3,
-                            Id_main = 1,
-                            LnameM = "adminmaterno",
-                            LnameP = "adminpaterno",
-                            Name = "soy admin",
-                            Password = "CFBD3E3A8ADC49B9E0061ADE86C84B499012048C903185821F9428DD981C4610B6D660D484A88641BF81B5B840422EA9E3A5DA29C12821EED60B0D281E5F43DB",
-                            Photo = "default.png",
-                            Status = true,
-                            Type = 3
-                        });
                 });
 
             modelBuilder.Entity("Administrator.Database.Tbl_Entry", b =>
@@ -461,6 +327,22 @@ namespace Administrator.Database.Migrations
                     b.HasOne("Administrator.Database.Tbl_Users", "Tbl_Users")
                         .WithMany("Tbl_Entry")
                         .HasForeignKey("Id_user")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Administrator.Database.Tbl_Permission_Root", b =>
+                {
+                    b.HasOne("Administrator.Database.Tbl_Groups", "Tbl_Groups")
+                        .WithOne("Permission_Root")
+                        .HasForeignKey("Administrator.Database.Tbl_Permission_Root", "Id")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Administrator.Database.Tbl_Permission_User", b =>
+                {
+                    b.HasOne("Administrator.Database.Tbl_Groups", "Tbl_Groups")
+                        .WithOne("Permission_User")
+                        .HasForeignKey("Administrator.Database.Tbl_Permission_User", "Id")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

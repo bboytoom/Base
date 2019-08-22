@@ -6,6 +6,10 @@ namespace Administrator.Database
     {
         public DbSet<Tbl_Groups> Tbl_Groups { get; set; }
 
+        public DbSet<Tbl_Permission_User> Tbl_Permission_User { get; set; }
+
+        public DbSet<Tbl_Permission_Root> Tbl_Permission_Root { get; set; }
+
         public DbSet<Cat_Users> Cat_Users { get; set; }
 
         public DbSet<Tbl_Users> Tbl_Users { get; set; }
@@ -26,6 +30,20 @@ namespace Administrator.Database
                 entity.HasKey(p => p.Id);
                 entity.Property(e => e.Id_main).IsRequired();
                 entity.Property(e => e.Group).IsRequired();
+            });
+
+            modelBuilder.Entity<Tbl_Groups>(entity =>
+            {
+                entity.HasOne(a => a.Permission_User)
+                .WithOne(b => b.Tbl_Groups)
+                .HasForeignKey<Tbl_Permission_User>(b => b.Id);
+            });
+
+            modelBuilder.Entity<Tbl_Groups>(entity =>
+            {
+                entity.HasOne(a => a.Permission_Root)
+                .WithOne(b => b.Tbl_Groups)
+                .HasForeignKey<Tbl_Permission_Root>(b => b.Id);
             });
 
             modelBuilder.Entity<Cat_Users>(entity =>
@@ -54,7 +72,7 @@ namespace Administrator.Database
                 entity.Property(e => e.Browser).IsRequired();
             });
 
-            modelBuilder.Seed();
+            //modelBuilder.Seed();
         }
     }
 }

@@ -20,10 +20,10 @@ namespace Administrator.Query
             var result = connect.getConexion.Tbl_Users
                 .Where(w => w.Id.Equals(id) && w.Password.Equals(password)).FirstOrDefault();
 
-            if (result != null)
-                return true;
+            if (result == null)
+                return false;
 
-            return false;
+            return true;
         }
 
         public bool ChangeEmail(int id, string email)
