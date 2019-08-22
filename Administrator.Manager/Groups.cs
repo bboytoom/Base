@@ -7,14 +7,14 @@ namespace Administrator.Manager
 {
     public class Groups
     {
-        private GroupsImp _ObjGroup;
+        private Groups_UserImp _ObjGroup;
 
         public Groups()
         {
-            _ObjGroup = new GroupsImp();
+            _ObjGroup = new Groups_UserImp();
         }
 
-        public bool Create(ViewModelGroup data, int hieghUser, int main)
+        public bool Create(ViewModelGroupUser data, int hieghUser, int main)
         {
             if (hieghUser == 0)
                 throw new ArgumentOutOfRangeException(nameof(hieghUser), "La funcion tiene un valor no permitido");
@@ -39,7 +39,7 @@ namespace Administrator.Manager
             return _ObjGroup.Delete(id, hieghUser);
         }
 
-        public ViewModelGroup Read(int id)
+        public ViewModelGroupUser Read(int id)
         {
             if (id == 0)
                 throw new ArgumentOutOfRangeException(nameof(id), "La funcion tiene un valor no permitido");
@@ -55,7 +55,7 @@ namespace Administrator.Manager
             return _ObjGroup.ReadAll(id_main);
         }
 
-        public bool Update(ViewModelGroup data, int hieghUser)
+        public bool Update(ViewModelGroupUser data, int hieghUser)
         {
             if (hieghUser == 0 && data.Id == 0)
                 throw new ArgumentOutOfRangeException(nameof(hieghUser), "La funcion tiene un valor no permitido");

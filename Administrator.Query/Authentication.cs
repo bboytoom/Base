@@ -22,7 +22,7 @@ namespace Administrator.Query
                 .Select(s => new ViewModelClaims
                 {
                     Identificador = s.Id.ToString(),
-                    Fullname = s.Name + " " + s.LnameP + " " + s.LnameM ,
+                    Fullname = s.Name + " " + s.LnameP + " " + s.LnameM,
                     MainUser = s.Id_main.ToString(),
                     Email = s.Email,
                     TypeUser = s.Type

@@ -9,7 +9,7 @@ namespace Administrator.Manager
     public class Authentication
     {
         private Auth ObjAuth;
- 
+
         public Authentication()
         {
             ObjAuth = new Auth();
@@ -100,7 +100,7 @@ namespace Administrator.Manager
         }
 
         public bool CreateEntry(ViewModelEntryUser data)
-        {          
+        {
             if (data.Id_user == 0)
                 throw new ArgumentOutOfRangeException(nameof(data.Id_user), "La funcion tiene un valor no permitido");
 

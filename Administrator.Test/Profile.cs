@@ -1,6 +1,6 @@
-﻿using System;
-using Administrator.Manager;
+﻿using Administrator.Manager;
 using NUnit.Framework;
+using System;
 
 namespace Administrator.Test
 {

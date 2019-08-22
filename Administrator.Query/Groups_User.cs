@@ -9,15 +9,15 @@ namespace Administrator.Query
 {
     #region ABC de la clase Group
 
-    public class GroupsImp : IOperations<ViewModelGroup, ViewModelReadGroup>
+    public class Groups_UserImp : IOperations<ViewModelGroupUser, ViewModelReadGroup>
     {
         private Configuration _connect;
-        public GroupsImp()
+        public Groups_UserImp()
         {
             _connect = Configuration.Ctx();
         }
 
-        public bool Create(ViewModelGroup data, int hieghUser, int main)
+        public bool Create(ViewModelGroupUser data, int hieghUser, int main)
         {
             try
             {
@@ -34,6 +34,8 @@ namespace Administrator.Query
 
                 _connect.getConexion.Tbl_Groups.Add(create_group);
                 _connect.getConexion.SaveChanges();
+
+                Permission_UserImp.Create(data);
 
                 return true;
             }
@@ -74,10 +76,10 @@ namespace Administrator.Query
             }
         }
 
-        public ViewModelGroup Read(int id)
+        public ViewModelGroupUser Read(int id)
         {
-            ViewModelGroup result = _connect.getConexion.Tbl_Groups.Where(w => w.Id.Equals(id))
-                    .Select(s => new ViewModelGroup
+            ViewModelGroupUser result = _connect.getConexion.Tbl_Groups.Where(w => w.Id.Equals(id))
+                    .Select(s => new ViewModelGroupUser
                     {
                         Id = s.Id,
                         Group = s.Group,
@@ -103,7 +105,7 @@ namespace Administrator.Query
             return result;
         }
 
-        public bool Update(ViewModelGroup data, int hieghUser)
+        public bool Update(ViewModelGroupUser data, int hieghUser)
         {
             try
             {
@@ -121,6 +123,11 @@ namespace Administrator.Query
                     Edit_user = hieghUser,
                     Edit_date = DateTime.Now
                 };
+
+                _connect.getConexion.Entry(search_group).CurrentValues.SetValues(update_group);
+                _connect.getConexion.SaveChanges();
+
+                Permission_UserImp.Update(data);
 
                 return true;
             }

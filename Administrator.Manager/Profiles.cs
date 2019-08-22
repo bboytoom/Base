@@ -1,7 +1,7 @@
-﻿using System;
-using System.Net;
-using Administrator.Manager.Helpers;
+﻿using Administrator.Manager.Helpers;
 using Administrator.Query;
+using System;
+using System.Net;
 
 namespace Administrator.Manager
 {
