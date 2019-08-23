@@ -35,9 +35,11 @@ namespace Administrator.Query
                 _connect.getConexion.Tbl_Groups.Add(create_group);
                 _connect.getConexion.SaveChanges();
 
-                Permission_UserImp.Create(data);
+                int identificador = _connect.getConexion.Tbl_Groups
+                    .Where(w => w.Id_main.Equals(main) && w.Group.Equals(data.Group))
+                    .FirstOrDefault().Id;
 
-                return true;
+                return Permission_UserImp.Create(data, identificador);
             }
             catch (Exception)
             {
@@ -127,9 +129,7 @@ namespace Administrator.Query
                 _connect.getConexion.Entry(search_group).CurrentValues.SetValues(update_group);
                 _connect.getConexion.SaveChanges();
 
-                Permission_UserImp.Update(data);
-
-                return true;
+                return Permission_UserImp.Update(data, data.Id);
             }
             catch (Exception)
             {

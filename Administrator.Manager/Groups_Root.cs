@@ -1,20 +1,20 @@
-﻿using Administrator.Contract;
-using Administrator.Query;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using Administrator.Contract;
+using Administrator.Query;
 
 namespace Administrator.Manager
 {
-    public class Groups
+    public class Groups_Root
     {
-        private Groups_UserImp _ObjGroup;
+        private Groups_RootImp _ObjGroup;
 
-        public Groups()
+        public Groups_Root()
         {
-            _ObjGroup = new Groups_UserImp();
+            _ObjGroup = new Groups_RootImp();
         }
 
-        public bool Create(ViewModelGroupUser data, int hieghUser, int main)
+        public bool Create(ViewModelGroupRoot data, int hieghUser, int main)
         {
             if (hieghUser == 0)
                 throw new ArgumentOutOfRangeException(nameof(hieghUser), "La funcion tiene un valor no permitido");
@@ -39,7 +39,7 @@ namespace Administrator.Manager
             return _ObjGroup.Delete(id, hieghUser);
         }
 
-        public ViewModelGroupUser Read(int id)
+        public ViewModelGroupRoot Read(int id)
         {
             if (id == 0)
                 throw new ArgumentOutOfRangeException(nameof(id), "La funcion tiene un valor no permitido");
@@ -55,10 +55,13 @@ namespace Administrator.Manager
             return _ObjGroup.ReadAll(id_main);
         }
 
-        public bool Update(ViewModelGroupUser data, int hieghUser)
+        public bool Update(ViewModelGroupRoot data, int hieghUser)
         {
-            if (hieghUser == 0 && data.Id == 0)
+            if (hieghUser == 0)
                 throw new ArgumentOutOfRangeException(nameof(hieghUser), "La funcion tiene un valor no permitido");
+
+            if (data.Id == 0)
+                throw new ArgumentOutOfRangeException(nameof(data.Id), "La funcion tiene un valor no permitido");
 
             if (string.IsNullOrEmpty(data.Group))
                 throw new ArgumentNullException(data.Group);
